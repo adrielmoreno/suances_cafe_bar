@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:suances/presentation/common/theme/app_styles.dart';
 
 import 'presentation/views/home/home_page.dart';
 
@@ -13,10 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Suances',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppStyles.appLightTheme,
+      darkTheme: AppStyles.appDarkTheme,
+      themeMode: ThemeMode.system,
       home: const MyHomePage(title: 'Suances App'),
     );
   }
