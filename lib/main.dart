@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:suances/presentation/common/theme/app_styles.dart';
 
-import 'presentation/views/home/home_page.dart';
+import 'presentation/common/routing/routing.dart';
+import 'presentation/common/theme/app_styles.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,12 +12,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Suances',
+      debugShowCheckedModeBanner: false,
       theme: AppStyles.appLightTheme,
       darkTheme: AppStyles.appDarkTheme,
       themeMode: ThemeMode.system,
-      home: const MyHomePage(title: 'Suances App'),
     );
   }
 }
