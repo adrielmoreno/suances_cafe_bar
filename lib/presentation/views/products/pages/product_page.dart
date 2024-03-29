@@ -43,88 +43,91 @@ class _ProductPageState extends State<ProductPage> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: MarginContainer(
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            controller: _nameController,
-                            decoration:
-                                const InputDecoration(labelText: 'Nombre'),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Por favor, ingrese un nombre.';
-                              }
-                              return null;
-                            },
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _packagingController,
-                                  decoration: const InputDecoration(
-                                      labelText: 'Empaque'),
-                                  keyboardType: TextInputType.number,
-                                ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _measureController,
-                                  decoration: const InputDecoration(
-                                      labelText: 'medida'),
-                                ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _pricePackingController,
-                                  decoration: const InputDecoration(
-                                      labelText: 'Precio empaque'),
-                                  keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                          decimal: true),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  readOnly: true,
-                                  controller: _priceUnitController,
-                                  decoration: const InputDecoration(
-                                      labelText: 'Precio por unidad'),
-                                  keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                    decimal: true,
+                    child: SizedBox(
+                      width: Dimens.maxwidth,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: _nameController,
+                              decoration:
+                                  const InputDecoration(labelText: 'Nombre'),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Por favor, ingrese un nombre.';
+                                }
+                                return null;
+                              },
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _packagingController,
+                                    decoration: const InputDecoration(
+                                        labelText: 'Empaque'),
+                                    keyboardType: TextInputType.number,
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  readOnly: true,
-                                  controller: _lastPriceController,
-                                  decoration: const InputDecoration(
-                                      labelText: 'Último precio'),
-                                  keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                    decimal: true,
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _measureController,
+                                    decoration: const InputDecoration(
+                                        labelText: 'medida'),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          TextFormField(
-                            controller: _lastSupplierController,
-                            decoration: const InputDecoration(
-                                labelText: 'Último proveedor'),
-                          ),
-                        ],
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _pricePackingController,
+                                    decoration: const InputDecoration(
+                                        labelText: 'Precio empaque'),
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                            decimal: true),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    controller: _priceUnitController,
+                                    decoration: const InputDecoration(
+                                        labelText: 'Precio por unidad'),
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    controller: _lastPriceController,
+                                    decoration: const InputDecoration(
+                                        labelText: 'Último precio'),
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            TextFormField(
+                              controller: _lastSupplierController,
+                              decoration: const InputDecoration(
+                                  labelText: 'Último proveedor'),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -133,15 +136,6 @@ class _ProductPageState extends State<ProductPage> {
             ],
           ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Dimens.big)),
-        onPressed: () {},
-        tooltip: 'Nuevo',
-        // TODO: will implement editable
-        child: Icon(_isEdited ? Icons.save_as : Icons.save),
       ),
     );
   }

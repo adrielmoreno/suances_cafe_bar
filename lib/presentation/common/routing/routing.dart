@@ -8,6 +8,7 @@ import '../../views/home/home_page.dart';
 import '../../views/metrics/metrics_page.dart';
 import '../../views/products/pages/product_page.dart';
 import '../../views/products/products_page.dart';
+import '../../views/suppliers/pages/supplier_page.dart';
 import '../../views/suppliers/suppliers_page.dart';
 import '../../views/todos/to_dos_page.dart';
 
@@ -97,6 +98,14 @@ final router = GoRouter(
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: SuppliersPage(),
               ),
+              routes: [
+                GoRoute(
+                  name: SupplierPage.route,
+                  path: SupplierPage.route,
+                  pageBuilder: (context, state) =>
+                      const NoTransitionPage(child: SupplierPage()),
+                ),
+              ],
             )
           ],
         ),

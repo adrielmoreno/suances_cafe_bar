@@ -8,15 +8,17 @@ class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({
     super.key,
     required this.focusNode,
+    this.hint,
   });
 
   final FocusNode focusNode;
+  final String? hint;
 
   @override
   Widget build(BuildContext context) {
     return SearchBar(
       focusNode: focusNode,
-      hintText: 'Nombre del producto',
+      hintText: hint ?? 'Buscar',
       leading: CustomIconButton(
         iconData: Icons.cancel_outlined,
         onTap: () {},
