@@ -4,11 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_icon_button.dart';
-import '../balance/balance_page.dart';
-import '../metrics/metrics_page.dart';
-import '../products/products_page.dart';
-import '../suppliers/suppliers_page.dart';
-import '../todos/to_dos_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.navigationShell});
@@ -44,7 +39,7 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: FloatingActionButton(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(Dimens.big)),
-          onPressed: () => context.go(ToDosPage.route),
+          onPressed: () => goIndex(2),
           tooltip: 'Nuevo',
           child: const Icon(Icons.shopping_basket_outlined),
         ),
@@ -65,23 +60,28 @@ class _HomePageState extends State<HomePage> {
         children: [
           CustomIconButton(
             iconData: Icons.bar_chart,
-            onTap: () => context.go(MetricsPage.route),
+            onTap: () => goIndex(0),
           ),
           CustomIconButton(
             iconData: Icons.sync_alt_outlined,
-            onTap: () => context.go(BalancePage.route),
+            onTap: () => goIndex(1),
           ),
           const SizedBox(width: Dimens.big),
           CustomIconButton(
             iconData: Icons.liquor_outlined,
-            onTap: () => context.go(ProductsPage.route),
+            onTap: () => goIndex(3),
           ),
           CustomIconButton(
             iconData: Icons.handshake_outlined,
-            onTap: () => context.go(SuppliersPage.route),
+            onTap: () => goIndex(4),
           ),
         ],
       ),
     );
+  }
+
+  void goIndex(int index) {
+    widget.navigationShell.goBranch(index,
+        initialLocation: index == widget.navigationShell.currentIndex);
   }
 }
