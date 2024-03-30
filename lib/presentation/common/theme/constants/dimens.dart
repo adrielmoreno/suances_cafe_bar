@@ -9,4 +9,6 @@ class Dimens {
   static const double small = 8.0;
   static const double extraSmall = 4.0;
   static const double zero = 0.0;
+
+  static const double maxwidth = 500;
 }
