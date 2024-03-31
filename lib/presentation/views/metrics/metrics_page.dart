@@ -14,16 +14,18 @@ class MetricsPage extends StatefulWidget {
 class _MetricsPageState extends State<MetricsPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       extendBody: true,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              MetricsPage.route,
+        child: SizedBox.expand(
+          child: InteractiveViewer(
+            panEnabled: true,
+            minScale: 1,
+            maxScale: 3,
+            child: InteractiveViewer(
+              child: Image.asset("assets/images/suances.jpeg"),
             ),
-          ],
+          ),
         ),
       ),
     );

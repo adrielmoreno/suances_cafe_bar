@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
+import 'inject/inject.dart';
 import 'presentation/common/routing/routing.dart';
 import 'presentation/common/theme/app_styles.dart';
 
@@ -10,6 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Inject().setup();
   runApp(const MyApp());
 }
 
