@@ -18,33 +18,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Scaffold(
-        extendBody: true,
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          toolbarHeight: 0,
-        ),
-        body: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: SafeArea(
-            child: widget.navigationShell,
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimens.big)),
-          onPressed: () => goIndex(2),
-          tooltip: 'Nuevo',
-          child: const Icon(Icons.shopping_basket_outlined),
-        ),
-        bottomNavigationBar: _getBottomBar(),
+    return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        toolbarHeight: 0,
       ),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SafeArea(
+          child: widget.navigationShell,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Dimens.big)),
+        onPressed: () => goIndex(2),
+        tooltip: 'Nuevo',
+        child: const Icon(Icons.shopping_basket_outlined),
+      ),
+      bottomNavigationBar: _getBottomBar(),
     );
   }
 
