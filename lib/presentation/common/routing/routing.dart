@@ -3,6 +3,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../domain/entities/product.dart';
+import '../../../domain/entities/supplier.dart';
 import '../../views/balance/balance_page.dart';
 import '../../views/home/home_page.dart';
 import '../../views/metrics/metrics_page.dart';
@@ -81,8 +83,13 @@ final router = GoRouter(
                 GoRoute(
                   name: ProductPage.route,
                   path: ProductPage.route,
-                  pageBuilder: (context, state) =>
-                      const NoTransitionPage(child: ProductPage()),
+                  pageBuilder: (context, state) {
+                    final data = state.extra as Product?;
+                    return NoTransitionPage(
+                        child: ProductPage(
+                      product: data,
+                    ));
+                  },
                 ),
               ],
             ),
@@ -100,11 +107,15 @@ final router = GoRouter(
               ),
               routes: [
                 GoRoute(
-                  name: SupplierPage.route,
-                  path: SupplierPage.route,
-                  pageBuilder: (context, state) =>
-                      const NoTransitionPage(child: SupplierPage()),
-                ),
+                    name: SupplierPage.route,
+                    path: SupplierPage.route,
+                    pageBuilder: (context, state) {
+                      final data = state.extra as Supplier?;
+                      return NoTransitionPage(
+                          child: SupplierPage(
+                        supplier: data,
+                      ));
+                    }),
               ],
             )
           ],

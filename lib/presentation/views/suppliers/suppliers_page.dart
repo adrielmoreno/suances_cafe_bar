@@ -1,13 +1,15 @@
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../domain/entities/supplier.dart';
+import '../../../data/supplier/data_impl/supplier_data_impl.dart';
+import '../../../inject/inject.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_appbar.dart';
 import '../../common/widgets/inputs/custom_searchbar.dart';
 import '../../common/widgets/margins/margin_container.dart';
+import '../../providers/supplier/supplier_provider.dart';
 import 'pages/supplier_page.dart';
+import 'widgets/card_item_supplier.dart';
 
 class SuppliersPage extends StatefulWidget {
   const SuppliersPage({
@@ -21,39 +23,39 @@ class SuppliersPage extends StatefulWidget {
 }
 
 class _SuppliersPageState extends State<SuppliersPage> {
+  final _supplierRep = getIt<SupplierDataImpl>();
+  final _supProvider = getIt<SupplierProvider>();
   late FocusNode focusNode;
-  List<Supplier> products = [];
+
   @override
   void initState() {
     super.initState();
-    setState(() {
-      focusNode = FocusNode();
-    });
 
-    setState(() {
-      generateSuppliers(20);
-    });
+    focusNode = FocusNode();
+
+    generateSuppliers();
+
+    _supProvider.addListener(_onProviderStateChanged);
   }
 
-  List<void> generateSuppliers(int count) {
-    for (int i = 0; i < count; i++) {
-      products.add(
-        Supplier(
-          id: faker.guid.guid(),
-          name: faker.company.name(),
-          cif: faker.randomGenerator.boolean()
-              ? faker.randomGenerator
-                  .fromCharSet('ABCDEFGHIJKLMONPQESTUVWXYZ', 8)
-              : null,
-          tel: faker.phoneNumber.us(),
-          contactName: faker.person.name(),
-          phone: faker.phoneNumber.us(),
-          type: TypeOfSupplier.values[
-              faker.randomGenerator.integer(TypeOfSupplier.values.length)],
-        ),
-      );
-    }
-    return products;
+  generateSuppliers() async {
+    _supProvider.supplierSearchProvider(await _supplierRep.getAll());
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    _supProvider.removeListener(_onProviderStateChanged);
+    super.dispose();
+  }
+
+  void _onProviderStateChanged() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override
@@ -81,32 +83,28 @@ class _SuppliersPageState extends State<SuppliersPage> {
               MarginContainer(
                 child: CustomSearchBar(
                   focusNode: focusNode,
+                  controller: _supProvider.searchController,
                   hint: 'Nombre del supplidor',
+                  onChanged: _supProvider.search,
+                  onClear: () => _supProvider.searchClean(),
                 ),
               ),
               Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: MarginContainer(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: Dimens.maxwidth,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: products.length,
-                            itemBuilder: (context, index) {
-                              return CardItemSuplier(
-                                supplier: products[index],
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 70,
-                        )
-                      ],
+                child: SizedBox(
+                  width: Dimens.maxwidth,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: Dimens.big,
+                    ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: _supProvider.filteredSuppliers.length,
+                      itemBuilder: (context, index) {
+                        return CardItemSuplier(
+                          supplier: _supProvider.filteredSuppliers[index],
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -115,45 +113,6 @@ class _SuppliersPageState extends State<SuppliersPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CardItemSuplier extends StatelessWidget {
-  const CardItemSuplier({
-    super.key,
-    required this.supplier,
-  });
-  final Supplier supplier;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      child: Card(
-          child: ListTile(
-        onTap: () => context.goNamed(SupplierPage.route),
-        // leading: Container(
-        //   decoration: BoxDecoration(
-        //     color: AppColors.inversePrimaryLight,
-        //     borderRadius: BorderRadius.circular(Dimens.semiBig),
-        //   ),
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(Dimens.small),
-        //     child: Text(
-        //         '${LocalDates.getCurrency()} ${supplier.priceUnit!.toStringAsFixed(2)}'),
-        //   ),
-        // ),
-        title: Text(supplier.name),
-        subtitle: Text(
-          supplier.contactName ?? '',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        trailing: const Icon(
-          Icons.arrow_forward_ios_outlined,
-          size: Dimens.semiBig,
-        ),
-      )),
     );
   }
 }
