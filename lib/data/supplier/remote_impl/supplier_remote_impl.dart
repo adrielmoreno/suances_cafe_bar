@@ -50,23 +50,20 @@ class SupplierRemoteImpl {
     return [];
   }
 
-  Future<Supplier> saveOne(Supplier supplier) async {
+  Future<void> saveOne(Supplier supplier) async {
     try {
       final docRef = await _db.suppliers.add(supplier.toMap());
       supplier.id = docRef.id;
-      return supplier;
     } catch (e) {
       log(e.toString());
-      rethrow;
     }
   }
 
-  Future<bool> updateOne(String id, Supplier supplier) async {
+  Future<void> updateOne(String id, Supplier supplier) async {
     try {
       await _db.suppliers.doc(id).update(supplier.toMap());
-      return true;
     } catch (e) {
-      return false;
+      log(e.toString());
     }
   }
 }

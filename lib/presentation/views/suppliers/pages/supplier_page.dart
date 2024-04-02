@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
-import '../../../../data/supplier/data_impl/supplier_data_impl.dart';
 import '../../../../domain/entities/supplier.dart';
 import '../../../../inject/inject.dart';
 import '../../../common/theme/constants/dimens.dart';
@@ -9,6 +8,7 @@ import '../../../common/widgets/buttons/custom_appbar.dart';
 import '../../../common/widgets/inputs/input_phone.dart';
 import '../../../common/widgets/margins/margin_container.dart';
 import '../../../providers/supplier/supplier_provider.dart';
+import '../view_model/supplier_view_model.dart';
 
 class SupplierPage extends StatefulWidget {
   const SupplierPage({
@@ -23,7 +23,7 @@ class SupplierPage extends StatefulWidget {
 }
 
 class _SupplierPageState extends State<SupplierPage> {
-  final _supplierRep = getIt<SupplierDataImpl>();
+  final _supplierViewModel = getIt<SupplierViewModel>();
   final _supProvider = getIt<SupplierProvider>();
 
   @override
@@ -207,12 +207,12 @@ class _SupplierPageState extends State<SupplierPage> {
 
     // update
     if (widget.supplier != null) {
-      await _supplierRep.updateOne(widget.supplier!.id!, supplier);
+      await _supplierViewModel.updateOne(widget.supplier!.id!, supplier);
       _supProvider.isEnabled = !_supProvider.isEnabled;
       setState(() {});
     } else {
       // save
-      await _supplierRep.saveOne(supplier);
+      await _supplierViewModel.saveOne(supplier);
       _supProvider.resetForm();
     }
   }

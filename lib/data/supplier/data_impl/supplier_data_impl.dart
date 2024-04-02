@@ -17,9 +17,9 @@ class SupplierDataImpl implements SupplierRepository {
       _remoteImpl.getByIndex(maxElement);
 
   @override
-  Future<Supplier> saveOne(Supplier supplier) => _remoteImpl.saveOne(supplier);
+  Future<void> saveOne(Supplier supplier) => _remoteImpl.saveOne(supplier);
 
   @override
-  Future<bool> updateOne(String id, Supplier supplier) =>
+  Future<void> updateOne(String id, Supplier supplier) =>
       _remoteImpl.updateOne(id, supplier);
 }
