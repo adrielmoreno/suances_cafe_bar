@@ -1,7 +1,21 @@
-enum TypeOfSupplier { consumer, food, taxes }
+import 'package:flutter/material.dart';
+
+enum TypeOfSupplier {
+  consumer,
+  food,
+  drink,
+  taxes;
+
+  IconData get getIconData => switch (this) {
+        consumer => Icons.miscellaneous_services_outlined,
+        food => Icons.fastfood_outlined,
+        drink => Icons.liquor_outlined,
+        taxes => Icons.attach_money,
+      };
+}
 
 class Supplier {
-  final String? id;
+  String? id;
   final String name;
 
   final String? cif;
@@ -36,21 +50,12 @@ class Supplier {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'name': name,
       'cif': cif,
       'tel': tel,
       'contactName': contactName,
       'phone': phone,
-      'type': TypeOfSupplier.values[type.index].name,
+      'type': type.name,
     };
-  }
-
-  List<Map<String, dynamic>> suppliersToMap(List<Supplier> suppliers) {
-    return suppliers.map((supplier) => supplier.toMap()).toList();
-  }
-
-  List<Supplier> suppliersFromMap(List<Map<String, dynamic>> maps) {
-    return maps.map((map) => Supplier.fromMap(map)).toList();
   }
 }

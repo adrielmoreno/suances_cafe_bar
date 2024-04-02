@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
+import '../../../../data/supplier/data_impl/supplier_data_impl.dart';
 import '../../../../domain/entities/supplier.dart';
+import '../../../../inject/inject.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/widgets/buttons/custom_appbar.dart';
 import '../../../common/widgets/inputs/input_phone.dart';
 import '../../../common/widgets/margins/margin_container.dart';
+import '../../../providers/supplier/supplier_provider.dart';
 
 class SupplierPage extends StatefulWidget {
   const SupplierPage({
     super.key,
+    this.supplier,
   });
-
+  final Supplier? supplier;
   static const route = 'supplier_page';
 
   @override
@@ -18,16 +23,55 @@ class SupplierPage extends StatefulWidget {
 }
 
 class _SupplierPageState extends State<SupplierPage> {
-  final _formKey = GlobalKey<FormState>();
+  final _supplierRep = getIt<SupplierDataImpl>();
+  final _supProvider = getIt<SupplierProvider>();
 
-  final _nameController = TextEditingController();
-  final _cifController = TextEditingController();
-  final _telController = TextEditingController();
-  final _contactNameController = TextEditingController();
-  final _phoneController = TextEditingController();
-  TypeOfSupplier? _type = TypeOfSupplier.food;
+  @override
+  void initState() {
+    super.initState();
 
-  final bool _isEdited = false;
+    _supProvider.addListener(_onProviderStateChanged);
+
+    setFormData();
+  }
+
+  setFormData() {
+    if (widget.supplier != null) {
+      final currentSupplier = widget.supplier!;
+      _supProvider.nameController.text = currentSupplier.name;
+      _supProvider.cifController.text = currentSupplier.cif ?? '';
+      _supProvider.type = currentSupplier.type;
+      _supProvider.telController.text =
+          clearPhoneEmpty(currentSupplier.tel ?? '');
+      _supProvider.localPhone =
+          PhoneNumber(isoCode: 'ES', phoneNumber: currentSupplier.tel ?? '');
+      _supProvider.contactNameController.text =
+          currentSupplier.contactName ?? '';
+      _supProvider.phoneController.text =
+          clearPhoneEmpty(currentSupplier.phone ?? '');
+      _supProvider.contactPhone =
+          PhoneNumber(isoCode: 'ES', phoneNumber: currentSupplier.phone ?? '');
+      _supProvider.isEnabled = false;
+    } else {
+      _supProvider.resetForm();
+      _supProvider.isEnabled = true;
+    }
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _supProvider.removeListener(_onProviderStateChanged);
+    super.dispose();
+  }
+
+  void _onProviderStateChanged() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +91,12 @@ class _SupplierPageState extends State<SupplierPage> {
                     child: SizedBox(
                       width: Dimens.maxwidth,
                       child: Form(
-                        key: _formKey,
+                        key: _supProvider.formKey,
                         child: Column(
                           children: [
                             TextFormField(
-                              controller: _nameController,
+                              controller: _supProvider.nameController,
+                              enabled: _supProvider.isEnabled,
                               decoration:
                                   const InputDecoration(labelText: 'Nombre'),
                               validator: (value) {
@@ -65,7 +110,8 @@ class _SupplierPageState extends State<SupplierPage> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
-                                    controller: _cifController,
+                                    controller: _supProvider.cifController,
+                                    enabled: _supProvider.isEnabled,
                                     decoration:
                                         const InputDecoration(labelText: 'CIF'),
                                   ),
@@ -73,14 +119,17 @@ class _SupplierPageState extends State<SupplierPage> {
                                 Expanded(
                                   child:
                                       DropdownButtonFormField<TypeOfSupplier>(
-                                    value: _type,
+                                    value: _supProvider.type,
                                     onChanged: (value) {
                                       setState(() {
-                                        _type = value;
+                                        if (value != null) {
+                                          _supProvider.type = value;
+                                        }
                                       });
                                     },
                                     items: TypeOfSupplier.values.map((type) {
                                       return DropdownMenuItem<TypeOfSupplier>(
+                                        enabled: _supProvider.isEnabled,
                                         value: type,
                                         child: Text(
                                             type.toString().split('.').last),
@@ -95,27 +144,26 @@ class _SupplierPageState extends State<SupplierPage> {
                             SizedBox(
                               height: Dimens.extraHuge,
                               child: InputPhone(
-                                phoneController: _telController,
+                                phoneController: _supProvider.telController,
+                                enabled: _supProvider.isEnabled,
                                 onChanged: (phone) {
-                                  _telController.text = phone.phoneNumber
-                                      .toString()
-                                      .replaceAll(RegExp(r'\s+'), '');
+                                  _supProvider.localPhone = phone;
                                 },
                               ),
                             ),
                             TextFormField(
-                              controller: _contactNameController,
+                              controller: _supProvider.contactNameController,
+                              enabled: _supProvider.isEnabled,
                               decoration: const InputDecoration(
                                   labelText: 'Nombre de contacto'),
                             ),
                             SizedBox(
                               height: Dimens.extraHuge,
                               child: InputPhone(
-                                phoneController: _phoneController,
+                                phoneController: _supProvider.phoneController,
+                                enabled: _supProvider.isEnabled,
                                 onChanged: (phone) {
-                                  _phoneController.text = phone.phoneNumber
-                                      .toString()
-                                      .replaceAll(RegExp(r'\s+'), '');
+                                  _supProvider.contactPhone = phone;
                                 },
                               ),
                             ),
@@ -130,6 +178,50 @@ class _SupplierPageState extends State<SupplierPage> {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Dimens.big)),
+        onPressed: _supProvider.isEnabled ? onSave : activeEdit,
+        tooltip: _supProvider.isEnabled ? 'Guardar' : 'Editar',
+        child: Icon(_supProvider.isEnabled
+            ? Icons.save_outlined
+            : Icons.edit_note_outlined),
+      ),
     );
+  }
+
+  activeEdit() {
+    _supProvider.isEnabled = !_supProvider.isEnabled;
+    setState(() {});
+  }
+
+  onSave() async {
+    final supplier = Supplier(
+        name: _supProvider.nameController.text,
+        type: _supProvider.type,
+        cif: _supProvider.cifController.text,
+        tel: clearPhoneEmpty(_supProvider.localPhone.phoneNumber),
+        contactName: _supProvider.contactNameController.text,
+        phone: clearPhoneEmpty(_supProvider.contactPhone.phoneNumber));
+
+    // update
+    if (widget.supplier != null) {
+      await _supplierRep.updateOne(widget.supplier!.id!, supplier);
+      _supProvider.isEnabled = !_supProvider.isEnabled;
+      setState(() {});
+    } else {
+      // save
+      await _supplierRep.saveOne(supplier);
+      _supProvider.resetForm();
+    }
+  }
+
+  String clearPhoneEmpty(String? phone) {
+    if (phone != null && phone.length > 3) {
+      return phone.toString().replaceAll(RegExp(r'\s+'), '');
+    }
+
+    return '';
   }
 }

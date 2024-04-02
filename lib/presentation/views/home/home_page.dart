@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../common/theme/constants/app_colors.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_icon_button.dart';
 
@@ -16,6 +17,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,26 +54,27 @@ class _HomePageState extends State<HomePage> {
       notchMargin: Dimens.small,
       padding: const EdgeInsets.symmetric(vertical: Dimens.zero),
       height: Dimens.huge,
-      shape: const CircularNotchedRectangle(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.max,
         children: [
-          CustomIconButton(
-            iconData: Icons.bar_chart,
-            onTap: () => goIndex(0),
-          ),
-          CustomIconButton(
-            iconData: Icons.sync_alt_outlined,
-            onTap: () => goIndex(1),
-          ),
-          const SizedBox(width: Dimens.big),
+          // CustomIconButton(
+          //   iconData: Icons.bar_chart,º
+          //   onTap: () => goIndex(0),
+          // ),
+          // CustomIconButton(
+          //   iconData: Icons.sync_alt_outlined,
+          //   onTap: () => goIndex(1),
+          // ),
+          // const SizedBox(width: Dimens.big),
           CustomIconButton(
             iconData: Icons.liquor_outlined,
+            color: currentIndex == 3 ? AppColors.primaryLight : null,
             onTap: () => goIndex(3),
           ),
           CustomIconButton(
             iconData: Icons.handshake_outlined,
+            color: currentIndex == 4 ? AppColors.primaryLight : null,
             onTap: () => goIndex(4),
           ),
         ],
@@ -79,7 +83,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void goIndex(int index) {
-    widget.navigationShell.goBranch(index,
-        initialLocation: index == widget.navigationShell.currentIndex);
+    setState(() {
+      currentIndex = index;
+    });
+
+    widget.navigationShell.goBranch(
+      index,
+      initialLocation: index == widget.navigationShell.currentIndex,
+    );
   }
 }
