@@ -1,14 +1,18 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../data/supplier/data_impl/supplier_data_impl.dart';
+import '../../../domain/entities/supplier.dart';
 import '../../../inject/inject.dart';
+import '../../common/interfaces/resource_state.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_appbar.dart';
 import '../../common/widgets/inputs/custom_searchbar.dart';
 import '../../common/widgets/margins/margin_container.dart';
 import '../../providers/supplier/supplier_provider.dart';
 import 'pages/supplier_page.dart';
+import 'view_model/supplier_view_model.dart';
 import 'widgets/card_item_supplier.dart';
 
 class SuppliersPage extends StatefulWidget {
@@ -23,7 +27,7 @@ class SuppliersPage extends StatefulWidget {
 }
 
 class _SuppliersPageState extends State<SuppliersPage> {
-  final _supplierRep = getIt<SupplierDataImpl>();
+  final _supplierViewModel = getIt<SupplierViewModel>();
   final _supProvider = getIt<SupplierProvider>();
   late FocusNode focusNode;
 
@@ -31,23 +35,38 @@ class _SuppliersPageState extends State<SuppliersPage> {
   void initState() {
     super.initState();
 
+    _supplierViewModel.getAllState.stream.listen((event) {
+      switch (event.state) {
+        case Status.LOADING:
+          // TODO: Implement loading...
+          log('Cargando...');
+          break;
+        case Status.COMPLETED:
+          _onSupliersChanged(event.data);
+          break;
+        // TODO: Implement error...
+        default:
+      }
+    });
+
+    _supplierViewModel.getAll();
+
     focusNode = FocusNode();
 
-    generateSuppliers();
-
     _supProvider.addListener(_onProviderStateChanged);
-  }
-
-  generateSuppliers() async {
-    _supProvider.supplierSearchProvider(await _supplierRep.getAll());
-    setState(() {});
   }
 
   @override
   void dispose() {
     focusNode.dispose();
+    _supplierViewModel.close();
     _supProvider.removeListener(_onProviderStateChanged);
     super.dispose();
+  }
+
+  void _onSupliersChanged(List<Supplier> list) {
+    _supProvider.supplierSearchProvider(list);
+    setState(() {});
   }
 
   void _onProviderStateChanged() {

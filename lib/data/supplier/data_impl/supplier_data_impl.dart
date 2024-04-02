@@ -10,16 +10,16 @@ class SupplierDataImpl implements SupplierRepository {
   Future<bool> deleteOne(String id) => _remoteImpl.deleteOne(id);
 
   @override
-  Future<List<Supplier>> getAll() => _remoteImpl.getAll();
+  Stream<List<Supplier>> getAll() => _remoteImpl.getAll();
 
   @override
   Future<List<Supplier>?> getByIndex(int maxElement) =>
       _remoteImpl.getByIndex(maxElement);
 
   @override
-  Future<Supplier> saveOne(Supplier supplier) => _remoteImpl.saveOne(supplier);
+  Future<void> saveOne(Supplier supplier) => _remoteImpl.saveOne(supplier);
 
   @override
-  Future<bool> updateOne(String id, Supplier supplier) =>
+  Future<void> updateOne(String id, Supplier supplier) =>
       _remoteImpl.updateOne(id, supplier);
 }
