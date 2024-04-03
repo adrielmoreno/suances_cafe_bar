@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../localization/app_localizations.dart';
 import '../../theme/constants/dimens.dart';
 import '../buttons/custom_icon_button.dart';
 
@@ -23,11 +24,12 @@ class CustomSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final thmeColor = Theme.of(context).colorScheme;
+    final themeColor = Theme.of(context).colorScheme;
+    final text = AppLocalizations.of(context)!;
     return SearchBar(
       controller: controller,
       focusNode: focusNode,
-      hintText: hint ?? 'Buscar',
+      hintText: hint ?? text.search,
       onChanged: onChanged,
       leading: CustomIconButton(
         iconData: Icons.cancel_outlined,
@@ -36,13 +38,13 @@ class CustomSearchBar extends StatelessWidget {
       trailing: [
         Container(
           decoration: BoxDecoration(
-            color: thmeColor.primary,
+            color: themeColor.primary,
             borderRadius: BorderRadius.circular(Dimens.semiBig),
           ),
           child: CustomIconButton(
             iconData: Icons.search_outlined,
             size: Dimens.semiBig,
-            color: thmeColor.onSecondary,
+            color: themeColor.onSecondary,
             onTap: onSearch,
           ),
         ),

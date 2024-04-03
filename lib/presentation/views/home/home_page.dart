@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../common/localization/app_localizations.dart';
 import '../../common/theme/constants/app_colors.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_icon_button.dart';
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Dimens.big)),
         onPressed: () => goIndex(2),
-        tooltip: 'Nuevo',
+        tooltip: text.newTask,
         child: const Icon(Icons.shopping_basket_outlined),
       ),
       bottomNavigationBar: _getBottomBar(),

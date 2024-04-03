@@ -6,12 +6,13 @@ import 'package:go_router/go_router.dart';
 import '../../../domain/entities/supplier.dart';
 import '../../../inject/inject.dart';
 import '../../common/interfaces/resource_state.dart';
+import '../../common/localization/app_localizations.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_appbar.dart';
 import '../../common/widgets/inputs/custom_searchbar.dart';
 import '../../common/widgets/margins/margin_container.dart';
-import '../../providers/supplier/supplier_provider.dart';
 import 'pages/supplier_page.dart';
+import 'provider/supplier_provider.dart';
 import 'view_model/supplier_view_model.dart';
 import 'widgets/card_item_supplier.dart';
 
@@ -79,6 +80,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Scaffold(
       body: GestureDetector(
         onTap: () => focusNode.unfocus(),
@@ -86,14 +88,14 @@ class _SuppliersPageState extends State<SuppliersPage> {
           child: Column(
             children: [
               CustomAppBar(
-                title: 'Suplidores',
+                title: text.suppliers,
                 actions: [
                   PopupMenuButton(
                     icon: const Icon(Icons.more_vert_outlined),
                     itemBuilder: (context) => [
                       PopupMenuItem(
                         onTap: () => context.goNamed(SupplierPage.route),
-                        child: const Text('Nuevo suplidor'),
+                        child: Text(text.newSupplier),
                       ),
                     ],
                   ),
@@ -103,7 +105,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
                 child: CustomSearchBar(
                   focusNode: focusNode,
                   controller: _supProvider.searchController,
-                  hint: 'Nombre del supplidor',
+                  hint: text.supplierName,
                   onChanged: _supProvider.search,
                   onClear: () => _supProvider.searchClean(),
                 ),
