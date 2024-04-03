@@ -3,11 +3,12 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import '../../../../domain/entities/supplier.dart';
 import '../../../../inject/inject.dart';
+import '../../../common/localization/app_localizations.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/widgets/buttons/custom_appbar.dart';
 import '../../../common/widgets/inputs/input_phone.dart';
 import '../../../common/widgets/margins/margin_container.dart';
-import '../../../providers/supplier/supplier_provider.dart';
+import '../provider/supplier_provider.dart';
 import '../view_model/supplier_view_model.dart';
 
 class SupplierPage extends StatefulWidget {
@@ -75,14 +76,15 @@ class _SupplierPageState extends State<SupplierPage> {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
           child: Column(
             children: [
-              const CustomAppBar(
-                title: 'Suplidor',
+              CustomAppBar(
+                title: text.supplier,
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -97,11 +99,10 @@ class _SupplierPageState extends State<SupplierPage> {
                             TextFormField(
                               controller: _supProvider.nameController,
                               enabled: _supProvider.isEnabled,
-                              decoration:
-                                  const InputDecoration(labelText: 'Nombre'),
+                              decoration: InputDecoration(labelText: text.name),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Este campo no puede estar vacío';
+                                  return text.errorName;
                                 }
                                 return null;
                               },
@@ -135,8 +136,8 @@ class _SupplierPageState extends State<SupplierPage> {
                                             type.toString().split('.').last),
                                       );
                                     }).toList(),
-                                    decoration: const InputDecoration(
-                                        labelText: 'Tipo'),
+                                    decoration:
+                                        InputDecoration(labelText: text.type),
                                   ),
                                 ),
                               ],
@@ -146,6 +147,7 @@ class _SupplierPageState extends State<SupplierPage> {
                               child: InputPhone(
                                 phoneController: _supProvider.telController,
                                 enabled: _supProvider.isEnabled,
+                                number: _supProvider.localPhone,
                                 onChanged: (phone) {
                                   _supProvider.localPhone = phone;
                                 },
@@ -154,14 +156,15 @@ class _SupplierPageState extends State<SupplierPage> {
                             TextFormField(
                               controller: _supProvider.contactNameController,
                               enabled: _supProvider.isEnabled,
-                              decoration: const InputDecoration(
-                                  labelText: 'Nombre de contacto'),
+                              decoration:
+                                  InputDecoration(labelText: text.contactName),
                             ),
                             SizedBox(
                               height: Dimens.extraHuge,
                               child: InputPhone(
                                 phoneController: _supProvider.phoneController,
                                 enabled: _supProvider.isEnabled,
+                                number: _supProvider.contactPhone,
                                 onChanged: (phone) {
                                   _supProvider.contactPhone = phone;
                                 },
@@ -183,7 +186,7 @@ class _SupplierPageState extends State<SupplierPage> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Dimens.big)),
         onPressed: _supProvider.isEnabled ? onSave : activeEdit,
-        tooltip: _supProvider.isEnabled ? 'Guardar' : 'Editar',
+        tooltip: _supProvider.isEnabled ? text.save : text.edit,
         child: Icon(_supProvider.isEnabled
             ? Icons.save_outlined
             : Icons.edit_note_outlined),

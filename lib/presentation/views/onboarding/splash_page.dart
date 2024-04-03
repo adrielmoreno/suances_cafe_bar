@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../common/theme/constants/dimens.dart';
-
 class SplashPage extends StatefulWidget {
   const SplashPage({
     super.key,
@@ -16,9 +14,9 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       extendBody: true,
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -27,14 +25,6 @@ class _SplashPageState extends State<SplashPage> {
             ),
           ],
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Dimens.big)),
-        onPressed: () {},
-        tooltip: 'Nuevo',
-        child: const Icon(Icons.add),
       ),
     );
   }

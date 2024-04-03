@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
 import 'inject/inject.dart';
+import 'presentation/common/localization/app_localizations.dart';
 import 'presentation/common/routing/routing.dart';
 import 'presentation/common/theme/app_styles.dart';
 
@@ -24,6 +25,8 @@ class MyApp extends StatelessWidget {
       routerConfig: router,
       title: 'Suances',
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: AppStyles.appLightTheme,
       darkTheme: AppStyles.appDarkTheme,
       themeMode: ThemeMode.system,
