@@ -23,6 +23,7 @@ class SupplierProvider with ChangeNotifier {
   }
 
   List<Supplier> get filteredSuppliers => _filteredSuppliers;
+  List<Supplier> get allSuppliers => _allSuppliers;
 
   final TextEditingController _searchController =
       TextEditingController(); // Controlador de búsqueda

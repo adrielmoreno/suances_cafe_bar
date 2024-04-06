@@ -5,8 +5,8 @@ import '../data/product/remote_impl/product_remote_impl.dart';
 import '../data/supplier/data_impl/supplier_data_impl.dart';
 import '../data/supplier/remote_impl/supplier_remote_impl.dart';
 import '../domain/repositories/supplier_repository.dart';
-import '../presentation/providers/product/producto_provider.dart';
-import '../presentation/providers/supplier/supplier_provider.dart';
+import '../presentation/views/products/provider/producto_provider.dart';
+import '../presentation/views/suppliers/provider/supplier_provider.dart';
 import '../presentation/views/suppliers/view_model/supplier_view_model.dart';
 
 final getIt = GetIt.instance;

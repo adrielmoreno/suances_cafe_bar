@@ -1,0 +1,78 @@
+import 'dart:developer';
+
+import '../../../domain/entities/product.dart';
+import '../../DBServices/firebase_db.dart';
+
+class ProductRemoteImpl {
+  final FirebaseDB _db = FirebaseDB();
+
+  ProductRemoteImpl();
+
+  Future<bool> deleteOne(String id) async {
+    try {
+      await _db.products.doc(id).delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<List<Product>> getAll() async {
+    try {
+      final refs = await _db.products.orderBy('name').get();
+      final docs = refs.docs;
+
+      if (docs.isNotEmpty) {
+        final products = docs.map((e) {
+          final map = e.data();
+          map['id'] = e.id;
+          return Product.fromMap(map);
+        }).toList();
+        return products;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return [];
+  }
+
+  Future<List<Product>?> getByIndex(int maxElement) async {
+    try {
+      final refs =
+          await _db.products.orderBy('name').limitToLast(maxElement).get();
+      final docs = refs.docs;
+
+      if (docs.isNotEmpty) {
+        final products = docs.map((e) {
+          final map = e.data();
+          map['id'] = e.id;
+          return Product.fromMap(map);
+        }).toList();
+        return products;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return [];
+  }
+
+  Future<Product> saveOne(Product product) async {
+    try {
+      final docRef = await _db.products.add(product.toMap());
+      product.id = docRef.id;
+      return product;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<bool> updateOne(String id, Product product) async {
+    try {
+      await _db.products.doc(id).update(product.toMap());
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+}
