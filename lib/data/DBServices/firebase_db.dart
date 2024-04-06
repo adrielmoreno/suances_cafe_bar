@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirebaseDB {
-  static const String _suppliers = 'suppliers';
-  static const String _products = 'products';
+enum FBCollection { suppliers, products }
 
+class FirebaseDB {
   static final _firestore = FirebaseFirestore.instance;
 
   FirebaseDB() {
@@ -18,8 +17,13 @@ class FirebaseDB {
   }
 
   CollectionReference<Map<String, dynamic>> get suppliers =>
-      _firestore.collection(_suppliers);
+      _firestore.collection(FBCollection.suppliers.name);
 
   CollectionReference<Map<String, dynamic>> get products =>
-      _firestore.collection(_products);
+      _firestore.collection(FBCollection.products.name);
+
+  static Future<DocumentReference> getReference(
+      String documentId, FBCollection collection) async {
+    return _firestore.collection(collection.name).doc(documentId);
+  }
 }

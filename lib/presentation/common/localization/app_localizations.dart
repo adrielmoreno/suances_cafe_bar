@@ -93,29 +93,23 @@ abstract class AppLocalizations {
     Locale('es')
   ];
 
-  /// No description provided for @phone.
+  /// No description provided for @contactName.
   ///
   /// In en, this message translates to:
-  /// **'contactPhone'**
-  String get phone;
+  /// **'ContactName'**
+  String get contactName;
 
-  /// No description provided for @errorPhone.
+  /// No description provided for @edit.
   ///
   /// In en, this message translates to:
-  /// **'Invalid phone'**
-  String get errorPhone;
+  /// **'Edit'**
+  String get edit;
 
-  /// No description provided for @newTask.
+  /// No description provided for @errorEmpty.
   ///
   /// In en, this message translates to:
-  /// **'New task'**
-  String get newTask;
-
-  /// No description provided for @name.
-  ///
-  /// In en, this message translates to:
-  /// **'Name'**
-  String get name;
+  /// **'Cannot be empty'**
+  String get errorEmpty;
 
   /// No description provided for @errorName.
   ///
@@ -123,29 +117,11 @@ abstract class AppLocalizations {
   /// **'Enter a name'**
   String get errorName;
 
-  /// No description provided for @packaging.
+  /// No description provided for @errorPhone.
   ///
   /// In en, this message translates to:
-  /// **'Packaging'**
-  String get packaging;
-
-  /// No description provided for @measure.
-  ///
-  /// In en, this message translates to:
-  /// **'Measure'**
-  String get measure;
-
-  /// No description provided for @pricePacking.
-  ///
-  /// In en, this message translates to:
-  /// **'Packaging price'**
-  String get pricePacking;
-
-  /// No description provided for @priceUnit.
-  ///
-  /// In en, this message translates to:
-  /// **'Unit price'**
-  String get priceUnit;
+  /// **'Invalid phone'**
+  String get errorPhone;
 
   /// No description provided for @lastPrice.
   ///
@@ -159,6 +135,60 @@ abstract class AppLocalizations {
   /// **'Last supplier'**
   String get lastSupplier;
 
+  /// No description provided for @measure.
+  ///
+  /// In en, this message translates to:
+  /// **'Measure'**
+  String get measure;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @newProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'New product'**
+  String get newProduct;
+
+  /// No description provided for @newSupplier.
+  ///
+  /// In en, this message translates to:
+  /// **'New supplier'**
+  String get newSupplier;
+
+  /// No description provided for @newTask.
+  ///
+  /// In en, this message translates to:
+  /// **'New task'**
+  String get newTask;
+
+  /// No description provided for @packaging.
+  ///
+  /// In en, this message translates to:
+  /// **'Packaging'**
+  String get packaging;
+
+  /// No description provided for @phone.
+  ///
+  /// In en, this message translates to:
+  /// **'contactPhone'**
+  String get phone;
+
+  /// No description provided for @pricePacking.
+  ///
+  /// In en, this message translates to:
+  /// **'Packaging price'**
+  String get pricePacking;
+
+  /// No description provided for @priceUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price'**
+  String get priceUnit;
+
   /// No description provided for @product.
   ///
   /// In en, this message translates to:
@@ -171,11 +201,17 @@ abstract class AppLocalizations {
   /// **'Products'**
   String get products;
 
-  /// No description provided for @newProduct.
+  /// No description provided for @save.
   ///
   /// In en, this message translates to:
-  /// **'New product'**
-  String get newProduct;
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
 
   /// No description provided for @supplier.
   ///
@@ -183,29 +219,11 @@ abstract class AppLocalizations {
   /// **'Supplier'**
   String get supplier;
 
-  /// No description provided for @type.
+  /// No description provided for @supplierName.
   ///
   /// In en, this message translates to:
-  /// **'Type'**
-  String get type;
-
-  /// No description provided for @contactName.
-  ///
-  /// In en, this message translates to:
-  /// **'ContactName'**
-  String get contactName;
-
-  /// No description provided for @save.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get save;
-
-  /// No description provided for @edit.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit'**
-  String get edit;
+  /// **'SupplierName'**
+  String get supplierName;
 
   /// No description provided for @suppliers.
   ///
@@ -213,23 +231,11 @@ abstract class AppLocalizations {
   /// **'Suppliers'**
   String get suppliers;
 
-  /// No description provided for @newSupplier.
+  /// No description provided for @type.
   ///
   /// In en, this message translates to:
-  /// **'New supplier'**
-  String get newSupplier;
-
-  /// No description provided for @supplierName.
-  ///
-  /// In en, this message translates to:
-  /// **'SupplierName'**
-  String get supplierName;
-
-  /// No description provided for @search.
-  ///
-  /// In en, this message translates to:
-  /// **'Search'**
-  String get search;
+  /// **'Type'**
+  String get type;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
