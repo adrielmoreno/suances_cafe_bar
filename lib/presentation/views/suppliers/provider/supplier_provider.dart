@@ -25,8 +25,7 @@ class SupplierProvider with ChangeNotifier {
   List<Supplier> get filteredSuppliers => _filteredSuppliers;
   List<Supplier> get allSuppliers => _allSuppliers;
 
-  final TextEditingController _searchController =
-      TextEditingController(); // Controlador de búsqueda
+  final TextEditingController _searchController = TextEditingController();
   TextEditingController get searchController => _searchController;
 
   void searchClean() {
@@ -34,7 +33,6 @@ class SupplierProvider with ChangeNotifier {
     search('');
     notifyListeners();
   }
-
   // ---- End search -----
 
   // ---- form -----

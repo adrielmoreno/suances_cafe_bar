@@ -1,13 +1,21 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/entities/product.dart';
+import '../../../inject/inject.dart';
+import '../../common/interfaces/resource_state.dart';
 import '../../common/localization/app_localizations.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_appbar.dart';
 import '../../common/widgets/inputs/custom_searchbar.dart';
 import '../../common/widgets/margins/margin_container.dart';
+import '../suppliers/provider/supplier_provider.dart';
+import '../suppliers/view_model/supplier_view_model.dart';
 import 'pages/product_page.dart';
+import 'provider/producto_provider.dart';
+import 'view_model/product_view_model.dart';
 import 'widgets/card_item_product.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -22,13 +30,72 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
+  final _productViewModel = getIt<ProductViewModel>();
+  final _productProvider = getIt<ProductProvider>();
+
   late FocusNode focusNode;
-  List<Product> products = [];
+  final _supplierViewModel = getIt<SupplierViewModel>();
+  final _supProvider = getIt<SupplierProvider>();
+
   @override
   void initState() {
     super.initState();
-    setState(() {
-      focusNode = FocusNode();
+
+    _productViewModel.getAllState.stream.listen((event) {
+      switch (event.state) {
+        case Status.LOADING:
+          // TODO: Implement loading...
+          log('Cargando...');
+          break;
+        case Status.COMPLETED:
+          _onProductsChanged(event.data);
+          break;
+        // TODO: Implement error...
+        default:
+      }
+    });
+
+    _productViewModel.getAll();
+
+    focusNode = FocusNode();
+
+    _productProvider.addListener(_onProviderStateChanged);
+
+    _supplierViewModel.getAllState.stream.listen((event) {
+      switch (event.state) {
+        case Status.COMPLETED:
+          setState(() {
+            _supProvider.supplierSearchProvider(event.data);
+          });
+          break;
+
+        default:
+      }
+    });
+
+    if (_supProvider.allSuppliers.isEmpty) {
+      _supplierViewModel.getAll();
+    }
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    _productViewModel.close();
+    _productProvider.removeListener(_onProviderStateChanged);
+    super.dispose();
+  }
+
+  void _onProductsChanged(List<Product> list) {
+    _productProvider.supplierSearchProvider(list);
+    setState(() {});
+  }
+
+  void _onProviderStateChanged() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
@@ -58,31 +125,28 @@ class _ProductsPageState extends State<ProductsPage> {
               MarginContainer(
                 child: CustomSearchBar(
                   focusNode: focusNode,
+                  controller: _productProvider.searchController,
+                  hint: text.productName,
+                  onChanged: _productProvider.search,
+                  onClear: () => _productProvider.searchClean(),
                 ),
               ),
               Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: MarginContainer(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: Dimens.maxwidth,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: products.length,
-                            itemBuilder: (context, index) {
-                              return CardItemProduct(
-                                product: products[index],
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 70,
-                        )
-                      ],
+                child: SizedBox(
+                  width: Dimens.maxwidth,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: Dimens.big,
+                    ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: _productProvider.filteredProducts.length,
+                      itemBuilder: (context, index) {
+                        return CardItemProduct(
+                          product: _productProvider.filteredProducts[index],
+                        );
+                      },
                     ),
                   ),
                 ),

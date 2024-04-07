@@ -20,7 +20,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorPhone => 'Invalid phone';
 
   @override
-  String get lastPrice => 'Last price';
+  String get lastPrice => '€ U+IVA';
 
   @override
   String get lastSupplier => 'Last supplier';
@@ -47,13 +47,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phone => 'contactPhone';
 
   @override
-  String get pricePacking => 'Packaging price';
+  String get pricePacking => '€ Price';
 
   @override
-  String get priceUnit => 'Unit price';
+  String get priceUnit => '€ Unit';
 
   @override
   String get product => 'Product';
+
+  @override
+  String get productName => 'Product name';
 
   @override
   String get products => 'Products';
@@ -68,11 +71,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supplier => 'Supplier';
 
   @override
-  String get supplierName => 'SupplierName';
+  String get supplierName => 'Supplier name';
 
   @override
   String get suppliers => 'Suppliers';
 
   @override
   String get type => 'Type';
+
+  @override
+  String get iva => '％ IVA';
 }

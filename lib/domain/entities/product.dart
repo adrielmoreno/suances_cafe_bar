@@ -7,6 +7,8 @@ class Product {
   final String? measure;
   final double? pricePacking;
   final double? priceUnit;
+  final double? iva;
+  final double? pricePlusIVA;
   final DocumentReference? lastSupplier;
 
   Product({
@@ -17,6 +19,8 @@ class Product {
     this.pricePacking,
     this.priceUnit,
     this.lastSupplier,
+    this.iva,
+    this.pricePlusIVA,
   });
 
   factory Product.fromMap(Map<String, dynamic> map) {
@@ -27,6 +31,8 @@ class Product {
       measure: map['measure'] as String?,
       pricePacking: map['pricePacking'] as double?,
       priceUnit: map['priceUnit'] as double?,
+      iva: map['iva'] as double?,
+      pricePlusIVA: map['pricePlusIVA'] as double?,
       lastSupplier: map['lastSupplier'] as DocumentReference?,
     );
   }
@@ -39,6 +45,8 @@ class Product {
       'pricePacking': pricePacking ?? 0,
       'priceUnit': priceUnit ?? 0,
       'lastSupplier': lastSupplier,
+      'iva': iva,
+      'pricePlusIVA': pricePlusIVA,
     };
   }
 }

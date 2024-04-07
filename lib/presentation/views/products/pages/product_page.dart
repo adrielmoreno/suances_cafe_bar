@@ -1,21 +1,17 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../../../../data/DBServices/firebase_db.dart';
-import '../../../../data/mappable/mappable.dart';
-import '../../../../data/product/data_impl/product_data_impl.dart';
 import '../../../../domain/entities/product.dart';
 import '../../../../domain/entities/supplier.dart';
 import '../../../../inject/inject.dart';
-import '../../../common/interfaces/resource_state.dart';
 import '../../../common/localization/app_localizations.dart';
+import '../../../common/theme/constants/app_colors.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/widgets/buttons/custom_appbar.dart';
 import '../../../common/widgets/margins/margin_container.dart';
 import '../../suppliers/provider/supplier_provider.dart';
-import '../../suppliers/view_model/supplier_view_model.dart';
 import '../provider/producto_provider.dart';
+import '../view_model/product_view_model.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({
@@ -31,35 +27,14 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final _productRep = getIt<ProductDataImpl>();
+  final _productViewModel = getIt<ProductViewModel>();
   final _prodProvider = getIt<ProductProvider>();
 
   final _supProvider = getIt<SupplierProvider>();
-  final _supplierViewModel = getIt<SupplierViewModel>();
 
   @override
   void initState() {
     super.initState();
-
-    _supplierViewModel.getAllState.stream.listen((event) {
-      switch (event.state) {
-        case Status.LOADING:
-          // TODO: Implement loading...
-          log('Cargando...');
-          break;
-        case Status.COMPLETED:
-          setState(() {
-            _supProvider.supplierSearchProvider(event.data);
-          });
-          break;
-        // TODO: Implement error...
-        default:
-      }
-    });
-
-    if (_supProvider.allSuppliers.isEmpty) {
-      _supplierViewModel.getAll();
-    }
 
     _prodProvider.addListener(_onProviderStateChanged);
 
@@ -70,28 +45,40 @@ class _ProductPageState extends State<ProductPage> {
     if (widget.product != null) {
       final currentProduct = widget.product!;
       _prodProvider.nameController.text = currentProduct.name;
+
       _prodProvider.packagingController.text =
           currentProduct.packaging.toString();
+
       _prodProvider.measureController.text = currentProduct.measure ?? '';
+
       _prodProvider.pricePackingController.text =
           currentProduct.pricePacking.toString();
+
       _prodProvider.priceUnitController.text =
           currentProduct.priceUnit.toString();
+
+      _prodProvider.ivaController.text = currentProduct.iva.toString();
+
+      _prodProvider.pricePlusIVA.text = currentProduct.pricePlusIVA.toString();
+
       _prodProvider.lastSupplier = currentProduct.lastSupplier != null
-          ? await getObjectFromRef(
-              currentProduct.lastSupplier!, Supplier.fromMap)
+          ? _supProvider.allSuppliers
+              .where((element) =>
+                  element.id == '${currentProduct.lastSupplier?.id}')
+              .first
           : null;
+
       _prodProvider.isEnabled = false;
     } else {
       _prodProvider.resetForm();
       _prodProvider.isEnabled = true;
     }
+
     setState(() {});
   }
 
   @override
   void dispose() {
-    _supplierViewModel.close();
     _prodProvider.removeListener(_onProviderStateChanged);
     super.dispose();
   }
@@ -128,6 +115,7 @@ class _ProductPageState extends State<ProductPage> {
                           children: [
                             TextFormField(
                               controller: _prodProvider.nameController,
+                              enabled: _prodProvider.isEnabled,
                               decoration: InputDecoration(labelText: text.name),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -142,6 +130,7 @@ class _ProductPageState extends State<ProductPage> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
+                                    enabled: _prodProvider.isEnabled,
                                     controller:
                                         _prodProvider.packagingController,
                                     decoration: InputDecoration(
@@ -153,10 +142,15 @@ class _ProductPageState extends State<ProductPage> {
                                       }
                                       return null;
                                     },
+                                    onChanged: (value) {
+                                      setUniPrice();
+                                      sePricePlusIVA();
+                                    },
                                   ),
                                 ),
                                 Expanded(
                                   child: TextFormField(
+                                    enabled: _prodProvider.isEnabled,
                                     controller: _prodProvider.measureController,
                                     decoration: InputDecoration(
                                         labelText: text.measure),
@@ -172,20 +166,15 @@ class _ProductPageState extends State<ProductPage> {
                                   child: TextFormField(
                                     controller:
                                         _prodProvider.pricePackingController,
+                                    enabled: _prodProvider.isEnabled,
                                     decoration: InputDecoration(
                                         labelText: text.pricePacking),
                                     keyboardType:
                                         const TextInputType.numberWithOptions(
                                             decimal: true),
                                     onChanged: (value) {
-                                      if (value.isNotEmpty &&
-                                          _prodProvider.packagingController.text
-                                              .isNotEmpty) {
-                                        setUniPrice();
-                                      } else {
-                                        _prodProvider.priceUnitController
-                                            .clear();
-                                      }
+                                      setUniPrice();
+                                      sePricePlusIVA();
                                     },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -204,6 +193,7 @@ class _ProductPageState extends State<ProductPage> {
                                 Expanded(
                                   child: TextFormField(
                                     readOnly: true,
+                                    enabled: _prodProvider.isEnabled,
                                     controller:
                                         _prodProvider.priceUnitController,
                                     decoration: InputDecoration(
@@ -216,9 +206,28 @@ class _ProductPageState extends State<ProductPage> {
                                 ),
                                 Expanded(
                                   child: TextFormField(
+                                    enabled: _prodProvider.isEnabled,
+                                    controller: _prodProvider.ivaController,
+                                    decoration:
+                                        InputDecoration(labelText: text.iva),
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _prodProvider.iva =
+                                            double.tryParse(value) ?? 0.0;
+                                      });
+                                      sePricePlusIVA();
+                                    },
+                                  ),
+                                ),
+                                Expanded(
+                                  child: TextFormField(
                                     readOnly: true,
-                                    controller:
-                                        _prodProvider.lastPriceController,
+                                    enabled: _prodProvider.isEnabled,
+                                    controller: _prodProvider.pricePlusIVA,
                                     decoration: InputDecoration(
                                         labelText: text.lastPrice),
                                     keyboardType:
@@ -234,15 +243,28 @@ class _ProductPageState extends State<ProductPage> {
                               value: _prodProvider.lastSupplier,
                               hint: Text(text.lastSupplier),
                               items: _supProvider.allSuppliers
-                                  .map((e) => DropdownMenuItem(
-                                      value: e, child: Text(e.name)))
-                                  .toList(),
+                                  .asMap()
+                                  .entries
+                                  .map((entry) {
+                                final int index = entry.key;
+                                final Supplier supplier = entry.value;
+                                return DropdownMenuItem<Supplier>(
+                                  enabled: _prodProvider.isEnabled,
+                                  value: supplier,
+                                  child: Container(
+                                    color: (index % 2 == 0)
+                                        ? AppColors.secondaryContainerLight
+                                        : null,
+                                    child: Text(supplier.name),
+                                  ),
+                                );
+                              }).toList(),
                               onChanged: (value) {
                                 setState(() {
                                   _prodProvider.lastSupplier = value;
                                 });
                               },
-                            ),
+                            )
                           ],
                         ),
                       ),
@@ -268,8 +290,9 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   activeEdit() {
-    _prodProvider.isEnabled = !_prodProvider.isEnabled;
-    setState(() {});
+    setState(() {
+      _prodProvider.isEnabled = !_prodProvider.isEnabled;
+    });
   }
 
   onSave() async {
@@ -279,21 +302,27 @@ class _ProductPageState extends State<ProductPage> {
         name: _prodProvider.nameController.text,
         packaging: replaceComma(_prodProvider.packagingController.text),
         measure: _prodProvider.measureController.text,
-        pricePacking: double.parse(_prodProvider.pricePackingController.text),
+        pricePacking: replaceComma(_prodProvider.pricePackingController.text),
         priceUnit: getUniPrice(
+          pricePacking: replaceComma(_prodProvider.pricePackingController.text),
+          packaging: replaceComma(_prodProvider.packagingController.text),
+        ),
+        iva: _prodProvider.iva,
+        pricePlusIVA: getPricePlusIVA(
           pricePacking: replaceComma(_prodProvider.pricePackingController.text),
           packaging: replaceComma(_prodProvider.packagingController.text),
         ),
         lastSupplier: _prodProvider.lastSupplier != null
             ? await FirebaseDB.getReference(
-                _prodProvider.lastSupplier!.id!, FBCollection.products)
+                _prodProvider.lastSupplier!.id!, FBCollection.suppliers)
             : null,
       );
+
       if (widget.product != null) {
-        await _productRep.updateOne(widget.product!.id!, product);
+        await _productViewModel.updateOne(widget.product!.id!, product);
         _prodProvider.isEnabled = !_prodProvider.isEnabled;
       } else {
-        await _productRep.saveOne(product);
+        await _productViewModel.saveOne(product);
         _prodProvider.resetForm();
       }
     }
@@ -301,19 +330,45 @@ class _ProductPageState extends State<ProductPage> {
 
   double getUniPrice({double pricePacking = 0, double packaging = 0}) {
     final total = pricePacking / packaging;
-    return total;
+    return double.parse(total.toStringAsFixed(2));
+  }
+
+  double getPricePlusIVA({double pricePacking = 0, double packaging = 0}) {
+    final unitPrice =
+        getUniPrice(pricePacking: pricePacking, packaging: packaging);
+    final taxes = unitPrice * _prodProvider.iva / 100;
+    final total = unitPrice + taxes;
+
+    return double.parse(total.toStringAsFixed(2));
   }
 
   double replaceComma(String value) {
-    return double.parse(
-      value.replaceAll(',', '.'),
-    );
+    return double.tryParse(value.replaceAll(',', '.')) ?? 0.0;
   }
 
   void setUniPrice() {
-    _prodProvider.priceUnitController.text = getUniPrice(
-      pricePacking: replaceComma(_prodProvider.pricePackingController.text),
-      packaging: replaceComma(_prodProvider.packagingController.text),
-    ).toStringAsFixed(2);
+    if (_prodProvider.pricePackingController.text.isNotEmpty &&
+        _prodProvider.packagingController.text.isNotEmpty) {
+      _prodProvider.priceUnitController.text = getUniPrice(
+        pricePacking: replaceComma(_prodProvider.pricePackingController.text),
+        packaging: replaceComma(_prodProvider.packagingController.text),
+      ).toStringAsFixed(2);
+    } else {
+      _prodProvider.priceUnitController.clear();
+    }
+    setState(() {});
+  }
+
+  void sePricePlusIVA() {
+    if (_prodProvider.pricePackingController.text.isNotEmpty &&
+        _prodProvider.packagingController.text.isNotEmpty) {
+      _prodProvider.pricePlusIVA.text = getPricePlusIVA(
+        pricePacking: replaceComma(_prodProvider.pricePackingController.text),
+        packaging: replaceComma(_prodProvider.packagingController.text),
+      ).toStringAsFixed(2);
+    } else {
+      _prodProvider.pricePlusIVA.clear();
+    }
+    setState(() {});
   }
 }

@@ -92,86 +92,90 @@ class _SupplierPageState extends State<SupplierPage> {
                   child: MarginContainer(
                     child: SizedBox(
                       width: Dimens.maxwidth,
-                      child: Form(
-                        key: _supProvider.formKey,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: _supProvider.nameController,
-                              enabled: _supProvider.isEnabled,
-                              decoration: InputDecoration(labelText: text.name),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return text.errorName;
-                                }
-                                return null;
-                              },
-                            ),
-                            Row(
+                      child: Column(
+                        children: [
+                          Form(
+                            key: _supProvider.formKey,
+                            child: Column(
                               children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    controller: _supProvider.cifController,
-                                    enabled: _supProvider.isEnabled,
-                                    decoration:
-                                        const InputDecoration(labelText: 'CIF'),
-                                  ),
-                                ),
-                                Expanded(
-                                  child:
-                                      DropdownButtonFormField<TypeOfSupplier>(
-                                    value: _supProvider.type,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        if (value != null) {
-                                          _supProvider.type = value;
-                                        }
-                                      });
-                                    },
-                                    items: TypeOfSupplier.values.map((type) {
-                                      return DropdownMenuItem<TypeOfSupplier>(
-                                        enabled: _supProvider.isEnabled,
-                                        value: type,
-                                        child: Text(
-                                            type.toString().split('.').last),
-                                      );
-                                    }).toList(),
-                                    decoration:
-                                        InputDecoration(labelText: text.type),
-                                  ),
+                                TextFormField(
+                                  controller: _supProvider.nameController,
+                                  enabled: _supProvider.isEnabled,
+                                  decoration:
+                                      InputDecoration(labelText: text.name),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return text.errorName;
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: Dimens.extraHuge,
-                              child: InputPhone(
-                                phoneController: _supProvider.telController,
-                                enabled: _supProvider.isEnabled,
-                                number: _supProvider.localPhone,
-                                onChanged: (phone) {
-                                  _supProvider.localPhone = phone;
-                                },
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _supProvider.cifController,
+                                  enabled: _supProvider.isEnabled,
+                                  decoration:
+                                      const InputDecoration(labelText: 'CIF'),
+                                ),
                               ),
-                            ),
-                            TextFormField(
-                              controller: _supProvider.contactNameController,
+                              Expanded(
+                                child: DropdownButtonFormField<TypeOfSupplier>(
+                                  value: _supProvider.type,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      if (value != null) {
+                                        _supProvider.type = value;
+                                      }
+                                    });
+                                  },
+                                  items: TypeOfSupplier.values.map((type) {
+                                    return DropdownMenuItem<TypeOfSupplier>(
+                                      enabled: _supProvider.isEnabled,
+                                      value: type,
+                                      child:
+                                          Text(type.toString().split('.').last),
+                                    );
+                                  }).toList(),
+                                  decoration:
+                                      InputDecoration(labelText: text.type),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: Dimens.extraHuge,
+                            child: InputPhone(
+                              phoneController: _supProvider.telController,
                               enabled: _supProvider.isEnabled,
-                              decoration:
-                                  InputDecoration(labelText: text.contactName),
+                              number: _supProvider.localPhone,
+                              onChanged: (phone) {
+                                _supProvider.localPhone = phone;
+                              },
                             ),
-                            SizedBox(
-                              height: Dimens.extraHuge,
-                              child: InputPhone(
-                                phoneController: _supProvider.phoneController,
-                                enabled: _supProvider.isEnabled,
-                                number: _supProvider.contactPhone,
-                                onChanged: (phone) {
-                                  _supProvider.contactPhone = phone;
-                                },
-                              ),
+                          ),
+                          TextFormField(
+                            controller: _supProvider.contactNameController,
+                            enabled: _supProvider.isEnabled,
+                            decoration:
+                                InputDecoration(labelText: text.contactName),
+                          ),
+                          SizedBox(
+                            height: Dimens.extraHuge,
+                            child: InputPhone(
+                              phoneController: _supProvider.phoneController,
+                              enabled: _supProvider.isEnabled,
+                              number: _supProvider.contactPhone,
+                              onChanged: (phone) {
+                                _supProvider.contactPhone = phone;
+                              },
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -200,23 +204,26 @@ class _SupplierPageState extends State<SupplierPage> {
   }
 
   onSave() async {
-    final supplier = Supplier(
-        name: _supProvider.nameController.text,
-        type: _supProvider.type,
-        cif: _supProvider.cifController.text,
-        tel: clearPhoneEmpty(_supProvider.localPhone.phoneNumber),
-        contactName: _supProvider.contactNameController.text,
-        phone: clearPhoneEmpty(_supProvider.contactPhone.phoneNumber));
+    late Supplier supplier;
+    if (_supProvider.formKey.currentState!.validate()) {
+      supplier = Supplier(
+          name: _supProvider.nameController.text,
+          type: _supProvider.type,
+          cif: _supProvider.cifController.text,
+          tel: clearPhoneEmpty(_supProvider.localPhone.phoneNumber),
+          contactName: _supProvider.contactNameController.text,
+          phone: clearPhoneEmpty(_supProvider.contactPhone.phoneNumber));
 
-    // update
-    if (widget.supplier != null) {
-      await _supplierViewModel.updateOne(widget.supplier!.id!, supplier);
-      _supProvider.isEnabled = !_supProvider.isEnabled;
-      setState(() {});
-    } else {
-      // save
-      await _supplierViewModel.saveOne(supplier);
-      _supProvider.resetForm();
+      // update
+      if (widget.supplier != null) {
+        await _supplierViewModel.updateOne(widget.supplier!.id!, supplier);
+        _supProvider.isEnabled = !_supProvider.isEnabled;
+        setState(() {});
+      } else {
+        // save
+        await _supplierViewModel.saveOne(supplier);
+        _supProvider.resetForm();
+      }
     }
   }
 
