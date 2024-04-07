@@ -62,7 +62,7 @@ class _ProductPageState extends State<ProductPage> {
       _prodProvider.pricePlusIVA.text = currentProduct.pricePlusIVA.toString();
 
       _prodProvider.lastSupplier = currentProduct.lastSupplier != null
-          ? _supProvider.allSuppliers
+          ? _supProvider.allItems
               .where((element) =>
                   element.id == '${currentProduct.lastSupplier?.id}')
               .first
@@ -242,7 +242,7 @@ class _ProductPageState extends State<ProductPage> {
                               isExpanded: true,
                               value: _prodProvider.lastSupplier,
                               hint: Text(text.lastSupplier),
-                              items: _supProvider.allSuppliers
+                              items: _supProvider.allItems
                                   .asMap()
                                   .entries
                                   .map((entry) {

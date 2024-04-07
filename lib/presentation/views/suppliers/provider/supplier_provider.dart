@@ -1,40 +1,10 @@
-import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import '../../../../domain/entities/supplier.dart';
+import '../../../common/provider/search_provider.dart';
 
-class SupplierProvider with ChangeNotifier {
-  // ---- Search -----
-  List<Supplier> _allSuppliers = [];
-  List<Supplier> _filteredSuppliers = [];
-
-  supplierSearchProvider(List<Supplier> suppliers) {
-    _allSuppliers = suppliers;
-    _filteredSuppliers = suppliers;
-  }
-
-  void search(String query) {
-    _filteredSuppliers = _allSuppliers.where((supplier) {
-      return removeDiacritics(supplier.name.toLowerCase())
-          .contains(removeDiacritics(query.toLowerCase()));
-    }).toList();
-    notifyListeners();
-  }
-
-  List<Supplier> get filteredSuppliers => _filteredSuppliers;
-  List<Supplier> get allSuppliers => _allSuppliers;
-
-  final TextEditingController _searchController = TextEditingController();
-  TextEditingController get searchController => _searchController;
-
-  void searchClean() {
-    _searchController.clear();
-    search('');
-    notifyListeners();
-  }
-  // ---- End search -----
-
+class SupplierProvider extends SearchProvider<Supplier> {
   // ---- form -----
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();

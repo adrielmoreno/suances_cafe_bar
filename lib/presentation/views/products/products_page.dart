@@ -65,7 +65,8 @@ class _ProductsPageState extends State<ProductsPage> {
       switch (event.state) {
         case Status.COMPLETED:
           setState(() {
-            _supProvider.supplierSearchProvider(event.data);
+            _supProvider.allItems = event.data;
+            _supProvider.filteredItems = event.data;
           });
           break;
 
@@ -73,7 +74,7 @@ class _ProductsPageState extends State<ProductsPage> {
       }
     });
 
-    if (_supProvider.allSuppliers.isEmpty) {
+    if (_supProvider.allItems.isEmpty) {
       _supplierViewModel.getAll();
     }
   }
@@ -87,7 +88,8 @@ class _ProductsPageState extends State<ProductsPage> {
   }
 
   void _onProductsChanged(List<Product> list) {
-    _productProvider.supplierSearchProvider(list);
+    _productProvider.allItems = list;
+    _productProvider.filteredItems = list;
     setState(() {});
   }
 
@@ -124,12 +126,15 @@ class _ProductsPageState extends State<ProductsPage> {
               ),
               MarginContainer(
                 child: CustomSearchBar(
-                  focusNode: focusNode,
-                  controller: _productProvider.searchController,
-                  hint: text.productName,
-                  onChanged: _productProvider.search,
-                  onClear: () => _productProvider.searchClean(),
-                ),
+                    focusNode: focusNode,
+                    controller: _productProvider.searchController,
+                    hint: text.productName,
+                    onChanged: (value) => _productProvider.search(
+                        value, (product) => product.name),
+                    onClear: () {
+                      focusNode.unfocus();
+                      _productProvider.searchClean();
+                    }),
               ),
               Expanded(
                 child: SizedBox(
@@ -141,10 +146,10 @@ class _ProductsPageState extends State<ProductsPage> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
-                      itemCount: _productProvider.filteredProducts.length,
+                      itemCount: _productProvider.filteredItems.length,
                       itemBuilder: (context, index) {
                         return CardItemProduct(
-                          product: _productProvider.filteredProducts[index],
+                          product: _productProvider.filteredItems[index],
                         );
                       },
                     ),
