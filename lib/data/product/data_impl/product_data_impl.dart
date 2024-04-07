@@ -10,7 +10,7 @@ class ProductDataImpl implements ProductRepository {
   Future<bool> deleteOne(String id) => _remoteImpl.deleteOne(id);
 
   @override
-  Future<List<Product>> getAll() => _remoteImpl.getAll();
+  Stream<List<Product>> getAll() => _remoteImpl.getAll();
 
   @override
   Future<List<Product>?> getByIndex(int maxElement) =>

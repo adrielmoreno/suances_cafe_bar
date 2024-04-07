@@ -18,11 +18,12 @@ class CardItemProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return SizedBox(
       child: Card(
           child: ListTile(
         onTap: () => context.goNamed(ProductPage.route, extra: product),
-        leading: Container(
+        trailing: Container(
           decoration: BoxDecoration(
             color: AppColors.inversePrimaryLight,
             borderRadius: BorderRadius.circular(Dimens.semiBig),
@@ -30,10 +31,17 @@ class CardItemProduct extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(Dimens.small),
             child: Text(
-                '${LocalDates.getCurrency()} ${product.priceUnit!.toStringAsFixed(2)}'),
+              '${LocalDates.getCurrency()} ${product.pricePlusIVA!.toStringAsFixed(2)}',
+              style: theme.labelLarge,
+            ),
           ),
         ),
-        title: Text(product.name),
+        title: Text(
+          product.name,
+          style: theme.labelLarge,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         subtitle: product.lastSupplier != null
             ? FutureBuilder(
                 future:
@@ -43,13 +51,10 @@ class CardItemProduct extends StatelessWidget {
                     snapshot.data?.name ?? "",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
+                    style: theme.labelSmall,
                   );
                 })
             : null,
-        trailing: const Icon(
-          Icons.arrow_forward_ios_outlined,
-          size: Dimens.semiBig,
-        ),
       )),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import '../../../domain/entities/product.dart';
 import '../../DBServices/firebase_db.dart';
+import '../../mappable/mappable.dart';
 
 class ProductRemoteImpl {
   final FirebaseDB _db = FirebaseDB();
@@ -17,23 +18,16 @@ class ProductRemoteImpl {
     }
   }
 
-  Future<List<Product>> getAll() async {
+  Stream<List<Product>> getAll() {
     try {
-      final refs = await _db.products.orderBy('name').get();
-      final docs = refs.docs;
-
-      if (docs.isNotEmpty) {
-        final products = docs.map((e) {
-          final map = e.data();
-          map['id'] = e.id;
-          return Product.fromMap(map);
-        }).toList();
-        return products;
-      }
+      return _db.products
+          .orderBy('name')
+          .snapshots()
+          .map((list) => getListFromSnapshot(list.docs, Product.fromMap));
     } catch (e) {
       log(e.toString());
+      return const Stream.empty();
     }
-    return [];
   }
 
   Future<List<Product>?> getByIndex(int maxElement) async {
