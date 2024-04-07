@@ -1,40 +1,10 @@
-import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/product.dart';
 import '../../../../domain/entities/supplier.dart';
+import '../../../common/provider/search_provider.dart';
 
-class ProductProvider extends ChangeNotifier {
-  // ---- Search -----
-  List<Product> _allProducts = [];
-  List<Product> _filteredProducts = [];
-
-  supplierSearchProvider(List<Product> products) {
-    _allProducts = products;
-    _filteredProducts = products;
-  }
-
-  void search(String query) {
-    _filteredProducts = _allProducts.where((product) {
-      return removeDiacritics(product.name.toLowerCase())
-          .contains(removeDiacritics(query.toLowerCase()));
-    }).toList();
-    notifyListeners();
-  }
-
-  List<Product> get filteredProducts => _filteredProducts;
-  List<Product> get allProducts => _allProducts;
-
-  final TextEditingController _searchController = TextEditingController();
-  TextEditingController get searchController => _searchController;
-
-  void searchClean() {
-    _searchController.clear();
-    search('');
-    notifyListeners();
-  }
-  // ---- End search -----
-
+class ProductProvider extends SearchProvider<Product> {
   // ------ form -------
   final _formKey = GlobalKey<FormState>();
 

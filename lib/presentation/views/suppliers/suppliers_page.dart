@@ -66,7 +66,8 @@ class _SuppliersPageState extends State<SuppliersPage> {
   }
 
   void _onSupliersChanged(List<Supplier> list) {
-    _supProvider.supplierSearchProvider(list);
+    _supProvider.allItems = list;
+    _supProvider.filteredItems = list;
     setState(() {});
   }
 
@@ -103,12 +104,15 @@ class _SuppliersPageState extends State<SuppliersPage> {
               ),
               MarginContainer(
                 child: CustomSearchBar(
-                  focusNode: focusNode,
-                  controller: _supProvider.searchController,
-                  hint: text.supplierName,
-                  onChanged: _supProvider.search,
-                  onClear: () => _supProvider.searchClean(),
-                ),
+                    focusNode: focusNode,
+                    controller: _supProvider.searchController,
+                    hint: text.supplierName,
+                    onChanged: (value) =>
+                        _supProvider.search(value, (suplier) => suplier.name),
+                    onClear: () {
+                      focusNode.unfocus();
+                      _supProvider.searchClean();
+                    }),
               ),
               Expanded(
                 child: SizedBox(
@@ -120,10 +124,10 @@ class _SuppliersPageState extends State<SuppliersPage> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
-                      itemCount: _supProvider.filteredSuppliers.length,
+                      itemCount: _supProvider.filteredItems.length,
                       itemBuilder: (context, index) {
                         return CardItemSuplier(
-                          supplier: _supProvider.filteredSuppliers[index],
+                          supplier: _supProvider.filteredItems[index],
                         );
                       },
                     ),
