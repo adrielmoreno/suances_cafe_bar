@@ -126,7 +126,7 @@ abstract class AppLocalizations {
   /// No description provided for @lastPrice.
   ///
   /// In en, this message translates to:
-  /// **'Last price'**
+  /// **'€ U+IVA'**
   String get lastPrice;
 
   /// No description provided for @lastSupplier.
@@ -180,13 +180,13 @@ abstract class AppLocalizations {
   /// No description provided for @pricePacking.
   ///
   /// In en, this message translates to:
-  /// **'Packaging price'**
+  /// **'€ Price'**
   String get pricePacking;
 
   /// No description provided for @priceUnit.
   ///
   /// In en, this message translates to:
-  /// **'Unit price'**
+  /// **'€ Unit'**
   String get priceUnit;
 
   /// No description provided for @product.
@@ -194,6 +194,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Product'**
   String get product;
+
+  /// No description provided for @productName.
+  ///
+  /// In en, this message translates to:
+  /// **'Product name'**
+  String get productName;
 
   /// No description provided for @products.
   ///
@@ -222,7 +228,7 @@ abstract class AppLocalizations {
   /// No description provided for @supplierName.
   ///
   /// In en, this message translates to:
-  /// **'SupplierName'**
+  /// **'Supplier name'**
   String get supplierName;
 
   /// No description provided for @suppliers.
@@ -236,6 +242,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Type'**
   String get type;
+
+  /// No description provided for @iva.
+  ///
+  /// In en, this message translates to:
+  /// **'％ IVA'**
+  String get iva;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

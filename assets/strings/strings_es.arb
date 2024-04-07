@@ -6,7 +6,7 @@
     "errorEmpty": "No puede estar vacío",
     "errorName": "Ingrese un nombre",
     "errorPhone": "Teléfono inválido",
-    "lastPrice": "Último precio",
+    "lastPrice": "€ U+IVA",
     "lastSupplier": "Último proveedor",
     "measure": "Medida",
     "name": "Nombre",
@@ -15,14 +15,16 @@
     "newTask": "Nueva tarea",
     "packaging": "Empaque",
     "phone": "Teléfono de contacto",
-    "pricePacking": "Precio de empaque",
-    "priceUnit": "Precio de unidad",
+    "pricePacking": "€ Precio",
+    "priceUnit": "€ Unidad",
     "product": "Producto",
+    "productName": "Nombre del producto",
     "products": "Productos",
     "save": "Guardar",
     "search": "Buscar",
     "supplier": "Suplidor",
     "supplierName": "Nombre del suplidor",
     "suppliers": "Suplidores",
-    "type": "Tipo"
+    "type": "Tipo",
+    "iva": "％ IVA"
 }
