@@ -10,6 +10,7 @@ import '../presentation/views/products/provider/producto_provider.dart';
 import '../presentation/views/products/view_model/product_view_model.dart';
 import '../presentation/views/suppliers/provider/supplier_provider.dart';
 import '../presentation/views/suppliers/view_model/supplier_view_model.dart';
+import '../presentation/views/todos/provider/to_dos_provider.dart';
 
 final getIt = GetIt.instance;
 
@@ -17,6 +18,7 @@ class Inject {
   setup() {
     _setupSupplier();
     _setupProduct();
+    _setupToDos();
   }
 
   _setupSupplier() {
@@ -35,5 +37,9 @@ class Inject {
     getIt
         .registerFactory<ProductViewModel>(() => ProductViewModel(getIt.get()));
     getIt.registerSingleton(ProductProvider());
+  }
+
+  _setupToDos() {
+    getIt.registerSingleton(ToDosProvider());
   }
 }
