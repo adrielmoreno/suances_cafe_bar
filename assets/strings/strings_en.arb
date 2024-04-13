@@ -25,6 +25,8 @@
     "supplier": "Supplier",
     "supplierName": "Supplier name",
     "suppliers": "Suppliers",
+    "todos": "ToDos",
+    "orders": "Orders",
     "type": "Type",
     "iva": "％ IVA"
 }

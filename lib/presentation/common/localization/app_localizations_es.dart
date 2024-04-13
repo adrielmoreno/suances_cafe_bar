@@ -77,6 +77,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get suppliers => 'Suplidores';
 
   @override
+  String get todos => 'Tareas';
+
+  @override
+  String get orders => 'Pedidos';
+
+  @override
   String get type => 'Tipo';
 
   @override

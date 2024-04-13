@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
     final text = AppLocalizations.of(context)!;
     return Scaffold(
       extendBody: true,
-      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.dark,
