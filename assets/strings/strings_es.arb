@@ -25,6 +25,8 @@
     "supplier": "Suplidor",
     "supplierName": "Nombre del suplidor",
     "suppliers": "Suplidores",
+    "todos": "Tareas",
+    "orders": "Pedidos",
     "type": "Tipo",
     "iva": "％ IVA"
 }

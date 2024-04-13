@@ -77,6 +77,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suppliers => 'Suppliers';
 
   @override
+  String get todos => 'ToDos';
+
+  @override
+  String get orders => 'Orders';
+
+  @override
   String get type => 'Type';
 
   @override

@@ -237,6 +237,18 @@ abstract class AppLocalizations {
   /// **'Suppliers'**
   String get suppliers;
 
+  /// No description provided for @todos.
+  ///
+  /// In en, this message translates to:
+  /// **'ToDos'**
+  String get todos;
+
+  /// No description provided for @orders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get orders;
+
   /// No description provided for @type.
   ///
   /// In en, this message translates to:
