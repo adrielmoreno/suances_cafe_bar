@@ -2,6 +2,8 @@
 
 Application to manage purchase orders, suppliers, expenses and income of the restaurant:
 
+https://github.com/adrielmoreno/suances_cafe_bar/assets/69350702/80787805-dc7a-4bf5-9874-5aa3f5da57b6
+
 ## How to use this project?
 
 1. Create a project in [Firebase](https://console.firebase.google.com/)
