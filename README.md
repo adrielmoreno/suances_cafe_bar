@@ -1,6 +1,25 @@
 # suances_cafe_bar
 
-Application to manage purchase orders, suppliers, expenses and income of the restaurant
+Application to manage purchase orders, suppliers, expenses and income of the restaurant:
+
+## How to use this project?
+
+1. Create a project in [Firebase](https://console.firebase.google.com/)
+2. Run this command to change the package name:
+
+    ```cmd
+    flutter pub run change_app_package_name:main com.new.package.name
+    ```
+
+3. [Add Firebase](https://firebase.google.com/docs/flutter/setup?platform=ios) to your Flutter app:
+
+    ```cmd
+    firebase login
+
+    dart pub global activate flutterfire_cli
+    
+    flutterfire configure
+    ```
 
 ## Libraries and tools used
 
