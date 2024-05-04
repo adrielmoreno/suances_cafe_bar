@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../data/DBServices/firebase_db.dart';
+import '../../../../data/db_services/firebase_db.dart';
 import '../../../../domain/entities/product.dart';
 import '../../../../domain/entities/supplier.dart';
 import '../../../../inject/inject.dart';
@@ -29,6 +29,7 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   final _productViewModel = getIt<ProductViewModel>();
   final _prodProvider = getIt<ProductProvider>();
+  final _db = getIt<FirebaseDB>();
 
   final _supProvider = getIt<SupplierProvider>();
 
@@ -313,7 +314,7 @@ class _ProductPageState extends State<ProductPage> {
           packaging: replaceComma(_prodProvider.packagingController.text),
         ),
         lastSupplier: _prodProvider.lastSupplier != null
-            ? await FirebaseDB.getReference(
+            ? await _db.getReference(
                 _prodProvider.lastSupplier!.id!, FBCollection.suppliers)
             : null,
       );

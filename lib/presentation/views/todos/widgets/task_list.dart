@@ -19,6 +19,7 @@ class _TaskListsState extends State<TaskList> {
   @override
   void initState() {
     super.initState();
+    _toDosProvider.loadDB();
     _toDosProvider.addListener(_updateState);
   }
 
