@@ -22,7 +22,7 @@ class FirebaseDB {
   CollectionReference<Map<String, dynamic>> get products =>
       _firestore.collection(FBCollection.products.name);
 
-  static Future<DocumentReference> getReference(
+  Future<DocumentReference> getReference(
       String documentId, FBCollection collection) async {
     return _firestore.collection(collection.name).doc(documentId);
   }

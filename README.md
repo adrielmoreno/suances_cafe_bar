@@ -28,6 +28,8 @@ https://github.com/adrielmoreno/suances_cafe_bar/assets/69350702/80787805-dc7a-4
 - [go_router: ^13.2.1 - routing](https://pub.dev/packages/go_router)
 - [get_it: ^7.6.7 - DI](https://pub.dev/packages/get_it)
 - [provider: ^6.1.2 - state](https://pub.dev/packages/provider)
+- [sqflite: ^2.3.3+1 - local BBDD](https://pub.dev/packages/sqflite)
+- [path_provider: ^2.1.3 - filesystem](https://pub.dev/packages/path_provider)
   
 ### Firebase
 

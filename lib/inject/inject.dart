@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 
+import '../data/db_services/firebase_db.dart';
+import '../data/db_services/local_db.dart';
 import '../data/product/data_impl/product_data_impl.dart';
 import '../data/product/remote_impl/product_remote_impl.dart';
 import '../data/supplier/data_impl/supplier_data_impl.dart';
@@ -16,6 +18,7 @@ final getIt = GetIt.instance;
 
 class Inject {
   setup() {
+    _setupDB();
     _setupSupplier();
     _setupProduct();
     _setupToDos();
@@ -41,5 +44,10 @@ class Inject {
 
   _setupToDos() {
     getIt.registerSingleton(ToDosProvider());
+  }
+
+  _setupDB() {
+    getIt.registerSingleton(FirebaseDB());
+    getIt.registerSingleton(LocalDB());
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/db_services/local_db.dart';
 import '../../../inject/inject.dart';
 import '../../common/localization/app_localizations.dart';
 import '../../common/theme/constants/dimens.dart';
@@ -22,7 +23,7 @@ class ToDosPage extends StatefulWidget {
 
 class _ToDosPageState extends State<ToDosPage> {
   final _toDosProvider = getIt<ToDosProvider>();
-
+  final _db = getIt<LocalDB>();
   @override
   void initState() {
     super.initState();
@@ -31,6 +32,12 @@ class _ToDosPageState extends State<ToDosPage> {
         setState(() {});
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _db.close();
+    super.dispose();
   }
 
   @override
@@ -51,13 +58,13 @@ class _ToDosPageState extends State<ToDosPage> {
               ),
               // ---- Switch
               const OptionsPanel(),
-              // ---- Form
+              // ---- Task Form
               Visibility(
-                  visible: _toDosProvider.todoView == TypeToDo.tasks,
+                  visible: _toDosProvider.todoView == TypeToDo.errand,
                   child: const TaskForm()),
               // ---- Task List
               Visibility(
-                visible: _toDosProvider.todoView == TypeToDo.tasks,
+                visible: _toDosProvider.todoView == TypeToDo.errand,
                 child: Expanded(
                   child: SizedBox(
                     width: Dimens.maxwidth,

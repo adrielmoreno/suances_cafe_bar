@@ -19,14 +19,12 @@ class _OptionsPanelState extends State<OptionsPanel> {
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
-    // TODO:
-    final theme = Theme.of(context).textTheme;
     return MarginContainer(
       child: SegmentedButton<TypeToDo>(
         selected: <TypeToDo>{toDosProvider.todoView},
         segments: [
           ButtonSegment(
-            value: TypeToDo.tasks,
+            value: TypeToDo.errand,
             label: Text(text.todos),
             icon: const Icon(Icons.assignment_outlined),
           ),

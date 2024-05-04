@@ -1,11 +1,12 @@
 import 'dart:developer';
 
 import '../../../domain/entities/supplier.dart';
-import '../../DBServices/firebase_db.dart';
+import '../../../inject/inject.dart';
+import '../../db_services/firebase_db.dart';
 import '../../mappable/mappable.dart';
 
 class SupplierRemoteImpl {
-  final FirebaseDB _db = FirebaseDB();
+  final _db = getIt<FirebaseDB>();
 
   SupplierRemoteImpl();
 
