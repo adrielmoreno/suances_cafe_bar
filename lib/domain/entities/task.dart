@@ -1,11 +1,11 @@
 class Errand {
-  int? id;
+  final String id;
   final DateTime date;
   final String name;
   bool isCompleted;
 
   Errand({
-    this.id,
+    required this.id,
     required this.date,
     required this.name,
     this.isCompleted = false,
@@ -13,7 +13,7 @@ class Errand {
 
   factory Errand.fromMap(Map<dynamic, dynamic> map) {
     return Errand(
-      id: map['id'] ?? 0,
+      id: map['id'],
       date: DateTime.parse(map['date']),
       name: map['name'],
       // sqflite
@@ -23,6 +23,7 @@ class Errand {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'date': date.toIso8601String(),
       'name': name,
       // sqflite

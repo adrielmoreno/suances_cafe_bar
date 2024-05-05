@@ -22,7 +22,7 @@ class LocalDB {
         version: version,
         onCreate: (db, version) async {
           await db.execute(
-            'CREATE TABLE IF NOT EXISTS ${TypeToDo.errand.name} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT, isCompleted INTEGER)',
+            'CREATE TABLE IF NOT EXISTS ${TypeToDo.errand.name} (id TEXT PRIMARY KEY, name TEXT, date TEXT, isCompleted INTEGER)',
           );
         },
       );
@@ -31,29 +31,32 @@ class LocalDB {
     }
   }
 
-  Future<int?> insert(String tableName, Map<String, dynamic> values) async {
+  Future<String?> insert(String tableName, Map<String, dynamic> values) async {
     try {
-      return await _db.insert(tableName, values);
+      final result = await _db.insert(tableName, values);
+      return result > 0 ? values['id'] : null;
     } catch (e) {
       log(e.toString());
       return null;
     }
   }
 
-  Future<int?> update(
-      String tableName, Map<String, dynamic> values, int id) async {
+  Future<String?> update(String tableName, Map<String, dynamic> values) async {
     try {
-      return await _db
-          .update(tableName, values, where: 'id =  ?', whereArgs: [id]);
+      final result = await _db.update(tableName, values,
+          where: 'id =  ?', whereArgs: [values['id']]);
+      return result > 0 ? values['id'] : null;
     } catch (e) {
       log(e.toString());
       return null;
     }
   }
 
-  Future<int?> delete(String tableName, int id) async {
+  Future<String?> delete(String tableName, String id) async {
     try {
-      return await _db.delete(tableName, where: 'id =  ?', whereArgs: [id]);
+      final result =
+          await _db.delete(tableName, where: 'id =  ?', whereArgs: [id]);
+      return result > 0 ? id : null;
     } catch (e) {
       log('Delete: e');
       return null;
