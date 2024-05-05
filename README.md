@@ -27,6 +27,7 @@ Application to manage purchase orders, suppliers, expenses and income of the res
 - [get_it: ^7.6.7 - DI](https://pub.dev/packages/get_it)
 - [provider: ^6.1.2 - state](https://pub.dev/packages/provider)
 - [sqflite: ^2.3.3+1 - local BBDD](https://pub.dev/packages/sqflite)
+- [hive: ^2.2.3 - Web BBDD](https://pub.dev/packages/hive)
 - [path_provider: ^2.1.3 - filesystem](https://pub.dev/packages/path_provider)
   
 ### Firebase

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../data/db_services/web_db.dart';
 import '../../../../inject/inject.dart';
 import '../../../common/utils/local_dates.dart';
 import '../provider/to_dos_provider.dart';
@@ -15,6 +16,7 @@ class TaskList extends StatefulWidget {
 
 class _TaskListsState extends State<TaskList> {
   final _toDosProvider = getIt<ToDosProvider>();
+  final _db = getIt<WebDB>();
 
   @override
   void initState() {
@@ -25,6 +27,7 @@ class _TaskListsState extends State<TaskList> {
 
   @override
   void dispose() {
+    _db.close();
     _toDosProvider.removeListener(_updateState);
     super.dispose();
   }

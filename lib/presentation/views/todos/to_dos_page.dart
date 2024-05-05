@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/db_services/local_db.dart';
 import '../../../inject/inject.dart';
 import '../../common/localization/app_localizations.dart';
 import '../../common/theme/constants/dimens.dart';
@@ -23,7 +22,7 @@ class ToDosPage extends StatefulWidget {
 
 class _ToDosPageState extends State<ToDosPage> {
   final _toDosProvider = getIt<ToDosProvider>();
-  final _db = getIt<LocalDB>();
+
   @override
   void initState() {
     super.initState();
@@ -35,16 +34,9 @@ class _ToDosPageState extends State<ToDosPage> {
   }
 
   @override
-  void dispose() {
-    _db.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
-    // TODO:
-    final theme = Theme.of(context).textTheme;
+
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
@@ -61,7 +53,8 @@ class _ToDosPageState extends State<ToDosPage> {
               // ---- Task Form
               Visibility(
                   visible: _toDosProvider.todoView == TypeToDo.errand,
-                  child: const TaskForm()),
+                  child: const SizedBox(
+                      width: Dimens.maxwidth, child: TaskForm())),
               // ---- Task List
               Visibility(
                 visible: _toDosProvider.todoView == TypeToDo.errand,

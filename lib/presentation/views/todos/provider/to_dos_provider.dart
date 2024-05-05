@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
-import '../../../../data/db_services/local_db.dart';
+import '../../../../data/db_services/web_db.dart';
 import '../../../../domain/entities/task.dart';
 import '../../../../inject/inject.dart';
 
@@ -8,7 +9,7 @@ enum TypeToDo { errand, order }
 
 class ToDosProvider extends ChangeNotifier {
   // Sqflite
-  final _db = getIt<LocalDB>();
+  final _db = getIt<WebDB>();
 
   List<Errand> _tasks = [];
   final _formKey = GlobalKey<FormState>();
@@ -26,7 +27,6 @@ class ToDosProvider extends ChangeNotifier {
 
   void _addTask(Errand task) {
     _db.insert(TypeToDo.errand.name, task.toMap()).then((value) {
-      task.id = value;
       _tasks.add(task);
       sortTasksByDate();
     });
@@ -36,7 +36,7 @@ class ToDosProvider extends ChangeNotifier {
 
   void removeTask(Errand task) {
     _db
-        .delete(TypeToDo.errand.name, task.id!)
+        .delete(TypeToDo.errand.name, task.id)
         .then((value) => _tasks.remove(task));
     notifyListeners();
   }
@@ -58,8 +58,10 @@ class ToDosProvider extends ChangeNotifier {
 
   void setTask() {
     if (_formKey.currentState!.validate()) {
-      final task =
-          Errand(date: _selectedDate, name: _taskController.text.trim());
+      final task = Errand(
+          id: const Uuid().v4(),
+          date: _selectedDate,
+          name: _taskController.text.trim());
       _addTask(task);
     }
   }
@@ -73,14 +75,17 @@ class ToDosProvider extends ChangeNotifier {
 
   void toggleTask(Errand task) {
     task.isCompleted = !task.isCompleted;
-    _db.update(TypeToDo.errand.name, task.toMap(), task.id!);
+    _db.update(TypeToDo.errand.name, task.toMap());
     notifyListeners();
   }
 
-  // sqflite
   Future<void> loadDB() async {
+    await _db.openDB();
     final results = await _db.queryAll(TypeToDo.errand.name);
-    _tasks = results?.map((e) => Errand.fromMap(e)).toList() ?? [];
+    // sqflite
+    // _tasks = results.map((e) => Errand.fromMap(e)).toList() ?? [];
+    // Hive
+    _tasks = results.map((e) => Errand.fromMap(e!)).toList();
     sortTasksByDate();
     notifyListeners();
   }
