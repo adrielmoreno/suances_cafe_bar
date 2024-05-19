@@ -17,13 +17,12 @@ class WebDB {
 
   Future<void> openDB() async {
     try {
-      await Hive.initFlutter();
+      final dbPath =
+          !kIsWeb ? (await getApplicationDocumentsDirectory()).path : null;
       _db = await BoxCollection.open(
         dbName,
         {TypeToDo.errand.name},
-        path: !kIsWeb
-            ? '${(await getApplicationDocumentsDirectory()).path}/$dbName'
-            : null,
+        path: '$dbPath/$dbName',
       );
     } catch (e) {
       log('Open: ${e.toString()}');
