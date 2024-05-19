@@ -13,6 +13,7 @@ import '../presentation/views/products/provider/producto_provider.dart';
 import '../presentation/views/products/view_model/product_view_model.dart';
 import '../presentation/views/suppliers/provider/supplier_provider.dart';
 import '../presentation/views/suppliers/view_model/supplier_view_model.dart';
+import '../presentation/views/todos/provider/order_provider.dart';
 import '../presentation/views/todos/provider/to_dos_provider.dart';
 
 final getIt = GetIt.instance;
@@ -45,6 +46,7 @@ class Inject {
 
   _setupToDos() {
     getIt.registerSingleton(ToDosProvider());
+    getIt.registerSingleton(OrderProvider());
   }
 
   _setupDB() {

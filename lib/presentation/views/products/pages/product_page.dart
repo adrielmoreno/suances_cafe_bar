@@ -247,16 +247,29 @@ class _ProductPageState extends State<ProductPage> {
                                   .asMap()
                                   .entries
                                   .map((entry) {
-                                final int index = entry.key;
                                 final Supplier supplier = entry.value;
                                 return DropdownMenuItem<Supplier>(
                                   enabled: _prodProvider.isEnabled,
                                   value: supplier,
-                                  child: Container(
-                                    color: (index % 2 == 0)
-                                        ? AppColors.secondaryContainerLight
-                                        : null,
-                                    child: Text(supplier.name),
+                                  child: SingleChildScrollView(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          color: (_prodProvider.lastSupplier ==
+                                                  supplier)
+                                              ? AppColors
+                                                  .secondaryContainerLight
+                                              : null,
+                                          child: Text(supplier.name),
+                                        ),
+                                        const Divider()
+                                      ],
+                                    ),
                                   ),
                                 );
                               }).toList(),
