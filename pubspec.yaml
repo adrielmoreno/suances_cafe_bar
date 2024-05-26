@@ -37,7 +37,9 @@ dependencies:
 dev_dependencies:
   change_app_package_name: ^1.1.0
   faker: ^2.1.0
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^3.0.0
+  flutter_native_splash: ^2.4.0
   flutter_test:
     sdk: flutter
 
@@ -47,3 +49,24 @@ flutter:
   assets:
     - assets/images/
     - assets/strings/
+
+# -> dart run flutter_native_splash:create
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/suances.jpeg
+  web: false
+  fullscreen: true
+
+# -> dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  remove_alpha_ios: true
+  image_path: assets/images/suances.jpeg
+  min_sdk_android: 21
+  background_color: "#ffffff"
+  web:
+    generate: true
+    image_path: assets/images/suances.jpeg
+    background_color: "#ffffff"
+    theme_color: "#ffffff"
