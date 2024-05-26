@@ -23,7 +23,7 @@ class _MetricsPageState extends State<MetricsPage> {
             minScale: 1,
             maxScale: 3,
             child: InteractiveViewer(
-              child: Image.asset("assets/images/suances.jpeg"),
+              child: Image.asset("assets/images/suances.png"),
             ),
           ),
         ),

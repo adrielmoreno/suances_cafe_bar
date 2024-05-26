@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../inject/inject.dart';
 import '../../common/localization/app_localizations.dart';
 import '../../common/theme/constants/dimens.dart';
-import '../../common/widgets/buttons/custom_appbar.dart';
 import 'provider/order_provider.dart';
 import 'provider/to_dos_provider.dart';
 import 'widgets/options_panel.dart';
@@ -54,9 +53,6 @@ class _ToDosPageState extends State<ToDosPage> {
         child: SafeArea(
           child: Column(
             children: [
-              CustomAppBar(
-                title: text.todos,
-              ),
               // ---- Switch
               const OptionsPanel(),
               // ---- Task Form
