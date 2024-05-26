@@ -49,5 +49,9 @@
 		<string>Permitir acceso a documentos</string>
 		<key>NSDownloadsFolderUsageDescription</key>
 		<string>Permitir acceso a descargas</string>
+		<key>UIStatusBarHidden</key>
+		<true/>
+		<key>UIViewControllerBasedStatusBarAppearance</key>
+		<false/>
 	</dict>
 </plist>

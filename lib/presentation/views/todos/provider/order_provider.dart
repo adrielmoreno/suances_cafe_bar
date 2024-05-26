@@ -71,7 +71,7 @@ class OrderProvider extends ChangeNotifier {
 
     // image logo
     final Uint8List imageData =
-        (await rootBundle.load('assets/images/suances.jpeg'))
+        (await rootBundle.load('assets/images/suances.png'))
             .buffer
             .asUint8List();
     final logo = pw.MemoryImage(imageData);

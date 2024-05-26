@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../inject/inject.dart';
 import '../../common/localization/app_localizations.dart';
 import '../../common/theme/constants/dimens.dart';
-import '../../common/widgets/buttons/custom_appbar.dart';
 import 'provider/order_provider.dart';
 import 'provider/to_dos_provider.dart';
 import 'widgets/options_panel.dart';
@@ -52,49 +51,48 @@ class _ToDosPageState extends State<ToDosPage> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
-          child: Column(
-            children: [
-              CustomAppBar(
-                title: text.todos,
-              ),
-              // ---- Switch
-              const OptionsPanel(),
-              // ---- Task Form
-              Visibility(
+          child: Center(
+            child: Column(
+              children: [
+                // ---- Switchs
+                const OptionsPanel(),
+                // ---- Task Form
+                Visibility(
+                    visible: _toDosProvider.todoView == TypeToDo.errand,
+                    child: const SizedBox(
+                        width: Dimens.maxwidth, child: TaskForm())),
+                // ---- Task List
+                Visibility(
                   visible: _toDosProvider.todoView == TypeToDo.errand,
-                  child: const SizedBox(
-                      width: Dimens.maxwidth, child: TaskForm())),
-              // ---- Task List
-              Visibility(
-                visible: _toDosProvider.todoView == TypeToDo.errand,
-                child: Expanded(
-                  child: SizedBox(
-                    width: Dimens.maxwidth,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: Dimens.big,
+                  child: Expanded(
+                    child: SizedBox(
+                      width: Dimens.maxwidth,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: Dimens.big,
+                        ),
+                        child: const TaskList(),
                       ),
-                      child: const TaskList(),
                     ),
                   ),
                 ),
-              ),
-              // ---- Task List
-              Visibility(
-                visible: _toDosProvider.todoView != TypeToDo.errand,
-                child: Expanded(
-                  child: SizedBox(
-                    width: Dimens.maxwidth,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: Dimens.big,
+                // ---- Task List
+                Visibility(
+                  visible: _toDosProvider.todoView != TypeToDo.errand,
+                  child: Expanded(
+                    child: SizedBox(
+                      width: Dimens.maxwidth,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: Dimens.big,
+                        ),
+                        child: const OrderPanel(),
                       ),
-                      child: const OrderPanel(),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
