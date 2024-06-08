@@ -1,18 +1,4 @@
-import 'package:flutter/material.dart';
-
-enum TypeOfSupplier {
-  consumer,
-  food,
-  drink,
-  taxes;
-
-  IconData get getIconData => switch (this) {
-        consumer => Icons.miscellaneous_services_outlined,
-        food => Icons.fastfood_outlined,
-        drink => Icons.liquor_outlined,
-        taxes => Icons.attach_money,
-      };
-}
+import '../../presentation/common/enums/type_of_supplier.dart';
 
 class Supplier {
   String? id;

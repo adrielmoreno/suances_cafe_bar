@@ -3,7 +3,8 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import '../../../../domain/entities/supplier.dart';
 import '../../../../inject/inject.dart';
-import '../../../common/localization/app_localizations.dart';
+import '../../../common/enums/type_of_supplier.dart';
+import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/widgets/buttons/custom_appbar.dart';
 import '../../../common/widgets/inputs/input_phone.dart';
@@ -76,7 +77,6 @@ class _SupplierPageState extends State<SupplierPage> {
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -90,93 +90,89 @@ class _SupplierPageState extends State<SupplierPage> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: MarginContainer(
-                    child: SizedBox(
-                      width: Dimens.maxwidth,
-                      child: Column(
-                        children: [
-                          Form(
-                            key: _supProvider.formKey,
-                            child: Column(
-                              children: [
-                                TextFormField(
-                                  controller: _supProvider.nameController,
-                                  enabled: _supProvider.isEnabled,
-                                  decoration:
-                                      InputDecoration(labelText: text.name),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return text.errorName;
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          Row(
+                    child: Column(
+                      children: [
+                        Form(
+                          key: _supProvider.formKey,
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _supProvider.cifController,
-                                  enabled: _supProvider.isEnabled,
-                                  decoration:
-                                      const InputDecoration(labelText: 'CIF'),
-                                ),
-                              ),
-                              Expanded(
-                                child: DropdownButtonFormField<TypeOfSupplier>(
-                                  value: _supProvider.type,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      if (value != null) {
-                                        _supProvider.type = value;
-                                      }
-                                    });
-                                  },
-                                  items: TypeOfSupplier.values.map((type) {
-                                    return DropdownMenuItem<TypeOfSupplier>(
-                                      enabled: _supProvider.isEnabled,
-                                      value: type,
-                                      child:
-                                          Text(type.toString().split('.').last),
-                                    );
-                                  }).toList(),
-                                  decoration:
-                                      InputDecoration(labelText: text.type),
-                                ),
+                              TextFormField(
+                                controller: _supProvider.nameController,
+                                enabled: _supProvider.isEnabled,
+                                decoration:
+                                    InputDecoration(labelText: text.name),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return text.errorName;
+                                  }
+                                  return null;
+                                },
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: Dimens.extraHuge,
-                            child: InputPhone(
-                              phoneController: _supProvider.telController,
-                              enabled: _supProvider.isEnabled,
-                              number: _supProvider.localPhone,
-                              onChanged: (phone) {
-                                _supProvider.localPhone = phone;
-                              },
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: _supProvider.cifController,
+                                enabled: _supProvider.isEnabled,
+                                decoration:
+                                    const InputDecoration(labelText: 'CIF'),
+                              ),
                             ),
-                          ),
-                          TextFormField(
-                            controller: _supProvider.contactNameController,
+                            Expanded(
+                              child: DropdownButtonFormField<TypeOfSupplier>(
+                                value: _supProvider.type,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value != null) {
+                                      _supProvider.type = value;
+                                    }
+                                  });
+                                },
+                                items: TypeOfSupplier.values.map((type) {
+                                  return DropdownMenuItem<TypeOfSupplier>(
+                                    enabled: _supProvider.isEnabled,
+                                    value: type,
+                                    child: Text(type.getName),
+                                  );
+                                }).toList(),
+                                decoration:
+                                    InputDecoration(labelText: text.type),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: Dimens.extraHuge,
+                          child: InputPhone(
+                            phoneController: _supProvider.telController,
                             enabled: _supProvider.isEnabled,
-                            decoration:
-                                InputDecoration(labelText: text.contactName),
+                            number: _supProvider.localPhone,
+                            onChanged: (phone) {
+                              _supProvider.localPhone = phone;
+                            },
                           ),
-                          SizedBox(
-                            height: Dimens.extraHuge,
-                            child: InputPhone(
-                              phoneController: _supProvider.phoneController,
-                              enabled: _supProvider.isEnabled,
-                              number: _supProvider.contactPhone,
-                              onChanged: (phone) {
-                                _supProvider.contactPhone = phone;
-                              },
-                            ),
+                        ),
+                        TextFormField(
+                          controller: _supProvider.contactNameController,
+                          enabled: _supProvider.isEnabled,
+                          decoration:
+                              InputDecoration(labelText: text.contactName),
+                        ),
+                        SizedBox(
+                          height: Dimens.extraHuge,
+                          child: InputPhone(
+                            phoneController: _supProvider.phoneController,
+                            enabled: _supProvider.isEnabled,
+                            number: _supProvider.contactPhone,
+                            onChanged: (phone) {
+                              _supProvider.contactPhone = phone;
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

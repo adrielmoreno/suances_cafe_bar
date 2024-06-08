@@ -10,5 +10,6 @@ class Dimens {
   static const double extraSmall = 4.0;
   static const double zero = 0.0;
 
-  static const double maxwidth = 500;
+  static const double minTableWidth = 840;
+  static const double minDesktopWidth = 1280;
 }

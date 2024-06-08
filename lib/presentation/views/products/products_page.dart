@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../domain/entities/product.dart';
 import '../../../inject/inject.dart';
 import '../../common/interfaces/resource_state.dart';
-import '../../common/localization/app_localizations.dart';
+import '../../common/localization/localization_manager.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_appbar.dart';
 import '../../common/widgets/inputs/custom_searchbar.dart';
@@ -103,7 +103,6 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return Scaffold(
       body: GestureDetector(
         onTap: () => focusNode.unfocus(),
@@ -137,22 +136,19 @@ class _ProductsPageState extends State<ProductsPage> {
                     }),
               ),
               Expanded(
-                child: SizedBox(
-                  width: Dimens.maxwidth,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: Dimens.big,
-                    ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: _productProvider.filteredItems.length,
-                      itemBuilder: (context, index) {
-                        return CardItemProduct(
-                          product: _productProvider.filteredItems[index],
-                        );
-                      },
-                    ),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: Dimens.medium,
+                  ),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: _productProvider.filteredItems.length,
+                    itemBuilder: (context, index) {
+                      return CardItemProduct(
+                        product: _productProvider.filteredItems[index],
+                      );
+                    },
                   ),
                 ),
               ),

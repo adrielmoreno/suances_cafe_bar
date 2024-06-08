@@ -7,7 +7,7 @@ import '../../../../domain/entities/product.dart';
 import '../../../../domain/entities/supplier.dart';
 import '../../../../inject/inject.dart';
 import '../../../common/interfaces/resource_state.dart';
-import '../../../common/localization/app_localizations.dart';
+import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/app_colors.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/widgets/inputs/custom_searchbar.dart';
@@ -102,14 +102,8 @@ class _OrderPanelState extends State<OrderPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return Column(
       children: [
-        // ---- Supplier
-        productFilteredBySupplier(),
-        const SizedBox(
-          height: Dimens.medium,
-        ),
         CustomSearchBar(
             focusNode: focusNode,
             controller: _productProvider.searchController,
@@ -119,21 +113,23 @@ class _OrderPanelState extends State<OrderPanel> {
             onClear: () {
               focusNode.unfocus();
               _productProvider.searchClean();
+              setFilter(null);
             }),
+        // ---- Supplier
+        productFilteredBySupplier(),
+
         Expanded(
-          child: SizedBox(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              itemCount: _productProvider.filteredItems.length,
-              itemBuilder: (context, index) {
-                final order =
-                    Order(product: _productProvider.filteredItems[index]);
-                return ItemToOrder(
-                  order: order,
-                );
-              },
-            ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemCount: _productProvider.filteredItems.length,
+            itemBuilder: (context, index) {
+              final order =
+                  Order(product: _productProvider.filteredItems[index]);
+              return ItemToOrder(
+                order: order,
+              );
+            },
           ),
         ),
       ],

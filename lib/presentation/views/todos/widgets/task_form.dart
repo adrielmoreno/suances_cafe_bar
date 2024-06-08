@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../inject/inject.dart';
-import '../../../common/localization/app_localizations.dart';
+import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/utils/local_dates.dart';
 import '../../../common/widgets/buttons/custom_icon_button.dart';
@@ -58,7 +58,6 @@ class _TaskFormState extends State<TaskForm> {
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return MarginContainer(
       child: Form(
         key: _toDosProvider.formKey,

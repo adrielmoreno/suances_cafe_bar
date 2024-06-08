@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../localization/app_localizations.dart';
+import '../../localization/localization_manager.dart';
 import '../../theme/constants/dimens.dart';
 import '../buttons/custom_icon_button.dart';
 
@@ -25,7 +25,7 @@ class CustomSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeColor = Theme.of(context).colorScheme;
-    final text = AppLocalizations.of(context)!;
+
     return SearchBar(
       controller: controller,
       focusNode: focusNode,

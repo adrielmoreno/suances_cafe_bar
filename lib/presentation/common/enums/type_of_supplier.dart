@@ -17,7 +17,7 @@ enum TypeOfSupplier {
         food => Icons.fastfood_outlined,
         drink => Icons.liquor_outlined,
         taxes => Icons.attach_money,
-        meats => Icons.restaurant_menu_outlined,
+        meats => Icons.food_bank_outlined,
         ice_cream => Icons.icecream_outlined,
         utilities => Icons.lightbulb_outline,
         services => Icons.room_service_outlined,
