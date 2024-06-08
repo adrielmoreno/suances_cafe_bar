@@ -77,6 +77,8 @@ class _SupplierPageState extends State<SupplierPage> {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -135,7 +137,20 @@ class _SupplierPageState extends State<SupplierPage> {
                                   return DropdownMenuItem<TypeOfSupplier>(
                                     enabled: _supProvider.isEnabled,
                                     value: type,
-                                    child: Text(type.getName),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(
+                                              Dimens.small),
+                                          child: Icon(
+                                            type.getIconData,
+                                            size: Dimens.medium,
+                                            color: color.primary,
+                                          ),
+                                        ),
+                                        Text(type.getName),
+                                      ],
+                                    ),
                                   );
                                 }).toList(),
                                 decoration:
