@@ -5,6 +5,9 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get app_title => 'Suances';
+
+  @override
   String get contactName => 'Nombre de contacto';
 
   @override
@@ -87,4 +90,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get iva => '％ IVA';
+
+  @override
+  String get consumer => 'Consumible';
+
+  @override
+  String get food => 'Comida';
+
+  @override
+  String get drink => 'Bebida';
+
+  @override
+  String get taxes => 'Impuestos';
+
+  @override
+  String get meats => 'Carnes';
+
+  @override
+  String get ice_cream => 'Helados';
+
+  @override
+  String get utilities => 'Suministros';
+
+  @override
+  String get services => 'Servicios';
 }

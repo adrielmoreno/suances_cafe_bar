@@ -93,10 +93,16 @@ abstract class AppLocalizations {
     Locale('es')
   ];
 
+  /// No description provided for @app_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Suances'**
+  String get app_title;
+
   /// No description provided for @contactName.
   ///
   /// In en, this message translates to:
-  /// **'ContactName'**
+  /// **'Contact name'**
   String get contactName;
 
   /// No description provided for @edit.
@@ -174,7 +180,7 @@ abstract class AppLocalizations {
   /// No description provided for @phone.
   ///
   /// In en, this message translates to:
-  /// **'contactPhone'**
+  /// **'Contact phone'**
   String get phone;
 
   /// No description provided for @pricePacking.
@@ -260,6 +266,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'％ IVA'**
   String get iva;
+
+  /// No description provided for @consumer.
+  ///
+  /// In en, this message translates to:
+  /// **'Consumable'**
+  String get consumer;
+
+  /// No description provided for @food.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get food;
+
+  /// No description provided for @drink.
+  ///
+  /// In en, this message translates to:
+  /// **'Drink'**
+  String get drink;
+
+  /// No description provided for @taxes.
+  ///
+  /// In en, this message translates to:
+  /// **'Taxes'**
+  String get taxes;
+
+  /// No description provided for @meats.
+  ///
+  /// In en, this message translates to:
+  /// **'Meats'**
+  String get meats;
+
+  /// No description provided for @ice_cream.
+  ///
+  /// In en, this message translates to:
+  /// **'Ice cream'**
+  String get ice_cream;
+
+  /// No description provided for @utilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplies'**
+  String get utilities;
+
+  /// No description provided for @services.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get services;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
