@@ -81,57 +81,55 @@ class _SuppliersPageState extends State<SuppliersPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () => focusNode.unfocus(),
-        child: SafeArea(
-          child: Column(
-            children: [
-              CustomAppBar(
-                title: text.suppliers,
-                actions: [
-                  PopupMenuButton(
-                    icon: const Icon(Icons.more_vert_outlined),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        onTap: () => context.goNamed(SupplierPage.route),
-                        child: Text(text.newSupplier),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              MarginContainer(
-                child: CustomSearchBar(
-                    focusNode: focusNode,
-                    controller: _supProvider.searchController,
-                    hint: text.supplierName,
-                    onChanged: (value) =>
-                        _supProvider.search(value, (suplier) => suplier.name),
-                    onClear: () {
-                      focusNode.unfocus();
-                      _supProvider.searchClean();
-                    }),
-              ),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: Dimens.medium,
-                  ),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: _supProvider.filteredItems.length,
-                    itemBuilder: (context, index) {
-                      return CardItemSuplier(
-                        supplier: _supProvider.filteredItems[index],
-                      );
-                    },
-                  ),
+    return GestureDetector(
+      onTap: () => focusNode.unfocus(),
+      child: SafeArea(
+        child: Column(
+          children: [
+            CustomAppBar(
+              title: text.suppliers,
+              actions: [
+                PopupMenuButton(
+                  icon: const Icon(Icons.more_vert_outlined),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      onTap: () => context.goNamed(SupplierPage.route),
+                      child: Text(text.newSupplier),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            MarginContainer(
+              child: CustomSearchBar(
+                  focusNode: focusNode,
+                  controller: _supProvider.searchController,
+                  hint: text.supplierName,
+                  onChanged: (value) =>
+                      _supProvider.search(value, (suplier) => suplier.name),
+                  onClear: () {
+                    focusNode.unfocus();
+                    _supProvider.searchClean();
+                  }),
+            ),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: Dimens.medium,
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: _supProvider.filteredItems.length,
+                  itemBuilder: (context, index) {
+                    return CardItemSuplier(
+                      supplier: _supProvider.filteredItems[index],
+                    );
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

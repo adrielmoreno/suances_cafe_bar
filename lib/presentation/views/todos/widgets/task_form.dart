@@ -46,7 +46,7 @@ class _TaskFormState extends State<TaskForm> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 7)),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
     );
 
     if (picked != null && picked != _toDosProvider.selectedDate) {
