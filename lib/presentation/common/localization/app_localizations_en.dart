@@ -114,4 +114,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get services => 'Services';
+
+  @override
+  String get no_supplier => 'No supplier';
 }

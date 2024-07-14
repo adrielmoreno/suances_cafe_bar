@@ -37,5 +37,6 @@
     "meats": "Meats",
     "ice_cream": "Ice cream",
     "utilities": "Supplies",
-    "services": "Services"
+    "services": "Services",
+    "no_supplier": "No supplier"
 }

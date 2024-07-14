@@ -37,5 +37,6 @@
     "meats": "Carnes",
     "ice_cream": "Helados",
     "utilities": "Suministros",
-    "services": "Servicios"
+    "services": "Servicios",
+    "no_supplier": "Ningún suplidor"
 }

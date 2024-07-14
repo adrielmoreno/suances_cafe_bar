@@ -314,6 +314,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Services'**
   String get services;
+
+  /// No description provided for @no_supplier.
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier'**
+  String get no_supplier;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

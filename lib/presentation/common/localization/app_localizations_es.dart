@@ -114,4 +114,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get services => 'Servicios';
+
+  @override
+  String get no_supplier => 'Ningún suplidor';
 }
