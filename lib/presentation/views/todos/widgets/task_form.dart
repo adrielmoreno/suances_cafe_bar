@@ -68,6 +68,7 @@ class _TaskFormState extends State<TaskForm> {
               child: TextFormField(
                 controller: _toDosProvider.dateController,
                 readOnly: true,
+                onTap: () async => _selectedDatePicker(context),
                 decoration: InputDecoration(
                   prefixIcon: CustomIconButton(
                     iconData: Icons.calendar_month_outlined,

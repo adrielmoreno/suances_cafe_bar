@@ -113,7 +113,7 @@ class _OrderListPageState extends State<OrderListPage> {
             onClear: () {
               focusNode.unfocus();
               _productProvider.searchClean();
-              setFilter(null);
+              // setFilter(null);
             }),
         // ---- Supplier
         productFilteredBySupplier(),
@@ -144,9 +144,27 @@ class _OrderListPageState extends State<OrderListPage> {
         // ---- Suppliers ----
         DropdownMenuItem<Supplier>(
           value: null,
-          child: Container(
-            color: Theme.of(context).colorScheme.inversePrimary,
-            child: const Text('Ningún suplidor'),
+          child: SizedBox(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InkWell(
+                  onTap: () => setFilter(null),
+                  child: const Icon(
+                    color: AppColors.shadowLight,
+                    Icons.restart_alt_outlined,
+                    size: Dimens.semiBig,
+                  ),
+                ),
+                const SizedBox(
+                  width: Dimens.medium,
+                ),
+                Text(
+                  text.no_supplier,
+                  selectionColor: Colors.red,
+                ),
+              ],
+            ),
           ),
         ),
         ..._supProvider.allItems.map((supplier) {
@@ -165,7 +183,7 @@ class _OrderListPageState extends State<OrderListPage> {
                           onTap: () => setFilter(null),
                           child: const Icon(
                             color: AppColors.shadowLight,
-                            Icons.cancel_outlined,
+                            Icons.restart_alt_outlined,
                             size: Dimens.semiBig,
                           ),
                         ),
