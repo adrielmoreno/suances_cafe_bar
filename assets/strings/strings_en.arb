@@ -38,5 +38,17 @@
     "ice_cream": "Ice cream",
     "utilities": "Supplies",
     "services": "Services",
-    "no_supplier": "No supplier"
+    "no_supplier": "No supplier",
+    "incomes": "Incomes",
+    "expenses": "Expenses",
+    "transaction": "Transactions",
+    "month_format": "{date}",
+    "@month_format": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMM"
+            }
+        }
+    }
 }

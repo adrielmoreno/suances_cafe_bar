@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 /// The translations for Spanish Castilian (`es`).
@@ -117,4 +119,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get no_supplier => 'Ningún suplidor';
+
+  @override
+  String get incomes => 'Ingresos';
+
+  @override
+  String get expenses => 'Gastos';
+
+  @override
+  String get transaction => 'Transacciones';
+
+  @override
+  String month_format(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMM(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '$dateString';
+  }
 }

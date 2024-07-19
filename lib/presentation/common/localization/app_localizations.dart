@@ -320,6 +320,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No supplier'**
   String get no_supplier;
+
+  /// No description provided for @incomes.
+  ///
+  /// In en, this message translates to:
+  /// **'Incomes'**
+  String get incomes;
+
+  /// No description provided for @expenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get expenses;
+
+  /// No description provided for @transaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get transaction;
+
+  /// No description provided for @month_format.
+  ///
+  /// In en, this message translates to:
+  /// **'{date}'**
+  String month_format(DateTime date);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

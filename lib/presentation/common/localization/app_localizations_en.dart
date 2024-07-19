@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 /// The translations for English (`en`).
@@ -117,4 +119,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get no_supplier => 'No supplier';
+
+  @override
+  String get incomes => 'Incomes';
+
+  @override
+  String get expenses => 'Expenses';
+
+  @override
+  String get transaction => 'Transactions';
+
+  @override
+  String month_format(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMM(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '$dateString';
+  }
 }

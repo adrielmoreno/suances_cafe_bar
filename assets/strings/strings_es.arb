@@ -38,5 +38,17 @@
     "ice_cream": "Helados",
     "utilities": "Suministros",
     "services": "Servicios",
-    "no_supplier": "Ningún suplidor"
+    "no_supplier": "Ningún suplidor",
+    "incomes": "Ingresos",
+    "expenses": "Gastos",
+    "transaction": "Transacciones",
+    "month_format": "{date}",
+    "@month_format": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMM"
+            }
+        }
+    }
 }
