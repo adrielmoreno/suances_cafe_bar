@@ -1,6 +1,7 @@
 {
     "@@author": "@MorenoCreativo",
     "@@locale": "es",
+    "app_title": "Suances",
     "contactName": "Nombre de contacto",
     "edit": "Editar",
     "errorEmpty": "No puede estar vacío",
@@ -28,5 +29,26 @@
     "todos": "Tareas",
     "orders": "Pedidos",
     "type": "Tipo",
-    "iva": "％ IVA"
+    "iva": "％ IVA",
+    "consumer": "Consumible",
+    "food": "Comida",
+    "drink": "Bebida",
+    "taxes": "Impuestos",
+    "meats": "Carnes",
+    "ice_cream": "Helados",
+    "utilities": "Suministros",
+    "services": "Servicios",
+    "no_supplier": "Ningún suplidor",
+    "incomes": "Ingresos",
+    "expenses": "Gastos",
+    "transaction": "Transacciones",
+    "month_format": "{date}",
+    "@month_format": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMM"
+            }
+        }
+    }
 }

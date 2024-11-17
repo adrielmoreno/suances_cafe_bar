@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class MetricsPage extends StatefulWidget {
   const MetricsPage({
@@ -23,7 +24,7 @@ class _MetricsPageState extends State<MetricsPage> {
             minScale: 1,
             maxScale: 3,
             child: InteractiveViewer(
-              child: Image.asset("assets/images/suances.png"),
+              child: SvgPicture.asset("assets/images/suances_cafe.svg"),
             ),
           ),
         ),

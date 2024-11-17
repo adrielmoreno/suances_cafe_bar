@@ -19,9 +19,9 @@ class CardItemProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-    return SizedBox(
-      child: Card(
-          child: ListTile(
+    return Card(
+      child: ListTile(
+        dense: true,
         onTap: () => context.goNamed(ProductPage.route, extra: product),
         trailing: Container(
           decoration: BoxDecoration(
@@ -32,13 +32,13 @@ class CardItemProduct extends StatelessWidget {
             padding: const EdgeInsets.all(Dimens.small),
             child: Text(
               '${LocalDates.getCurrency()} ${product.pricePlusIVA!.toStringAsFixed(2)}',
-              style: theme.labelLarge,
+              style: theme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
         ),
         title: Text(
           product.name,
-          style: theme.labelLarge,
+          style: theme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -55,7 +55,7 @@ class CardItemProduct extends StatelessWidget {
                   );
                 })
             : null,
-      )),
+      ),
     );
   }
 }

@@ -10,7 +10,7 @@ class MarginContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
-        horizontal: Dimens.big,
+        horizontal: Dimens.medium,
         vertical: Dimens.small,
       ),
       child: child,

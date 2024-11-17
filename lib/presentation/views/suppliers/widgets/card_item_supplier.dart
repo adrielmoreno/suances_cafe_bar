@@ -18,6 +18,7 @@ class CardItemSuplier extends StatelessWidget {
     final color = Theme.of(context).colorScheme;
     return Card(
         child: ListTile(
+      dense: true,
       onTap: () => context.goNamed(SupplierPage.route, extra: supplier),
       leading: Container(
         decoration: BoxDecoration(
@@ -35,7 +36,7 @@ class CardItemSuplier extends StatelessWidget {
       ),
       title: Text(
         supplier.name,
-        style: theme.titleMedium,
+        style: theme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),

@@ -71,7 +71,7 @@ class OrderProvider extends ChangeNotifier {
 
     // image logo
     final Uint8List imageData =
-        (await rootBundle.load('assets/images/suances.png'))
+        (await rootBundle.load('assets/images/suances_cafe.png'))
             .buffer
             .asUint8List();
     final logo = pw.MemoryImage(imageData);
@@ -139,13 +139,14 @@ class OrderProvider extends ChangeNotifier {
 
     final String dir =
         !kIsWeb ? (await getApplicationDocumentsDirectory()).path : 'downloads';
-    final String path = '$dir/purchase_order.pdf';
+    final name = 'order_${DateTime.now().microsecondsSinceEpoch}.pdf';
+    final String path = '$dir/$name';
 
     if (kIsWeb) {
       final blob = html.Blob([await pdf.save()], 'application/pdf');
       final url = html.Url.createObjectUrlFromBlob(blob);
       html.AnchorElement(href: url)
-        ..setAttribute("download", "purchase_order.pdf")
+        ..setAttribute("download", name)
         ..click();
       html.Url.revokeObjectUrl(url);
     } else {

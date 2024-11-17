@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
-import '../../localization/app_localizations.dart';
+import '../../localization/localization_manager.dart';
 
 class InputPhone extends StatelessWidget {
   const InputPhone({
@@ -19,7 +19,6 @@ class InputPhone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return InternationalPhoneNumberInput(
       countries: const ['ES'],
       hintText: text.phone,

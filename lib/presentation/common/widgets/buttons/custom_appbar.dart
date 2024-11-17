@@ -18,6 +18,7 @@ class CustomAppBar extends StatelessWidget {
       leading: showBack! ? const BackButton() : null,
       title: Text(title ?? ''),
       actions: actions,
+      centerTitle: true,
     );
   }
 }

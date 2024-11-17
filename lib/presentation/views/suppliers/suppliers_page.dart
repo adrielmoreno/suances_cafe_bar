@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/entities/supplier.dart';
-import '../../../inject/inject.dart';
+import '../../../external/inject/inject.dart';
 import '../../common/interfaces/resource_state.dart';
-import '../../common/localization/app_localizations.dart';
+import '../../common/localization/localization_manager.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_appbar.dart';
 import '../../common/widgets/inputs/custom_searchbar.dart';
@@ -81,61 +81,55 @@ class _SuppliersPageState extends State<SuppliersPage> {
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () => focusNode.unfocus(),
-        child: SafeArea(
-          child: Column(
-            children: [
-              CustomAppBar(
-                title: text.suppliers,
-                actions: [
-                  PopupMenuButton(
-                    icon: const Icon(Icons.more_vert_outlined),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        onTap: () => context.goNamed(SupplierPage.route),
-                        child: Text(text.newSupplier),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              MarginContainer(
-                child: CustomSearchBar(
-                    focusNode: focusNode,
-                    controller: _supProvider.searchController,
-                    hint: text.supplierName,
-                    onChanged: (value) =>
-                        _supProvider.search(value, (suplier) => suplier.name),
-                    onClear: () {
-                      focusNode.unfocus();
-                      _supProvider.searchClean();
-                    }),
-              ),
-              Expanded(
-                child: SizedBox(
-                  width: Dimens.maxwidth,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: Dimens.big,
+    return GestureDetector(
+      onTap: () => focusNode.unfocus(),
+      child: SafeArea(
+        child: Column(
+          children: [
+            CustomAppBar(
+              title: text.suppliers,
+              actions: [
+                PopupMenuButton(
+                  icon: const Icon(Icons.more_vert_outlined),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      onTap: () => context.goNamed(SupplierPage.route),
+                      child: Text(text.newSupplier),
                     ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: _supProvider.filteredItems.length,
-                      itemBuilder: (context, index) {
-                        return CardItemSuplier(
-                          supplier: _supProvider.filteredItems[index],
-                        );
-                      },
-                    ),
-                  ),
+                  ],
+                ),
+              ],
+            ),
+            MarginContainer(
+              child: CustomSearchBar(
+                  focusNode: focusNode,
+                  controller: _supProvider.searchController,
+                  hint: text.supplierName,
+                  onChanged: (value) =>
+                      _supProvider.search(value, (suplier) => suplier.name),
+                  onClear: () {
+                    focusNode.unfocus();
+                    _supProvider.searchClean();
+                  }),
+            ),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: Dimens.medium,
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: _supProvider.filteredItems.length,
+                  itemBuilder: (context, index) {
+                    return CardItemSuplier(
+                      supplier: _supProvider.filteredItems[index],
+                    );
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

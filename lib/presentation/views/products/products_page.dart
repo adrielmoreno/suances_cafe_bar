@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/entities/product.dart';
-import '../../../inject/inject.dart';
+import '../../../external/inject/inject.dart';
 import '../../common/interfaces/resource_state.dart';
-import '../../common/localization/app_localizations.dart';
+import '../../common/localization/localization_manager.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_appbar.dart';
 import '../../common/widgets/inputs/custom_searchbar.dart';
@@ -103,61 +103,55 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () => focusNode.unfocus(),
-        child: SafeArea(
-          child: Column(
-            children: [
-              CustomAppBar(
-                title: text.products,
-                actions: [
-                  PopupMenuButton(
-                    icon: const Icon(Icons.more_vert_outlined),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        onTap: () => context.goNamed(ProductPage.route),
-                        child: Text(text.newProduct),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              MarginContainer(
-                child: CustomSearchBar(
-                    focusNode: focusNode,
-                    controller: _productProvider.searchController,
-                    hint: text.productName,
-                    onChanged: (value) => _productProvider.search(
-                        value, (product) => product.name),
-                    onClear: () {
-                      focusNode.unfocus();
-                      _productProvider.searchClean();
-                    }),
-              ),
-              Expanded(
-                child: SizedBox(
-                  width: Dimens.maxwidth,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: Dimens.big,
+    return GestureDetector(
+      onTap: () => focusNode.unfocus(),
+      child: SafeArea(
+        child: Column(
+          children: [
+            CustomAppBar(
+              title: text.products,
+              actions: [
+                PopupMenuButton(
+                  icon: const Icon(Icons.more_vert_outlined),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      onTap: () => context.goNamed(ProductPage.route),
+                      child: Text(text.newProduct),
                     ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: _productProvider.filteredItems.length,
-                      itemBuilder: (context, index) {
-                        return CardItemProduct(
-                          product: _productProvider.filteredItems[index],
-                        );
-                      },
-                    ),
-                  ),
+                  ],
+                ),
+              ],
+            ),
+            MarginContainer(
+              child: CustomSearchBar(
+                  focusNode: focusNode,
+                  controller: _productProvider.searchController,
+                  hint: text.productName,
+                  onChanged: (value) =>
+                      _productProvider.search(value, (product) => product.name),
+                  onClear: () {
+                    focusNode.unfocus();
+                    _productProvider.searchClean();
+                  }),
+            ),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: Dimens.medium,
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: _productProvider.filteredItems.length,
+                  itemBuilder: (context, index) {
+                    return CardItemProduct(
+                      product: _productProvider.filteredItems[index],
+                    );
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

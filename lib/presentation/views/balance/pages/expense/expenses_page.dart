@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class BalancePage extends StatefulWidget {
-  const BalancePage({
+class ExpensesPage extends StatefulWidget {
+  const ExpensesPage({
     super.key,
   });
 
-  static const route = '/balance_page';
+  static const route = '/expenses_page';
 
   @override
-  State<BalancePage> createState() => _BalancePageState();
+  State<ExpensesPage> createState() => _ExpensesPageState();
 }
 
-class _BalancePageState extends State<BalancePage> {
+class _ExpensesPageState extends State<ExpensesPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -21,7 +21,7 @@ class _BalancePageState extends State<BalancePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              BalancePage.route,
+              ExpensesPage.route,
             ),
           ],
         ),

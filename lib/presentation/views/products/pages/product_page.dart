@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../data/db_services/firebase_db.dart';
 import '../../../../domain/entities/product.dart';
 import '../../../../domain/entities/supplier.dart';
-import '../../../../inject/inject.dart';
-import '../../../common/localization/app_localizations.dart';
+import '../../../../external/inject/inject.dart';
+import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/app_colors.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/widgets/buttons/custom_appbar.dart';
@@ -94,7 +94,6 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -108,179 +107,184 @@ class _ProductPageState extends State<ProductPage> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: MarginContainer(
-                    child: SizedBox(
-                      width: Dimens.maxwidth,
-                      child: Form(
-                        key: _prodProvider.formKey,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: _prodProvider.nameController,
-                              enabled: _prodProvider.isEnabled,
-                              decoration: InputDecoration(labelText: text.name),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return text.errorName;
-                                }
-                                return null;
-                              },
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    enabled: _prodProvider.isEnabled,
-                                    controller:
-                                        _prodProvider.packagingController,
-                                    decoration: InputDecoration(
-                                        labelText: text.packaging),
-                                    keyboardType: TextInputType.number,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return text.errorEmpty;
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: (value) {
-                                      setUniPrice();
-                                      sePricePlusIVA();
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                  child: TextFormField(
-                                    enabled: _prodProvider.isEnabled,
-                                    controller: _prodProvider.measureController,
-                                    decoration: InputDecoration(
-                                        labelText: text.measure),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return text.errorEmpty;
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                  child: TextFormField(
-                                    controller:
-                                        _prodProvider.pricePackingController,
-                                    enabled: _prodProvider.isEnabled,
-                                    decoration: InputDecoration(
-                                        labelText: text.pricePacking),
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                            decimal: true),
-                                    onChanged: (value) {
-                                      setUniPrice();
-                                      sePricePlusIVA();
-                                    },
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return text.errorEmpty;
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    readOnly: true,
-                                    enabled: _prodProvider.isEnabled,
-                                    controller:
-                                        _prodProvider.priceUnitController,
-                                    decoration: InputDecoration(
-                                        labelText: text.priceUnit),
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: TextFormField(
-                                    enabled: _prodProvider.isEnabled,
-                                    controller: _prodProvider.ivaController,
-                                    decoration:
-                                        InputDecoration(labelText: text.iva),
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _prodProvider.iva =
-                                            double.tryParse(value) ?? 0.0;
-                                      });
-                                      sePricePlusIVA();
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                  child: TextFormField(
-                                    readOnly: true,
-                                    enabled: _prodProvider.isEnabled,
-                                    controller: _prodProvider.pricePlusIVA,
-                                    decoration: InputDecoration(
-                                        labelText: text.lastPrice),
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            DropdownButtonFormField<Supplier>(
-                              isExpanded: true,
-                              value: _prodProvider.lastSupplier,
-                              hint: Text(text.lastSupplier),
-                              items: _supProvider.allItems
-                                  .asMap()
-                                  .entries
-                                  .map((entry) {
-                                final Supplier supplier = entry.value;
-                                return DropdownMenuItem<Supplier>(
+                    child: Form(
+                      key: _prodProvider.formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: _prodProvider.nameController,
+                            enabled: _prodProvider.isEnabled,
+                            decoration: InputDecoration(labelText: text.name),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return text.errorName;
+                              }
+                              return null;
+                            },
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
                                   enabled: _prodProvider.isEnabled,
-                                  value: supplier,
-                                  child: SingleChildScrollView(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          color: (_prodProvider.lastSupplier ==
-                                                  supplier)
-                                              ? AppColors
-                                                  .secondaryContainerLight
-                                              : null,
-                                          child: Text(supplier.name),
-                                        ),
-                                        const Divider()
-                                      ],
-                                    ),
+                                  controller: _prodProvider.packagingController,
+                                  decoration: InputDecoration(
+                                      labelText: text.packaging),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return text.errorEmpty;
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    setUniPrice();
+                                    sePricePlusIVA();
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                width: Dimens.medium,
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  enabled: _prodProvider.isEnabled,
+                                  controller: _prodProvider.measureController,
+                                  decoration:
+                                      InputDecoration(labelText: text.measure),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return text.errorEmpty;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                width: Dimens.medium,
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  controller:
+                                      _prodProvider.pricePackingController,
+                                  enabled: _prodProvider.isEnabled,
+                                  decoration: InputDecoration(
+                                      labelText: text.pricePacking),
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                          decimal: true),
+                                  onChanged: (value) {
+                                    setUniPrice();
+                                    sePricePlusIVA();
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return text.errorEmpty;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  readOnly: true,
+                                  enabled: _prodProvider.isEnabled,
+                                  controller: _prodProvider.priceUnitController,
+                                  decoration: InputDecoration(
+                                      labelText: text.priceUnit),
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                    decimal: true,
                                   ),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _prodProvider.lastSupplier = value;
-                                });
-                              },
-                            )
-                          ],
-                        ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: Dimens.medium,
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  enabled: _prodProvider.isEnabled,
+                                  controller: _prodProvider.ivaController,
+                                  decoration:
+                                      InputDecoration(labelText: text.iva),
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                    decimal: true,
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _prodProvider.iva =
+                                          double.tryParse(value) ?? 0.0;
+                                    });
+                                    sePricePlusIVA();
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                width: Dimens.medium,
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  readOnly: true,
+                                  enabled: _prodProvider.isEnabled,
+                                  controller: _prodProvider.pricePlusIVA,
+                                  decoration: InputDecoration(
+                                      labelText: text.lastPrice),
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                    decimal: true,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          DropdownButtonFormField<Supplier>(
+                            isExpanded: true,
+                            value: _prodProvider.lastSupplier,
+                            hint: Text(text.lastSupplier),
+                            items: _supProvider.allItems
+                                .asMap()
+                                .entries
+                                .map((entry) {
+                              final Supplier supplier = entry.value;
+                              return DropdownMenuItem<Supplier>(
+                                enabled: _prodProvider.isEnabled,
+                                value: supplier,
+                                child: SingleChildScrollView(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        color: (_prodProvider.lastSupplier ==
+                                                supplier)
+                                            ? AppColors.secondaryContainerLight
+                                            : null,
+                                        child: Text(supplier.name),
+                                      ),
+                                      const Divider()
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _prodProvider.lastSupplier = value;
+                              });
+                            },
+                          )
+                        ],
                       ),
                     ),
                   ),

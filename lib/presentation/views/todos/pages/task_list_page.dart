@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../../../../data/db_services/web_db.dart';
-import '../../../../inject/inject.dart';
+import '../../../../external/inject/inject.dart';
 import '../../../common/utils/local_dates.dart';
 import '../provider/to_dos_provider.dart';
 
-class TaskList extends StatefulWidget {
-  const TaskList({
+class TaskListPage extends StatefulWidget {
+  const TaskListPage({
     super.key,
   });
 
   @override
-  State<TaskList> createState() => _TaskListsState();
+  State<TaskListPage> createState() => _TaskListsState();
 }
 
-class _TaskListsState extends State<TaskList> {
+class _TaskListsState extends State<TaskListPage> {
   final _toDosProvider = getIt<ToDosProvider>();
   final _db = getIt<WebDB>();
 

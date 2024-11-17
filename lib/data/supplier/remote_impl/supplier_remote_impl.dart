@@ -1,14 +1,13 @@
 import 'dart:developer';
 
 import '../../../domain/entities/supplier.dart';
-import '../../../inject/inject.dart';
 import '../../db_services/firebase_db.dart';
 import '../../mappable/mappable.dart';
 
 class SupplierRemoteImpl {
-  final _db = getIt<FirebaseDB>();
+  final FirebaseDB _db;
 
-  SupplierRemoteImpl();
+  SupplierRemoteImpl(this._db);
 
   Future<bool> deleteOne(String id) async {
     try {

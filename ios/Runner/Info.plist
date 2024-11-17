@@ -53,5 +53,12 @@
 		<true/>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
+		<key>NSCameraUsageDescription</key>
+		<string>Necesitamos acceso a la cámara para permitirte tomar fotos.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Necesitamos acceso a tu galería para seleccionar fotos.</string>
+		<key>NSUserNotificationUsageDescription</key>
+		<string>Necesitamos permiso para enviarte notificaciones.</string>
+
 	</dict>
 </plist>

@@ -1,7 +1,8 @@
 {
     "@@author": "@MorenoCreativo",
     "@@locale": "en",
-    "contactName": "ContactName",
+    "app_title": "Suances",
+    "contactName": "Contact name",
     "edit": "Edit",
     "errorEmpty": "Cannot be empty",
     "errorName": "Enter a name",
@@ -14,7 +15,7 @@
     "newSupplier": "New supplier",
     "newTask": "New task",
     "packaging": "Packaging",
-    "phone": "contactPhone",
+    "phone": "Contact phone",
     "pricePacking": "€ Price",
     "priceUnit": "€ Unit",
     "product": "Product",
@@ -28,5 +29,26 @@
     "todos": "ToDos",
     "orders": "Orders",
     "type": "Type",
-    "iva": "％ IVA"
+    "iva": "％ IVA",
+    "consumer": "Consumable",
+    "food": "Food",
+    "drink": "Drink",
+    "taxes": "Taxes",
+    "meats": "Meats",
+    "ice_cream": "Ice cream",
+    "utilities": "Supplies",
+    "services": "Services",
+    "no_supplier": "No supplier",
+    "incomes": "Incomes",
+    "expenses": "Expenses",
+    "transaction": "Transactions",
+    "month_format": "{date}",
+    "@month_format": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMM"
+            }
+        }
+    }
 }

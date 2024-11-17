@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../data/mappable/mappable.dart';
 import '../../../../domain/entities/orden.dart';
 import '../../../../domain/entities/supplier.dart';
-import '../../../../inject/inject.dart';
+import '../../../../external/inject/inject.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../provider/order_provider.dart';
 
@@ -37,98 +37,96 @@ class _ItemToOrderState extends State<ItemToOrder> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
 
-    return Column(
-      children: [
-        ListTile(
-          contentPadding: EdgeInsets.zero,
-          leading: Checkbox(
-            value: _orderProvider.selectedProducts.any(
-                (element) => element.product.id == widget.order.product.id),
-            onChanged: (value) {
-              setState(() {
-                value != null && value
-                    ? _orderProvider.addSelectedProduct(widget.order)
-                    : _orderProvider.removeSelectedProduct(widget.order);
-              });
-            },
-          ),
-          title: Text(
-            widget.order.product.name,
-            style: theme.labelLarge,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
           children: [
-            if (widget.order.product.lastSupplier != null)
-              FutureBuilder(
-                future: getObjectFromRef(
-                    widget.order.product.lastSupplier!, Supplier.fromMap),
-                builder: (context, snapshot) {
-                  return Expanded(
-                    child: Text(
-                      snapshot.data?.name ?? "",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.labelSmall,
+            Checkbox(
+              value: _orderProvider.selectedProducts.any(
+                  (element) => element.product.id == widget.order.product.id),
+              onChanged: (value) {
+                setState(() {
+                  value != null && value
+                      ? _orderProvider.addSelectedProduct(widget.order)
+                      : _orderProvider.removeSelectedProduct(widget.order);
+                });
+              },
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.order.product.name,
+                    style:
+                        theme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (widget.order.product.lastSupplier != null)
+                    FutureBuilder(
+                      future: getObjectFromRef(
+                          widget.order.product.lastSupplier!, Supplier.fromMap),
+                      builder: (context, snapshot) {
+                        return Text(
+                          snapshot.data?.name ?? "",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.labelSmall,
+                        );
+                      },
                     ),
-                  );
-                },
+                ],
               ),
-            const SizedBox(width: Dimens.semiBig),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+            Column(
               children: [
                 Text(
                   '${widget.order.product.measure}',
-                  style: theme.labelLarge,
+                  style:
+                      theme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(
-                  width: Dimens.medium,
-                ),
-
-                // Counter
-                getButton(
-                  onTap: () {
-                    setState(() {
-                      if (quantity > 0) {
-                        quantity--;
-                        updateQuantity();
-                      }
-                    });
-                  },
-                  icon: Icons.remove,
-                ),
-                SizedBox(
-                  width: Dimens.semiBig,
-                  child: Text(
-                    '$quantity',
-                    style:
-                        theme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-
-                getButton(
-                  onTap: () {
-                    setState(() {
-                      quantity++;
-                      updateQuantity();
-                    });
-                  },
-                  icon: Icons.add,
-                ),
+                Row(
+                  children: [
+                    getButton(
+                      onTap: () {
+                        setState(() {
+                          if (quantity > 0) {
+                            quantity--;
+                            updateQuantity();
+                          }
+                        });
+                      },
+                      icon: Icons.remove,
+                    ),
+                    SizedBox(
+                      width: Dimens.semiBig,
+                      child: Text(
+                        '$quantity',
+                        style: theme.labelLarge
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    getButton(
+                      onTap: () {
+                        setState(() {
+                          quantity++;
+                          updateQuantity();
+                        });
+                      },
+                      icon: Icons.add,
+                    ),
+                  ],
+                )
               ],
             ),
-            const SizedBox(width: Dimens.semiBig),
           ],
         ),
-        const Divider()
-      ],
+      ),
     );
   }
 

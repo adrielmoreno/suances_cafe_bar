@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../inject/inject.dart';
-import '../../../common/localization/app_localizations.dart';
+import '../../../../external/inject/inject.dart';
+import '../../../common/localization/localization_manager.dart';
 import '../../../common/widgets/margins/margin_container.dart';
 import '../provider/to_dos_provider.dart';
 
@@ -15,28 +15,37 @@ class OptionsPanel extends StatefulWidget {
 }
 
 class _OptionsPanelState extends State<OptionsPanel> {
-  final toDosProvider = getIt<ToDosProvider>();
+  final _toDosProvider = getIt<ToDosProvider>();
+
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return MarginContainer(
-      child: SegmentedButton<TypeToDo>(
-        selected: <TypeToDo>{toDosProvider.todoView},
-        segments: [
-          ButtonSegment(
-            value: TypeToDo.errand,
-            label: Text(text.todos),
-            icon: const Icon(Icons.assignment_outlined),
-          ),
-          ButtonSegment(
-            value: TypeToDo.order,
-            label: Text(text.orders),
-            icon: const Icon(Icons.shopping_cart_checkout_outlined),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: SegmentedButton<TypeToDo>(
+              selected: <TypeToDo>{_toDosProvider.todoView},
+              segments: [
+                ButtonSegment(
+                  value: TypeToDo.errand,
+                  label: Text(text.todos),
+                  icon: const Icon(Icons.assignment_outlined),
+                ),
+                ButtonSegment(
+                  value: TypeToDo.order,
+                  label: Text(text.orders),
+                  icon: const Icon(Icons.shopping_cart_checkout_outlined),
+                ),
+              ],
+              onSelectionChanged: (value) => setState(() {
+                _toDosProvider.todoView = value.first;
+              }),
+            ),
           ),
         ],
-        onSelectionChanged: (value) => setState(() {
-          toDosProvider.todoView = value.first;
-        }),
       ),
     );
   }

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import '../../../../domain/entities/orden.dart';
 import '../../../../domain/entities/product.dart';
 import '../../../../domain/entities/supplier.dart';
-import '../../../../inject/inject.dart';
+import '../../../../external/inject/inject.dart';
 import '../../../common/interfaces/resource_state.dart';
-import '../../../common/localization/app_localizations.dart';
+import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/app_colors.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/widgets/inputs/custom_searchbar.dart';
@@ -16,18 +16,18 @@ import '../../products/view_model/product_view_model.dart';
 import '../../suppliers/provider/supplier_provider.dart';
 import '../../suppliers/view_model/supplier_view_model.dart';
 import '../provider/order_provider.dart';
-import 'item_to_order.dart';
+import '../widgets/item_to_order.dart';
 
-class OrderPanel extends StatefulWidget {
-  const OrderPanel({
+class OrderListPage extends StatefulWidget {
+  const OrderListPage({
     super.key,
   });
 
   @override
-  State<OrderPanel> createState() => _OrderPanelState();
+  State<OrderListPage> createState() => _OrderListPageState();
 }
 
-class _OrderPanelState extends State<OrderPanel> {
+class _OrderListPageState extends State<OrderListPage> {
   final _productViewModel = getIt<ProductViewModel>();
   final _productProvider = getIt<ProductProvider>();
 
@@ -102,14 +102,8 @@ class _OrderPanelState extends State<OrderPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return Column(
       children: [
-        // ---- Supplier
-        productFilteredBySupplier(),
-        const SizedBox(
-          height: Dimens.medium,
-        ),
         CustomSearchBar(
             focusNode: focusNode,
             controller: _productProvider.searchController,
@@ -119,21 +113,23 @@ class _OrderPanelState extends State<OrderPanel> {
             onClear: () {
               focusNode.unfocus();
               _productProvider.searchClean();
+              setFilter(null);
             }),
+        // ---- Supplier
+        productFilteredBySupplier(),
+
         Expanded(
-          child: SizedBox(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              itemCount: _productProvider.filteredItems.length,
-              itemBuilder: (context, index) {
-                final order =
-                    Order(product: _productProvider.filteredItems[index]);
-                return ItemToOrder(
-                  order: order,
-                );
-              },
-            ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemCount: _productProvider.filteredItems.length,
+            itemBuilder: (context, index) {
+              final order =
+                  Order(product: _productProvider.filteredItems[index]);
+              return ItemToOrder(
+                order: order,
+              );
+            },
           ),
         ),
       ],
@@ -148,9 +144,27 @@ class _OrderPanelState extends State<OrderPanel> {
         // ---- Suppliers ----
         DropdownMenuItem<Supplier>(
           value: null,
-          child: Container(
-            color: Theme.of(context).colorScheme.inversePrimary,
-            child: const Text('Ningún suplidor'),
+          child: SizedBox(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InkWell(
+                  onTap: () => setFilter(null),
+                  child: const Icon(
+                    color: AppColors.shadowLight,
+                    Icons.restart_alt_outlined,
+                    size: Dimens.semiBig,
+                  ),
+                ),
+                const SizedBox(
+                  width: Dimens.medium,
+                ),
+                Text(
+                  text.no_supplier,
+                  selectionColor: Colors.red,
+                ),
+              ],
+            ),
           ),
         ),
         ..._supProvider.allItems.map((supplier) {
@@ -169,7 +183,7 @@ class _OrderPanelState extends State<OrderPanel> {
                           onTap: () => setFilter(null),
                           child: const Icon(
                             color: AppColors.shadowLight,
-                            Icons.cancel_outlined,
+                            Icons.restart_alt_outlined,
                             size: Dimens.semiBig,
                           ),
                         ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../inject/inject.dart';
-import '../../../common/localization/app_localizations.dart';
+import '../../../../external/inject/inject.dart';
+import '../../../common/extensions/widget_extensions.dart';
+import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/utils/local_dates.dart';
 import '../../../common/widgets/buttons/custom_icon_button.dart';
@@ -41,24 +42,17 @@ class _TaskFormState extends State<TaskForm> {
     });
   }
 
-  Future<void> _selectedDatePicker(BuildContext context) async {
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 7)),
-    );
-
-    if (picked != null && picked != _toDosProvider.selectedDate) {
+  void updateDate() async {
+    final date = await context.selectedDatePicker();
+    if (date != null && date != _toDosProvider.selectedDate) {
       setState(() {
-        _toDosProvider.selectedDate = picked;
+        _toDosProvider.selectedDate = date;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return MarginContainer(
       child: Form(
         key: _toDosProvider.formKey,
@@ -69,10 +63,11 @@ class _TaskFormState extends State<TaskForm> {
               child: TextFormField(
                 controller: _toDosProvider.dateController,
                 readOnly: true,
+                onTap: () async => updateDate(),
                 decoration: InputDecoration(
                   prefixIcon: CustomIconButton(
                     iconData: Icons.calendar_month_outlined,
-                    onTap: () async => _selectedDatePicker(context),
+                    onTap: () async => updateDate(),
                   ),
                   hintText:
                       LocalDates.dateFormated(_toDosProvider.selectedDate),
