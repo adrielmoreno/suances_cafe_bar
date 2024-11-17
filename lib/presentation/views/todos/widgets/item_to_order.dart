@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../data/mappable/mappable.dart';
 import '../../../../domain/entities/orden.dart';
 import '../../../../domain/entities/supplier.dart';
-import '../../../../inject/inject.dart';
+import '../../../../external/inject/inject.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../provider/order_provider.dart';
 

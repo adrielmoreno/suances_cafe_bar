@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../data/db_services/firebase_db.dart';
 import '../../../../domain/entities/product.dart';
 import '../../../../domain/entities/supplier.dart';
-import '../../../../inject/inject.dart';
+import '../../../../external/inject/inject.dart';
 import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/app_colors.dart';
 import '../../../common/theme/constants/dimens.dart';
@@ -145,6 +145,9 @@ class _ProductPageState extends State<ProductPage> {
                                   },
                                 ),
                               ),
+                              const SizedBox(
+                                width: Dimens.medium,
+                              ),
                               Expanded(
                                 child: TextFormField(
                                   enabled: _prodProvider.isEnabled,
@@ -158,6 +161,9 @@ class _ProductPageState extends State<ProductPage> {
                                     return null;
                                   },
                                 ),
+                              ),
+                              const SizedBox(
+                                width: Dimens.medium,
                               ),
                               Expanded(
                                 child: TextFormField(
@@ -200,6 +206,9 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                                 ),
                               ),
+                              const SizedBox(
+                                width: Dimens.medium,
+                              ),
                               Expanded(
                                 child: TextFormField(
                                   enabled: _prodProvider.isEnabled,
@@ -218,6 +227,9 @@ class _ProductPageState extends State<ProductPage> {
                                     sePricePlusIVA();
                                   },
                                 ),
+                              ),
+                              const SizedBox(
+                                width: Dimens.medium,
                               ),
                               Expanded(
                                 child: TextFormField(

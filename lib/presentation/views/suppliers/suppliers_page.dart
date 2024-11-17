@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/entities/supplier.dart';
-import '../../../inject/inject.dart';
+import '../../../external/inject/inject.dart';
 import '../../common/interfaces/resource_state.dart';
 import '../../common/localization/localization_manager.dart';
 import '../../common/theme/constants/dimens.dart';

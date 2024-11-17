@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../inject/inject.dart';
+import '../../../external/inject/inject.dart';
 import '../../common/localization/localization_manager.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_appbar.dart';
@@ -29,12 +29,20 @@ class _ToDosPageState extends State<ToDosPage> {
   @override
   void initState() {
     super.initState();
-    _toDosProvider.addListener(() {
-      if (mounted) {
-        setState(() {});
-      }
-    });
-    _orderProvider.addListener(() {
+    _toDosProvider.addListener(_updateState);
+
+    _orderProvider.addListener(_updateState);
+  }
+
+  @override
+  void dispose() {
+    _toDosProvider.removeListener(_updateState);
+    _orderProvider.removeListener(_updateState);
+    super.dispose();
+  }
+
+  _updateState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         setState(() {});
       }

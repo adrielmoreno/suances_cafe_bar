@@ -3,7 +3,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../../data/db_services/web_db.dart';
 import '../../../../domain/entities/task.dart';
-import '../../../../inject/inject.dart';
+import '../../../../external/inject/inject.dart';
 
 enum TypeToDo { errand, order }
 

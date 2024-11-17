@@ -2,11 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'external/inject/inject.dart';
+import 'external/router/app_router.dart';
 import 'firebase_options.dart';
-import 'inject/inject.dart';
 import 'presentation/common/localization/app_localizations.dart';
 import 'presentation/common/localization/localization_manager.dart';
-import 'presentation/common/routing/routing.dart';
 import 'presentation/common/theme/app_styles.dart';
 import 'presentation/common/theme/constants/dimens.dart';
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: AppRouter.router,
       title: 'Suances',
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
