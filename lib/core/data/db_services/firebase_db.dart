@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../domain/entities/product.dart';
 import '../../../domain/entities/supplier.dart';
 import '../../../features/incomes/domain/entities/income.dart';
+import '../../../features/products/domain/entities/product.dart';
 
 enum FBCollection {
   suppliers,
@@ -49,7 +49,7 @@ class FirebaseDB {
   }
 
   CollectionReference<Supplier> get suppliers => getCollectionWithConverter(
-        collection: FBCollection.products,
+        collection: FBCollection.suppliers,
         fromMap: (data) => Supplier.fromMap(data),
         toMap: (supplier) => supplier.toMap(),
       );

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../domain/entities/product.dart';
-import '../../../common/theme/constants/app_colors.dart';
-import '../../../common/theme/constants/dimens.dart';
-import '../../../common/utils/local_dates.dart';
-import '../pages/product_page.dart';
+import '../../../../presentation/common/theme/constants/app_colors.dart';
+import '../../../../presentation/common/theme/constants/dimens.dart';
+import '../../../../presentation/common/utils/local_dates.dart';
+import '../../domain/entities/product.dart';
+import '../../pages/product_page.dart';
 
 class CardItemProduct extends StatelessWidget {
   const CardItemProduct({

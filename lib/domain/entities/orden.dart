@@ -1,4 +1,4 @@
-import 'product.dart';
+import '../../features/products/domain/entities/product.dart';
 
 class Order {
   final Product product;

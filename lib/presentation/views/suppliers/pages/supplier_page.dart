@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../app/di/inject.dart';
 import '../../../../domain/entities/supplier.dart';
@@ -218,6 +219,7 @@ class _SupplierPageState extends State<SupplierPage> {
     late Supplier supplier;
     if (_supProvider.formKey.currentState!.validate()) {
       supplier = Supplier(
+          id: const Uuid().v4(),
           name: _supProvider.nameController.text,
           type: _supProvider.type,
           cif: _supProvider.cifController.text,
@@ -227,7 +229,7 @@ class _SupplierPageState extends State<SupplierPage> {
 
       // update
       if (widget.supplier != null) {
-        await _supplierViewModel.updateOne(widget.supplier!.id!, supplier);
+        await _supplierViewModel.updateOne(widget.supplier!.id, supplier);
         _supProvider.isEnabled = !_supProvider.isEnabled;
         setState(() {});
       } else {

@@ -7,6 +7,7 @@ class CustomDecimalInput extends StatelessWidget {
   final String labelText;
   final String hintText;
   final bool readOnly;
+  final bool enabled;
 
   final Function(String)? onChanged;
 
@@ -19,6 +20,7 @@ class CustomDecimalInput extends StatelessWidget {
     required this.labelText,
     this.hintText = "",
     this.readOnly = false,
+    this.enabled = true,
     this.onChanged,
     this.onTap,
     this.prefixIcon,
@@ -29,6 +31,7 @@ class CustomDecimalInput extends StatelessWidget {
     return TextFormField(
       controller: controller,
       readOnly: readOnly,
+      enabled: enabled,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,

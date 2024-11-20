@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import '../../../core/data/db_services/firebase_db.dart';
-import '../../../domain/entities/product.dart';
+import '../../../../core/data/db_services/firebase_db.dart';
+import '../../domain/entities/product.dart';
 
 class ProductRemoteImpl {
   final FirebaseDB _db;
@@ -43,8 +43,7 @@ class ProductRemoteImpl {
 
   Future<Product> saveOne(Product product) async {
     try {
-      await _db.products.add(product);
-
+      await _db.products.doc(product.id).set(product);
       return product;
     } catch (e) {
       log(e.toString());
@@ -52,9 +51,9 @@ class ProductRemoteImpl {
     }
   }
 
-  Future<bool> updateOne(String id, Product product) async {
+  Future<bool> updateOne(Product product) async {
     try {
-      await _db.products.doc(id).update(product.toMap());
+      await _db.products.doc(product.id).update(product.toMap());
       return true;
     } catch (e) {
       return false;

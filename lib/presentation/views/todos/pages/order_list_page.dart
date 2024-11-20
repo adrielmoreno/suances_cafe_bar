@@ -1,18 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../../../../app/di/inject.dart';
 import '../../../../domain/entities/orden.dart';
-import '../../../../domain/entities/product.dart';
 import '../../../../domain/entities/supplier.dart';
+import '../../../../features/products/presentation/view_model/product_view_model.dart';
 import '../../../common/interfaces/resource_state.dart';
 import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/app_colors.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/widgets/inputs/custom_searchbar.dart';
-import '../../products/provider/producto_provider.dart';
-import '../../products/view_model/product_view_model.dart';
 import '../../suppliers/provider/supplier_provider.dart';
 import '../../suppliers/view_model/supplier_view_model.dart';
 import '../provider/order_provider.dart';
@@ -29,7 +25,6 @@ class OrderListPage extends StatefulWidget {
 
 class _OrderListPageState extends State<OrderListPage> {
   final _productViewModel = getIt<ProductViewModel>();
-  final _productProvider = getIt<ProductProvider>();
 
   late FocusNode focusNode;
   final _supplierViewModel = getIt<SupplierViewModel>();
@@ -41,25 +36,11 @@ class _OrderListPageState extends State<OrderListPage> {
   void initState() {
     super.initState();
 
-    _productViewModel.getAllState.stream.listen((event) {
-      switch (event.state) {
-        case Status.LOADING:
-          // TODO: Implement loading...
-          log('Cargando...');
-          break;
-        case Status.COMPLETED:
-          _onProductsChanged(event.data);
-          break;
-        // TODO: Implement error...
-        default:
-      }
-    });
+    _productViewModel.addListener(_onProviderStateChanged);
 
     _productViewModel.getAll();
 
     focusNode = FocusNode();
-
-    _productProvider.addListener(_onProviderStateChanged);
 
     _supplierViewModel.getAllState.stream.listen((event) {
       switch (event.state) {
@@ -82,14 +63,9 @@ class _OrderListPageState extends State<OrderListPage> {
   @override
   void dispose() {
     focusNode.dispose();
-    _productViewModel.close();
-    _productProvider.removeListener(_onProviderStateChanged);
-    super.dispose();
-  }
 
-  void _onProductsChanged(List<Product> list) {
-    _productProvider.allItems = list;
-    _productProvider.filteredItems = list;
+    _productViewModel.removeListener(_onProviderStateChanged);
+    super.dispose();
   }
 
   void _onProviderStateChanged() {
@@ -106,13 +82,13 @@ class _OrderListPageState extends State<OrderListPage> {
       children: [
         CustomSearchBar(
             focusNode: focusNode,
-            controller: _productProvider.searchController,
+            controller: _productViewModel.searchController,
             hint: text.productName,
             onChanged: (value) =>
-                _productProvider.search(value, (product) => product.name),
+                _productViewModel.search(value, (product) => product.name),
             onClear: () {
               focusNode.unfocus();
-              _productProvider.searchClean();
+              _productViewModel.searchClean();
               setFilter(null);
             }),
         // ---- Supplier
@@ -122,10 +98,10 @@ class _OrderListPageState extends State<OrderListPage> {
           child: ListView.builder(
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
-            itemCount: _productProvider.filteredItems.length,
+            itemCount: _productViewModel.filteredItems.length,
             itemBuilder: (context, index) {
               final order =
-                  Order(product: _productProvider.filteredItems[index]);
+                  Order(product: _productViewModel.filteredItems[index]);
               return ItemToOrder(
                 order: order,
               );
@@ -213,9 +189,9 @@ class _OrderListPageState extends State<OrderListPage> {
     setState(() {
       _orderProvider.selectedSupplier = value;
       if (_orderProvider.selectedSupplier == null) {
-        _productProvider.searchClean();
+        _productViewModel.searchClean();
       } else {
-        _productProvider.filteredItems = _productProvider.allItems
+        _productViewModel.filteredItems = _productViewModel.allItems
             .where((product) =>
                 product.lastSupplier!.id == _orderProvider.selectedSupplier!.id)
             .toList();

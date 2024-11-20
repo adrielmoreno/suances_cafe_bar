@@ -43,7 +43,7 @@ class SupplierRemoteImpl {
 
   Future<void> saveOne(Supplier supplier) async {
     try {
-      await _db.suppliers.add(supplier);
+      await _db.suppliers.doc(supplier.id).set(supplier);
     } catch (e) {
       log(e.toString());
     }

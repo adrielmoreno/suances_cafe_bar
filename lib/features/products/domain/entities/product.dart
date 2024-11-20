@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../app/di/inject.dart';
-import '../../core/data/db_services/firebase_db.dart';
-import 'supplier.dart';
+import '../../../../app/di/inject.dart';
+import '../../../../core/data/db_services/firebase_db.dart';
+import '../../../../domain/entities/supplier.dart';
 
 class Product {
   final String id;

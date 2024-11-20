@@ -3,15 +3,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/entities/product.dart';
 import '../../domain/entities/supplier.dart';
 import '../../features/balance/transaction_page.dart';
 import '../../features/incomes/domain/entities/income.dart';
 import '../../features/incomes/presentation/pages/income_page.dart';
+import '../../features/products/domain/entities/product.dart';
+import '../../features/products/pages/product_page.dart';
+import '../../features/products/presentation/products_page.dart';
 import '../../presentation/views/home/home_page.dart';
 import '../../presentation/views/metrics/metrics_page.dart';
-import '../../presentation/views/products/pages/product_page.dart';
-import '../../presentation/views/products/products_page.dart';
 import '../../presentation/views/suppliers/pages/supplier_page.dart';
 import '../../presentation/views/suppliers/suppliers_page.dart';
 import '../../presentation/views/todos/to_dos_page.dart';

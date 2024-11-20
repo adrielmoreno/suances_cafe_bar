@@ -1,5 +1,5 @@
-import '../../../domain/entities/product.dart';
-import '../../../domain/repositories/product_repository.dart';
+import '../../domain/entities/product.dart';
+import '../../domain/repositories/product_repository.dart';
 import '../remote_impl/product_remote_impl.dart';
 
 class ProductDataImpl implements ProductRepository {
@@ -20,6 +20,5 @@ class ProductDataImpl implements ProductRepository {
   Future<Product> saveOne(Product product) => _remoteImpl.saveOne(product);
 
   @override
-  Future<bool> updateOne(String id, Product product) =>
-      _remoteImpl.updateOne(id, product);
+  Future<bool> updateOne(Product product) => _remoteImpl.updateOne(product);
 }

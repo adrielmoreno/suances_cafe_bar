@@ -7,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   final String labelText;
   final String hintText;
   final bool readOnly;
+  final bool enabled;
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
 
@@ -19,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.labelText,
     this.hintText = "",
     this.readOnly = false,
+    this.enabled = true,
     this.keyboardType,
     this.onChanged,
     this.onTap,
@@ -30,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       readOnly: readOnly,
+      enabled: enabled,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
