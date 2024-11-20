@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
+import '../../../../app/di/inject.dart';
 import '../../../../domain/entities/supplier.dart';
-import '../../../../external/inject/inject.dart';
 import '../../../common/enums/type_of_supplier.dart';
 import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/dimens.dart';

@@ -1,8 +1,7 @@
 import 'dart:developer';
 
+import '../../../core/data/db_services/firebase_db.dart';
 import '../../../domain/entities/product.dart';
-import '../../db_services/firebase_db.dart';
-import '../../mappable/mappable.dart';
 
 class ProductRemoteImpl {
   final FirebaseDB _db;
@@ -23,7 +22,7 @@ class ProductRemoteImpl {
       return _db.products
           .orderBy('name')
           .snapshots()
-          .map((list) => getListFromSnapshot(list.docs, Product.fromMap));
+          .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
     } catch (e) {
       log(e.toString());
       return const Stream.empty();
@@ -32,18 +31,10 @@ class ProductRemoteImpl {
 
   Future<List<Product>?> getByIndex(int maxElement) async {
     try {
-      final refs =
+      final data =
           await _db.products.orderBy('name').limitToLast(maxElement).get();
-      final docs = refs.docs;
 
-      if (docs.isNotEmpty) {
-        final products = docs.map((e) {
-          final map = e.data();
-          map['id'] = e.id;
-          return Product.fromMap(map);
-        }).toList();
-        return products;
-      }
+      data.docs.map((e) => e.data()).toList();
     } catch (e) {
       log(e.toString());
     }
@@ -52,8 +43,8 @@ class ProductRemoteImpl {
 
   Future<Product> saveOne(Product product) async {
     try {
-      final docRef = await _db.products.add(product.toMap());
-      product.id = docRef.id;
+      await _db.products.add(product);
+
       return product;
     } catch (e) {
       log(e.toString());

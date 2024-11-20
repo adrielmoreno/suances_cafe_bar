@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../data/mappable/mappable.dart';
 import '../../../../domain/entities/product.dart';
-import '../../../../domain/entities/supplier.dart';
 import '../../../common/theme/constants/app_colors.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../../../common/utils/local_dates.dart';
@@ -31,7 +29,7 @@ class CardItemProduct extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(Dimens.small),
             child: Text(
-              '${LocalDates.getCurrency()} ${product.pricePlusIVA!.toStringAsFixed(2)}',
+              '${LocalDates.getCurrency()} ${product.pricePlusIVA.toStringAsFixed(2)}',
               style: theme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
@@ -44,11 +42,10 @@ class CardItemProduct extends StatelessWidget {
         ),
         subtitle: product.lastSupplier != null
             ? FutureBuilder(
-                future:
-                    getObjectFromRef(product.lastSupplier!, Supplier.fromMap),
+                future: product.lastSupplier?.get(),
                 builder: (context, snapshot) {
                   return Text(
-                    snapshot.data?.name ?? "",
+                    snapshot.data?.data()?.name ?? "",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.labelSmall,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../data/db_services/web_db.dart';
-import '../../../../external/inject/inject.dart';
+import '../../../../app/di/inject.dart';
+import '../../../../core/data/db_services/web_db.dart';
 import '../../../common/utils/local_dates.dart';
 import '../provider/to_dos_provider.dart';
 

@@ -1,8 +1,7 @@
 import 'dart:developer';
 
+import '../../../core/data/db_services/firebase_db.dart';
 import '../../../domain/entities/supplier.dart';
-import '../../db_services/firebase_db.dart';
-import '../../mappable/mappable.dart';
 
 class SupplierRemoteImpl {
   final FirebaseDB _db;
@@ -23,7 +22,7 @@ class SupplierRemoteImpl {
       return _db.suppliers
           .orderBy('name')
           .snapshots()
-          .map((list) => getListFromSnapshot(list.docs, Supplier.fromMap));
+          .map((snapshot) => snapshot.docs.map((e) => e.data()).toList());
     } catch (e) {
       log(e.toString());
       return const Stream.empty();
@@ -32,18 +31,10 @@ class SupplierRemoteImpl {
 
   Future<List<Supplier>?> getByIndex(int maxElement) async {
     try {
-      final refs =
+      final data =
           await _db.suppliers.orderBy('name').limitToLast(maxElement).get();
-      final docs = refs.docs;
 
-      if (docs.isNotEmpty) {
-        final suppliers = docs.map((e) {
-          final map = e.data();
-          map['id'] = e.id;
-          return Supplier.fromMap(map);
-        }).toList();
-        return suppliers;
-      }
+      return data.docs.map((e) => e.data()).toList();
     } catch (e) {
       log(e.toString());
     }
@@ -52,8 +43,7 @@ class SupplierRemoteImpl {
 
   Future<void> saveOne(Supplier supplier) async {
     try {
-      final docRef = await _db.suppliers.add(supplier.toMap());
-      supplier.id = docRef.id;
+      await _db.suppliers.add(supplier);
     } catch (e) {
       log(e.toString());
     }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
-import '../../../../data/db_services/firebase_db.dart';
+import '../../../../app/di/inject.dart';
+import '../../../../core/data/db_services/firebase_db.dart';
 import '../../../../domain/entities/product.dart';
 import '../../../../domain/entities/supplier.dart';
-import '../../../../external/inject/inject.dart';
 import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/app_colors.dart';
 import '../../../common/theme/constants/dimens.dart';
@@ -29,7 +30,6 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   final _productViewModel = getIt<ProductViewModel>();
   final _prodProvider = getIt<ProductProvider>();
-  final _db = getIt<FirebaseDB>();
 
   final _supProvider = getIt<SupplierProvider>();
 
@@ -50,7 +50,7 @@ class _ProductPageState extends State<ProductPage> {
       _prodProvider.packagingController.text =
           currentProduct.packaging.toString();
 
-      _prodProvider.measureController.text = currentProduct.measure ?? '';
+      _prodProvider.measureController.text = currentProduct.measure;
 
       _prodProvider.pricePackingController.text =
           currentProduct.pricePacking.toString();
@@ -331,13 +331,15 @@ class _ProductPageState extends State<ProductPage> {
           packaging: replaceComma(_prodProvider.packagingController.text),
         ),
         lastSupplier: _prodProvider.lastSupplier != null
-            ? await _db.getReference(
-                _prodProvider.lastSupplier!.id!, FBCollection.suppliers)
+            ? getIt<FirebaseDB>().suppliers.doc(_prodProvider.lastSupplier!.id!)
             : null,
+        id: widget.product?.id ?? const Uuid().v4(),
+        createdAt: widget.product?.createdAt ?? DateTime.now(),
+        updatedAt: DateTime.now(),
       );
 
       if (widget.product != null) {
-        await _productViewModel.updateOne(widget.product!.id!, product);
+        await _productViewModel.updateOne(widget.product!.id, product);
         _prodProvider.isEnabled = !_prodProvider.isEnabled;
       } else {
         await _productViewModel.saveOne(product);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../external/inject/inject.dart';
+import '../../../app/di/inject.dart';
 import '../../common/localization/localization_manager.dart';
 import '../../common/theme/constants/dimens.dart';
 import '../../common/widgets/buttons/custom_appbar.dart';

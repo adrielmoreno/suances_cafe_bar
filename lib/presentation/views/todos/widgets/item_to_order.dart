@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../data/mappable/mappable.dart';
+import '../../../../app/di/inject.dart';
 import '../../../../domain/entities/orden.dart';
-import '../../../../domain/entities/supplier.dart';
-import '../../../../external/inject/inject.dart';
 import '../../../common/theme/constants/dimens.dart';
 import '../provider/order_provider.dart';
 
@@ -66,11 +64,10 @@ class _ItemToOrderState extends State<ItemToOrder> {
                   ),
                   if (widget.order.product.lastSupplier != null)
                     FutureBuilder(
-                      future: getObjectFromRef(
-                          widget.order.product.lastSupplier!, Supplier.fromMap),
+                      future: widget.order.product.lastSupplier!.get(),
                       builder: (context, snapshot) {
                         return Text(
-                          snapshot.data?.name ?? "",
+                          snapshot.data?.data()?.name ?? "",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: theme.labelSmall,
@@ -83,7 +80,7 @@ class _ItemToOrderState extends State<ItemToOrder> {
             Column(
               children: [
                 Text(
-                  '${widget.order.product.measure}',
+                  widget.order.product.measure,
                   style:
                       theme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
                   maxLines: 1,

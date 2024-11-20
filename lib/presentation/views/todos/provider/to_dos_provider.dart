@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../data/db_services/web_db.dart';
+import '../../../../app/di/inject.dart';
+import '../../../../core/data/db_services/web_db.dart';
 import '../../../../domain/entities/task.dart';
-import '../../../../external/inject/inject.dart';
 
 enum TypeToDo { errand, order }
 

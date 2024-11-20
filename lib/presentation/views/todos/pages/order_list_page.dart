@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
+import '../../../../app/di/inject.dart';
 import '../../../../domain/entities/orden.dart';
 import '../../../../domain/entities/product.dart';
 import '../../../../domain/entities/supplier.dart';
-import '../../../../external/inject/inject.dart';
 import '../../../common/interfaces/resource_state.dart';
 import '../../../common/localization/localization_manager.dart';
 import '../../../common/theme/constants/app_colors.dart';
