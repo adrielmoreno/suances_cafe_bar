@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/di/inject.dart';
-import '../../../core/data/db_services/firebase_db.dart';
-import '../../../domain/entities/supplier.dart';
-import '../../../presentation/common/localization/localization_manager.dart';
-import '../../../presentation/common/theme/constants/app_colors.dart';
-import '../../../presentation/common/theme/constants/dimens.dart';
-import '../../../presentation/common/widgets/buttons/custom_appbar.dart';
-import '../../../presentation/common/widgets/buttons/text_icon_button.dart';
-import '../../../presentation/common/widgets/inputs/custom_decimal_input.dart';
-import '../../../presentation/common/widgets/inputs/custom_text_form_field.dart';
-import '../../../presentation/common/widgets/margins/margin_container.dart';
-import '../domain/entities/product.dart';
-import '../presentation/view_model/product_view_model.dart';
+import '../../../../app/di/inject.dart';
+import '../../../../core/data/db_services/firebase_db.dart';
+import '../../../../domain/entities/supplier.dart';
+import '../../../../presentation/common/localization/localization_manager.dart';
+import '../../../../presentation/common/theme/constants/app_colors.dart';
+import '../../../../presentation/common/theme/constants/dimens.dart';
+import '../../../../presentation/common/utils/format_helper.dart';
+import '../../../../presentation/common/widgets/buttons/custom_appbar.dart';
+import '../../../../presentation/common/widgets/buttons/text_icon_button.dart';
+import '../../../../presentation/common/widgets/inputs/custom_decimal_input.dart';
+import '../../../../presentation/common/widgets/inputs/custom_text_form_field.dart';
+import '../../../../presentation/common/widgets/margins/margin_container.dart';
+import '../../domain/entities/product.dart';
+import '../view_model/product_view_model.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({
@@ -170,11 +171,12 @@ class _ProductPageState extends State<ProductPage> {
         ),
         Expanded(
           child: CustomDecimalInput(
-            controller: _productViewModel.pricePackingController,
-            enabled: _productViewModel.isEnabled,
-            labelText: text.pricePacking,
-            onChanged: (_) => _productViewModel.updatePrices(),
-          ),
+              controller: _productViewModel.pricePackingController,
+              enabled: _productViewModel.isEnabled,
+              labelText: text.pricePacking,
+              onChanged: (value) {
+                _productViewModel.updatePrices();
+              }),
         ),
       ],
     );
@@ -202,7 +204,7 @@ class _ProductPageState extends State<ProductPage> {
             controller: _productViewModel.ivaController,
             labelText: text.iva,
             onChanged: (value) {
-              _productViewModel.iva = double.tryParse(value) ?? 0.0;
+              _productViewModel.iva = FormatHelper.parseInput(value);
 
               _productViewModel.updatePrices();
             },

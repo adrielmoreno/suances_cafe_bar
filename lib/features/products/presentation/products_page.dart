@@ -7,7 +7,7 @@ import '../../../presentation/common/theme/constants/dimens.dart';
 import '../../../presentation/common/widgets/buttons/custom_appbar.dart';
 import '../../../presentation/common/widgets/inputs/custom_searchbar.dart';
 import '../../../presentation/common/widgets/margins/margin_container.dart';
-import '../pages/product_page.dart';
+import 'pages/product_page.dart';
 import 'view_model/product_view_model.dart';
 import 'widgets/card_item_product.dart';
 

@@ -45,7 +45,7 @@ class CustomDecimalInput extends StatelessWidget {
         if (value == null || value.isEmpty) {
           return text.errorEmpty;
         }
-        if (double.tryParse(value) == null) {
+        if (double.tryParse(value.replaceAll(',', '.')) == null) {
           return 'Por favor, introduce un número válido';
         }
         return null;

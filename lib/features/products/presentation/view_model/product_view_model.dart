@@ -7,6 +7,7 @@ import '../../../../app/di/inject.dart';
 import '../../../../core/data/db_services/firebase_db.dart';
 import '../../../../domain/entities/supplier.dart';
 import '../../../../presentation/common/provider/search_provider.dart';
+import '../../../../presentation/common/utils/format_helper.dart';
 import '../../domain/entities/product.dart';
 import '../../domain/repositories/product_repository.dart';
 
@@ -105,8 +106,9 @@ class ProductViewModel extends SearchProvider<Product> {
   void updatePrices() {
     if (_pricePackingController.text.isNotEmpty &&
         _packagingController.text.isNotEmpty) {
-      final pricePacking = _parseInput(_pricePackingController.text);
-      final packaging = _parseInput(_packagingController.text);
+      final pricePacking =
+          FormatHelper.parseInput(_pricePackingController.text);
+      final packaging = FormatHelper.parseInput(_packagingController.text);
 
       final unitPrice = _calculateUnitPrice(pricePacking, packaging);
       final priceWithIVA = _calculatePriceWithIVA(unitPrice, _iva);
@@ -126,12 +128,12 @@ class ProductViewModel extends SearchProvider<Product> {
     final newProduct = Product(
       id: product?.id ?? const Uuid().v4(),
       name: _nameController.text,
-      packaging: _parseInput(_packagingController.text),
+      packaging: FormatHelper.parseInput(_packagingController.text),
       measure: _measureController.text,
-      pricePacking: _parseInput(_pricePackingController.text),
-      priceUnit: _parseInput(_priceUnitController.text),
+      pricePacking: FormatHelper.parseInput(_pricePackingController.text),
+      priceUnit: FormatHelper.parseInput(_priceUnitController.text),
       iva: _iva,
-      pricePlusIVA: _parseInput(_pricePlusIVA.text),
+      pricePlusIVA: FormatHelper.parseInput(_pricePlusIVA.text),
       lastSupplier: _lastSupplier != null
           ? getIt<FirebaseDB>().suppliers.doc(_lastSupplier!.id)
           : null,
@@ -155,10 +157,6 @@ class ProductViewModel extends SearchProvider<Product> {
   double _calculatePriceWithIVA(double unitPrice, double iva) {
     final taxes = unitPrice * iva / 100;
     return unitPrice + taxes;
-  }
-
-  double _parseInput(String value) {
-    return double.tryParse(value.replaceAll(',', '.')) ?? 0.0;
   }
 
   @override

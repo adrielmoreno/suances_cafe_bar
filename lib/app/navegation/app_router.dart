@@ -8,7 +8,7 @@ import '../../features/balance/transaction_page.dart';
 import '../../features/incomes/domain/entities/income.dart';
 import '../../features/incomes/presentation/pages/income_page.dart';
 import '../../features/products/domain/entities/product.dart';
-import '../../features/products/pages/product_page.dart';
+import '../../features/products/presentation/pages/product_page.dart';
 import '../../features/products/presentation/products_page.dart';
 import '../../presentation/views/home/home_page.dart';
 import '../../presentation/views/metrics/metrics_page.dart';

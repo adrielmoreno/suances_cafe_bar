@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import '../../../../app/di/inject.dart';
 import '../../../../presentation/common/extensions/widget_extensions.dart';
 import '../../../../presentation/common/theme/constants/dimens.dart';
+import '../../../../presentation/common/utils/format_helper.dart';
 import '../../../../presentation/common/utils/local_dates.dart';
 import '../../../../presentation/common/widgets/buttons/custom_appbar.dart';
 import '../../../../presentation/common/widgets/buttons/custom_icon_button.dart';
@@ -78,11 +79,12 @@ class _IncomePageState extends State<IncomePage> {
                             children: [
                               Expanded(
                                 child: CustomDecimalInput(
+                                  controller: _incomeViewModel.cashController,
                                   labelText: '€ Efectivo',
                                   hintText: "0.0",
                                   onChanged: (value) {
                                     _incomeViewModel.cash =
-                                        double.tryParse(value) ?? 0.0;
+                                        FormatHelper.parseInput(value);
 
                                     _incomeViewModel.setTotal();
                                   },
@@ -93,11 +95,12 @@ class _IncomePageState extends State<IncomePage> {
                               ),
                               Expanded(
                                 child: CustomDecimalInput(
+                                  controller: _incomeViewModel.cardController,
                                   labelText: '€ Tarjeta',
                                   hintText: "0.0",
                                   onChanged: (value) {
                                     _incomeViewModel.card =
-                                        double.tryParse(value) ?? 0.0;
+                                        FormatHelper.parseInput(value);
 
                                     _incomeViewModel.setTotal();
                                   },
