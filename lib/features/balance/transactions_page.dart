@@ -70,11 +70,11 @@ class _TransactionsPageState extends State<TransactionsPage> {
                     itemBuilder: (context) => [
                       PopupMenuItem(
                         onTap: () => context.pushNamed(IncomePage.route),
-                        child: const Text("Nueva Ingreso"),
+                        child: Text(text.new_income),
                       ),
                       PopupMenuItem(
                         onTap: () {},
-                        child: const Text("Nuevo Gasto"),
+                        child: Text(text.new_expense),
                       ),
                     ],
                   ),

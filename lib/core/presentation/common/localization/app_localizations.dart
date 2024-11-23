@@ -344,6 +344,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{date}'**
   String month_format(DateTime date);
+
+  /// No description provided for @new_income.
+  ///
+  /// In en, this message translates to:
+  /// **'New income'**
+  String get new_income;
+
+  /// No description provided for @new_expense.
+  ///
+  /// In en, this message translates to:
+  /// **'New expense'**
+  String get new_expense;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

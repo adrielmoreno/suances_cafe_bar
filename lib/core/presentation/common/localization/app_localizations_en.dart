@@ -136,4 +136,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
     return '$dateString';
   }
+
+  @override
+  String get new_income => 'New income';
+
+  @override
+  String get new_expense => 'New expense';
 }

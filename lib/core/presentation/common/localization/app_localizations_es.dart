@@ -136,4 +136,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
     return '$dateString';
   }
+
+  @override
+  String get new_income => 'Nuevo ingreso';
+
+  @override
+  String get new_expense => 'Nuevo gasto';
 }
