@@ -50,5 +50,13 @@
                 "format": "yMMM"
             }
         }
-    }
+    },
+    "new_income": "New income",
+    "new_expense": "New expense",
+    "label_cash": "€ Cash",
+    "label_card": "€ Card",
+    "label_total": "€ Total",
+    "label_date": "Date",
+    "no_image": "No image selected.",
+    "income_saved": "Income saved successfully"
 }
