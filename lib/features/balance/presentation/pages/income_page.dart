@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../app/di/inject.dart';
 import '../../../../core/presentation/common/extensions/widget_extensions.dart';
+import '../../../../core/presentation/common/localization/localization_manager.dart';
 import '../../../../core/presentation/common/theme/constants/dimens.dart';
 import '../../../../core/presentation/common/utils/format_helper.dart';
 import '../../../../core/presentation/common/utils/local_dates.dart';
@@ -60,8 +61,8 @@ class _IncomePageState extends State<IncomePage> {
         child: SafeArea(
           child: Column(
             children: [
-              const CustomAppBar(
-                title: 'Nuevo Ingreso',
+              CustomAppBar(
+                title: text.new_income,
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -78,7 +79,7 @@ class _IncomePageState extends State<IncomePage> {
                               Expanded(
                                 child: CustomDecimalInput(
                                   controller: _incomeForm.cashController,
-                                  labelText: '€ Efectivo',
+                                  labelText: text.label_cash,
                                   hintText: "0.0",
                                   onChanged: (value) {
                                     _incomeForm.cash =
@@ -94,7 +95,7 @@ class _IncomePageState extends State<IncomePage> {
                               Expanded(
                                 child: CustomDecimalInput(
                                   controller: _incomeForm.cardController,
-                                  labelText: '€ Tarjeta',
+                                  labelText: text.label_card,
                                   hintText: "0.0",
                                   onChanged: (value) {
                                     _incomeForm.card =
@@ -112,7 +113,7 @@ class _IncomePageState extends State<IncomePage> {
                             children: [
                               Expanded(
                                 child: CustomDecimalInput(
-                                  labelText: '€ Total',
+                                  labelText: text.label_total,
                                   readOnly: true,
                                   controller: _incomeForm.totalController,
                                 ),
@@ -127,7 +128,7 @@ class _IncomePageState extends State<IncomePage> {
                                   onTap: () async {
                                     updateDate();
                                   },
-                                  labelText: 'Fecha',
+                                  labelText: text.label_date,
                                   prefixIcon: CustomIconButton(
                                     iconData: Icons.calendar_month_outlined,
                                     onTap: () async {
@@ -144,7 +145,7 @@ class _IncomePageState extends State<IncomePage> {
                             height: Dimens.medium,
                           ),
                           _incomeForm.imageFile == null
-                              ? const Text('No se ha seleccionado una imagen.')
+                              ? Text(text.no_image)
                               : Image.file(_incomeForm.imageFile!),
                           const SizedBox(
                             height: Dimens.medium,
@@ -162,11 +163,11 @@ class _IncomePageState extends State<IncomePage> {
                             child: FilledButton(
                               onPressed: () async {
                                 _incomeForm.saveIncome().then(
-                                      (value) => context.showSnackBar(
-                                          "Ingreso guardado correctamente"),
+                                      (value) => context
+                                          .showSnackBar(text.income_saved),
                                     );
                               },
-                              child: const Text('Guardar'),
+                              child: Text(text.save),
                             ),
                           ),
                         ],

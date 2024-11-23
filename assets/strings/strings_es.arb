@@ -52,5 +52,11 @@
         }
     },
     "new_income": "Nuevo ingreso",
-    "new_expense": "Nuevo gasto"
+    "new_expense": "Nuevo gasto",
+    "label_cash": "€ Efectivo",
+    "label_card": "€ Tarjeta",
+    "label_total": "€ Total",
+    "label_date": "Fecha",
+    "no_image": "No se ha seleccionado una imagen.",
+    "income_saved": "Ingreso guardado correctamente"
 }

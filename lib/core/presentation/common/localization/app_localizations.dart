@@ -356,6 +356,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New expense'**
   String get new_expense;
+
+  /// No description provided for @label_cash.
+  ///
+  /// In en, this message translates to:
+  /// **'€ Cash'**
+  String get label_cash;
+
+  /// No description provided for @label_card.
+  ///
+  /// In en, this message translates to:
+  /// **'€ Card'**
+  String get label_card;
+
+  /// No description provided for @label_total.
+  ///
+  /// In en, this message translates to:
+  /// **'€ Total'**
+  String get label_total;
+
+  /// No description provided for @label_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get label_date;
+
+  /// No description provided for @no_image.
+  ///
+  /// In en, this message translates to:
+  /// **'No image selected.'**
+  String get no_image;
+
+  /// No description provided for @income_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Income saved successfully'**
+  String get income_saved;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

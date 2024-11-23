@@ -142,4 +142,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get new_expense => 'Nuevo gasto';
+
+  @override
+  String get label_cash => '€ Efectivo';
+
+  @override
+  String get label_card => '€ Tarjeta';
+
+  @override
+  String get label_total => '€ Total';
+
+  @override
+  String get label_date => 'Fecha';
+
+  @override
+  String get no_image => 'No se ha seleccionado una imagen.';
+
+  @override
+  String get income_saved => 'Ingreso guardado correctamente';
 }
