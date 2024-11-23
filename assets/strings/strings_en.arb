@@ -50,5 +50,7 @@
                 "format": "yMMM"
             }
         }
-    }
+    },
+    "new_income": "New income",
+    "new_expense": "New expense"
 }
