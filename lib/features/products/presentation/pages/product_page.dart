@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 import '../../../../app/di/inject.dart';
 import '../../../../core/data/db_services/firebase_db.dart';
-import '../../../../domain/entities/supplier.dart';
-import '../../../../presentation/common/localization/localization_manager.dart';
-import '../../../../presentation/common/theme/constants/app_colors.dart';
-import '../../../../presentation/common/theme/constants/dimens.dart';
-import '../../../../presentation/common/utils/format_helper.dart';
-import '../../../../presentation/common/widgets/buttons/custom_appbar.dart';
-import '../../../../presentation/common/widgets/buttons/text_icon_button.dart';
-import '../../../../presentation/common/widgets/inputs/custom_decimal_input.dart';
-import '../../../../presentation/common/widgets/inputs/custom_text_form_field.dart';
-import '../../../../presentation/common/widgets/margins/margin_container.dart';
+import '../../../../core/presentation/common/localization/localization_manager.dart';
+import '../../../../core/presentation/common/theme/constants/app_colors.dart';
+import '../../../../core/presentation/common/theme/constants/dimens.dart';
+import '../../../../core/presentation/common/utils/format_helper.dart';
+import '../../../../core/presentation/common/widgets/buttons/custom_appbar.dart';
+import '../../../../core/presentation/common/widgets/buttons/text_icon_button.dart';
+import '../../../../core/presentation/common/widgets/inputs/custom_decimal_input.dart';
+import '../../../../core/presentation/common/widgets/inputs/custom_text_form_field.dart';
+import '../../../../core/presentation/common/widgets/margins/margin_container.dart';
+import '../../../suppliers/domain/entities/supplier.dart';
 import '../../domain/entities/product.dart';
-import '../view_model/product_view_model.dart';
+import '../forms/product_form.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({
@@ -22,52 +22,36 @@ class ProductPage extends StatefulWidget {
   });
   final Product? product;
 
-  static const route = 'product_page';
+  static const route = 'product-page';
 
   @override
   State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final _productViewModel = getIt<ProductViewModel>();
+  final _productForm = getIt<ProductForm>();
 
   @override
   void initState() {
     super.initState();
 
-    _productViewModel.addListener(_onUpdate);
+    _productForm.addListener(_onUpdate);
 
     _initializeFormData();
   }
 
   void _initializeFormData() async {
     if (widget.product != null) {
-      _loadProductData(widget.product!);
-      _productViewModel.isEnabled = false;
+      _productForm.loadProductData(widget.product!);
     } else {
-      _productViewModel.resetForm();
-      _productViewModel.isEnabled = true;
+      _productForm.resetForm();
     }
     _onUpdate();
   }
 
-  _loadProductData(Product product) async {
-    _productViewModel.nameController.text = product.name;
-    _productViewModel.packagingController.text = product.packaging.toString();
-    _productViewModel.measureController.text = product.measure;
-    _productViewModel.pricePackingController.text =
-        product.pricePacking.toString();
-    _productViewModel.priceUnitController.text = product.priceUnit.toString();
-    _productViewModel.ivaController.text = product.iva.toString();
-    _productViewModel.pricePlusIVA.text = product.pricePlusIVA.toString();
-    _productViewModel.lastSupplier = product.lastSupplier != null
-        ? (await product.lastSupplier?.get())?.data()
-        : null;
-  }
-
   @override
   void dispose() {
-    _productViewModel.removeListener(_onUpdate);
+    _productForm.removeListener(_onUpdate);
     super.dispose();
   }
 
@@ -76,6 +60,12 @@ class _ProductPageState extends State<ProductPage> {
       if (mounted) {
         setState(() {});
       }
+    });
+  }
+
+  activeEdit() {
+    setState(() {
+      _productForm.isEnabled = !_productForm.isEnabled;
     });
   }
 
@@ -95,12 +85,12 @@ class _ProductPageState extends State<ProductPage> {
                   physics: const BouncingScrollPhysics(),
                   child: MarginContainer(
                     child: Form(
-                      key: _productViewModel.formKey,
+                      key: _productForm.formKey,
                       child: Column(
                         children: [
                           CustomTextFormField(
-                            controller: _productViewModel.nameController,
-                            enabled: _productViewModel.isEnabled,
+                            controller: _productForm.nameController,
+                            enabled: _productForm.isEnabled,
                             labelText: text.name,
                           ),
                           const SizedBox(height: Dimens.medium),
@@ -113,14 +103,14 @@ class _ProductPageState extends State<ProductPage> {
                           SizedBox(
                             width: double.infinity,
                             child: TextIconButton(
-                              onPressed: () => _productViewModel.isEnabled
-                                  ? _productViewModel
+                              onPressed: () => _productForm.isEnabled
+                                  ? _productForm
                                       .saveOrUpdateProduct(widget.product)
                                   : activeEdit(),
-                              label: _productViewModel.isEnabled
+                              label: _productForm.isEnabled
                                   ? text.save
                                   : text.edit,
-                              iconData: _productViewModel.isEnabled
+                              iconData: _productForm.isEnabled
                                   ? Icons.save_outlined
                                   : Icons.edit_note_outlined,
                             ),
@@ -138,23 +128,17 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  activeEdit() {
-    setState(() {
-      _productViewModel.isEnabled = !_productViewModel.isEnabled;
-    });
-  }
-
-  Row _buildPackagingRow() {
+  Widget _buildPackagingRow() {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Expanded(
           child: CustomDecimalInput(
-            enabled: _productViewModel.isEnabled,
-            controller: _productViewModel.packagingController,
+            enabled: _productForm.isEnabled,
+            controller: _productForm.packagingController,
             labelText: text.packaging,
-            onChanged: (_) => _productViewModel.updatePrices(),
+            onChanged: (_) => _productForm.updatePrices(),
           ),
         ),
         const SizedBox(
@@ -162,8 +146,8 @@ class _ProductPageState extends State<ProductPage> {
         ),
         Expanded(
           child: CustomTextFormField(
-              enabled: _productViewModel.isEnabled,
-              controller: _productViewModel.measureController,
+              enabled: _productForm.isEnabled,
+              controller: _productForm.measureController,
               labelText: text.measure),
         ),
         const SizedBox(
@@ -171,18 +155,18 @@ class _ProductPageState extends State<ProductPage> {
         ),
         Expanded(
           child: CustomDecimalInput(
-              controller: _productViewModel.pricePackingController,
-              enabled: _productViewModel.isEnabled,
+              controller: _productForm.pricePackingController,
+              enabled: _productForm.isEnabled,
               labelText: text.pricePacking,
               onChanged: (value) {
-                _productViewModel.updatePrices();
+                _productForm.updatePrices();
               }),
         ),
       ],
     );
   }
 
-  Row _buildPriceRow() {
+  Widget _buildPriceRow() {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -190,8 +174,8 @@ class _ProductPageState extends State<ProductPage> {
         Expanded(
           child: CustomDecimalInput(
             readOnly: true,
-            enabled: _productViewModel.isEnabled,
-            controller: _productViewModel.priceUnitController,
+            enabled: _productForm.isEnabled,
+            controller: _productForm.priceUnitController,
             labelText: text.priceUnit,
           ),
         ),
@@ -200,13 +184,13 @@ class _ProductPageState extends State<ProductPage> {
         ),
         Expanded(
           child: CustomDecimalInput(
-            enabled: _productViewModel.isEnabled,
-            controller: _productViewModel.ivaController,
+            enabled: _productForm.isEnabled,
+            controller: _productForm.ivaController,
             labelText: text.iva,
             onChanged: (value) {
-              _productViewModel.iva = FormatHelper.parseInput(value);
+              _productForm.iva = FormatHelper.parseInput(value);
 
-              _productViewModel.updatePrices();
+              _productForm.updatePrices();
             },
           ),
         ),
@@ -216,8 +200,8 @@ class _ProductPageState extends State<ProductPage> {
         Expanded(
           child: CustomDecimalInput(
             readOnly: true,
-            enabled: _productViewModel.isEnabled,
-            controller: _productViewModel.pricePlusIVA,
+            enabled: _productForm.isEnabled,
+            controller: _productForm.pricePlusIVA,
             labelText: text.lastPrice,
           ),
         ),
@@ -232,11 +216,11 @@ class _ProductPageState extends State<ProductPage> {
         final suppliers = snap.data?.docs.map((doc) => doc.data()).toList();
         return DropdownButtonFormField<Supplier>(
           isExpanded: true,
-          value: _productViewModel.lastSupplier,
+          value: _productForm.lastSupplier,
           hint: Text(text.lastSupplier),
           items: suppliers?.map((supplier) {
             return DropdownMenuItem<Supplier>(
-              enabled: _productViewModel.isEnabled,
+              enabled: _productForm.isEnabled,
               value: supplier,
               child: SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
@@ -245,7 +229,7 @@ class _ProductPageState extends State<ProductPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      color: (_productViewModel.lastSupplier == supplier)
+                      color: (_productForm.lastSupplier == supplier)
                           ? AppColors.secondaryContainerLight
                           : null,
                       child: Text(supplier.name),
@@ -257,7 +241,7 @@ class _ProductPageState extends State<ProductPage> {
             );
           }).toList(),
           onChanged: (value) {
-            _productViewModel.lastSupplier = value;
+            _productForm.lastSupplier = value;
           },
         );
       },

@@ -3,18 +3,18 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/entities/supplier.dart';
-import '../../features/balance/transaction_page.dart';
-import '../../features/incomes/domain/entities/income.dart';
-import '../../features/incomes/presentation/pages/income_page.dart';
+import '../../core/presentation/common/layouts/home_Layout.dart';
+import '../../features/balance/domain/entities/income.dart';
+import '../../features/balance/presentation/pages/income_page.dart';
+import '../../features/balance/transactions_page.dart';
+import '../../features/metrics/metrics_page.dart';
 import '../../features/products/domain/entities/product.dart';
 import '../../features/products/presentation/pages/product_page.dart';
 import '../../features/products/presentation/products_page.dart';
-import '../../presentation/views/home/home_page.dart';
-import '../../presentation/views/metrics/metrics_page.dart';
-import '../../presentation/views/suppliers/pages/supplier_page.dart';
-import '../../presentation/views/suppliers/suppliers_page.dart';
-import '../../presentation/views/todos/to_dos_page.dart';
+import '../../features/suppliers/domain/entities/supplier.dart';
+import '../../features/suppliers/presentation/pages/supplier_page.dart';
+import '../../features/suppliers/presentation/suppliers_page.dart';
+import '../../features/todos/presentation/to_dos_page.dart';
 
 final _rootKey = GlobalKey<NavigatorState>();
 final _metricsKey = GlobalKey<NavigatorState>();
@@ -29,7 +29,7 @@ class AppRouter {
     initialLocation: MetricsPage.route,
     routes: [
       StatefulShellRoute.indexedStack(
-        builder: (context, state, navShell) => HomePage(
+        builder: (context, state, navShell) => HomeLayout(
           navigationShell: navShell,
         ),
         branches: [
@@ -51,10 +51,10 @@ class AppRouter {
             navigatorKey: _transaction,
             routes: [
               GoRoute(
-                  path: TransactionPage.route,
+                  path: TransactionsPage.route,
                   parentNavigatorKey: _transaction,
                   pageBuilder: (context, state) => const NoTransitionPage(
-                        child: TransactionPage(),
+                        child: TransactionsPage(),
                       ),
                   routes: [
                     GoRoute(

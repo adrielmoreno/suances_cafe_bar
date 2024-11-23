@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../../presentation/views/todos/provider/to_dos_provider.dart';
+import '../../../features/todos/presentation/providers/to_dos_provider.dart';
 
 class LocalDB {
   static const String dbName = 'suances_db.sqlite';

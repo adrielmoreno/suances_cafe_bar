@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import '../presentation/common/localization/app_localizations.dart';
-import '../presentation/common/localization/localization_manager.dart';
-import '../presentation/common/theme/app_styles.dart';
-import '../presentation/common/theme/constants/dimens.dart';
+import '../core/presentation/common/localization/app_localizations.dart';
+import '../core/presentation/common/localization/localization_manager.dart';
+import '../core/presentation/common/theme/app_styles.dart';
+import '../core/presentation/common/theme/constants/dimens.dart';
 import 'navegation/app_router.dart';
 
 class App extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../domain/entities/supplier.dart';
-import '../../../features/incomes/domain/entities/income.dart';
+import '../../../features/balance/domain/entities/income.dart';
 import '../../../features/products/domain/entities/product.dart';
+import '../../../features/suppliers/domain/entities/supplier.dart';
 
 enum FBCollection {
   suppliers,

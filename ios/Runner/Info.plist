@@ -49,10 +49,10 @@
 		<string>Permitir acceso a documentos</string>
 		<key>NSDownloadsFolderUsageDescription</key>
 		<string>Permitir acceso a descargas</string>
-		<key>UIStatusBarHidden</key>
+		<!-- <key>UIStatusBarHidden</key>
 		<true/>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
-		<false/>
+		<false/> -->
 		<key>NSCameraUsageDescription</key>
 		<string>Necesitamos acceso a la cámara para permitirte tomar fotos.</string>
 		<key>NSPhotoLibraryUsageDescription</key>

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../../presentation/views/todos/provider/to_dos_provider.dart';
+import '../../../features/todos/presentation/providers/to_dos_provider.dart';
 
 class WebDB {
   static const String dbName = 'suances_db';

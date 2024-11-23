@@ -7,23 +7,23 @@ import '../../../core/presentation/common/theme/constants/dimens.dart';
 import '../../../core/presentation/common/widgets/buttons/custom_appbar.dart';
 import '../../../core/presentation/common/widgets/inputs/custom_searchbar.dart';
 import '../../../core/presentation/common/widgets/margins/margin_container.dart';
-import 'pages/product_page.dart';
-import 'view_model/product_view_model.dart';
-import 'widgets/card_item_product.dart';
+import 'pages/supplier_page.dart';
+import 'view_model/supplier_view_model.dart';
+import 'widgets/card_item_supplier.dart';
 
-class ProductsPage extends StatefulWidget {
-  const ProductsPage({
+class SuppliersPage extends StatefulWidget {
+  const SuppliersPage({
     super.key,
   });
 
-  static const route = '/products-page';
+  static const route = '/suppliers_page';
 
   @override
-  State<ProductsPage> createState() => _ProductsPageState();
+  State<SuppliersPage> createState() => _SuppliersPageState();
 }
 
-class _ProductsPageState extends State<ProductsPage> {
-  final _productViewModel = getIt<ProductViewModel>();
+class _SuppliersPageState extends State<SuppliersPage> {
+  final _supplierViewModel = getIt<SupplierViewModel>();
 
   late FocusNode focusNode;
 
@@ -31,9 +31,9 @@ class _ProductsPageState extends State<ProductsPage> {
   void initState() {
     super.initState();
 
-    _productViewModel.addListener(_onUpdate);
+    _supplierViewModel.addListener(_onUpdate);
 
-    _productViewModel.getAll();
+    _supplierViewModel.getAll();
 
     focusNode = FocusNode();
   }
@@ -41,7 +41,8 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   void dispose() {
     focusNode.dispose();
-    _productViewModel.removeListener(_onUpdate);
+    _supplierViewModel.dispose();
+    _supplierViewModel.removeListener(_onUpdate);
     super.dispose();
   }
 
@@ -59,14 +60,14 @@ class _ProductsPageState extends State<ProductsPage> {
         child: Column(
           children: [
             CustomAppBar(
-              title: text.products,
+              title: text.suppliers,
               actions: [
                 PopupMenuButton(
                   icon: const Icon(Icons.more_vert_outlined),
                   itemBuilder: (context) => [
                     PopupMenuItem(
-                      onTap: () => context.goNamed(ProductPage.route),
-                      child: Text(text.newProduct),
+                      onTap: () => context.goNamed(SupplierPage.route),
+                      child: Text(text.newSupplier),
                     ),
                   ],
                 ),
@@ -75,13 +76,13 @@ class _ProductsPageState extends State<ProductsPage> {
             MarginContainer(
               child: CustomSearchBar(
                   focusNode: focusNode,
-                  controller: _productViewModel.searchController,
-                  hint: text.productName,
-                  onChanged: (value) => _productViewModel.search(
-                      value, (product) => product.name),
+                  controller: _supplierViewModel.searchController,
+                  hint: text.supplierName,
+                  onChanged: (value) => _supplierViewModel.search(
+                      value, (suplier) => suplier.name),
                   onClear: () {
                     focusNode.unfocus();
-                    _productViewModel.searchClean();
+                    _supplierViewModel.searchClean();
                   }),
             ),
             Expanded(
@@ -92,10 +93,10 @@ class _ProductsPageState extends State<ProductsPage> {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: _productViewModel.filteredItems.length,
+                  itemCount: _supplierViewModel.filteredItems.length,
                   itemBuilder: (context, index) {
-                    return CardItemProduct(
-                      product: _productViewModel.filteredItems[index],
+                    return CardItemSuplier(
+                      supplier: _supplierViewModel.filteredItems[index],
                     );
                   },
                 ),
