@@ -1,8 +1,13 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
+import '../../../../app/di/inject.dart';
 import '../../../../core/presentation/common/utils/local_dates.dart';
+import '../../domain/entities/income.dart';
+import '../viewmodels/income_view_model.dart';
 
 class IncomeForm extends ChangeNotifier {
   // ------ form -------
@@ -69,5 +74,32 @@ class IncomeForm extends ChangeNotifier {
     _cash = null;
     _imageFile = null;
     notifyListeners();
+  }
+
+  Future<void> saveIncome() async {
+    if (formKey.currentState!.validate()) {
+      // correct time
+
+      final dateWithCorrectTime = DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        DateTime.now().hour,
+        DateTime.now().minute,
+        DateTime.now().second,
+      );
+
+      final newIncome = Income(
+        createdAt: Timestamp.fromDate(dateWithCorrectTime),
+        cash: cash ?? 0.0,
+        card: card ?? 0.0,
+        total: (cash ?? 0.0) + (card ?? 0.0),
+        urlImgTicket: imageFile?.path ?? "",
+        id: const Uuid().v4(),
+      );
+
+      await getIt<IncomeViewModel>().saveOne(newIncome, imageFile);
+      resetForm();
+    }
   }
 }

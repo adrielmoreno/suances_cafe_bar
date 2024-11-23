@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../../app/di/inject.dart';
 import '../../../../core/presentation/common/extensions/widget_extensions.dart';
@@ -15,7 +13,6 @@ import '../../../../core/presentation/common/widgets/inputs/custom_text_form_fie
 import '../../../../core/presentation/common/widgets/margins/margin_container.dart';
 import '../../domain/entities/income.dart';
 import '../forms/income_form.dart';
-import '../viewmodels/income_view_model.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({super.key, this.income});
@@ -163,7 +160,12 @@ class _IncomePageState extends State<IncomePage> {
                           SizedBox(
                             width: double.infinity,
                             child: FilledButton(
-                              onPressed: _submitForm,
+                              onPressed: () async {
+                                _incomeForm.saveIncome().then(
+                                      (value) => context.showSnackBar(
+                                          "Ingreso guardado correctamente"),
+                                    );
+                              },
                               child: const Text('Guardar'),
                             ),
                           ),
@@ -186,37 +188,6 @@ class _IncomePageState extends State<IncomePage> {
     if (date != null && date != _incomeForm.selectedDate) {
       setState(() {
         _incomeForm.selectedDate = date;
-      });
-    }
-  }
-
-  void _submitForm() {
-    if (_incomeForm.formKey.currentState!.validate()) {
-      // correct time
-      final selectedDate = _incomeForm.selectedDate;
-      final dateWithCorrectTime = DateTime(
-        selectedDate.year,
-        selectedDate.month,
-        selectedDate.day,
-        DateTime.now().hour,
-        DateTime.now().minute,
-        DateTime.now().second,
-      );
-
-      final newIncome = Income(
-        createdAt: Timestamp.fromDate(dateWithCorrectTime),
-        cash: _incomeForm.cash ?? 0.0,
-        card: _incomeForm.card ?? 0.0,
-        total: (_incomeForm.cash ?? 0.0) + (_incomeForm.card ?? 0.0),
-        urlImgTicket: _incomeForm.imageFile?.path ?? "",
-        id: const Uuid().v4(),
-      );
-
-      getIt<IncomeViewModel>()
-          .saveOne(newIncome, _incomeForm.imageFile)
-          .then((value) {
-        context.showSnackBar("Ingreso guardado correctamente");
-        _incomeForm.resetForm();
       });
     }
   }
