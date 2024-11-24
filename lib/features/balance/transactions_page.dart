@@ -5,8 +5,10 @@ import '../../app/di/inject.dart';
 import '../../core/presentation/common/localization/localization_manager.dart';
 import '../../core/presentation/common/theme/constants/dimens.dart';
 import '../../core/presentation/common/widgets/buttons/custom_appbar.dart';
+import 'presentation/pages/expense_page.dart';
 import 'presentation/pages/income_page.dart';
 import 'presentation/providers/transaction_provider.dart';
+import 'presentation/viewmodels/expense_view_model.dart';
 import 'presentation/viewmodels/income_view_model.dart';
 import 'presentation/views/expenses_view.dart';
 import 'presentation/views/incomes_view.dart';
@@ -25,6 +27,7 @@ class TransactionsPage extends StatefulWidget {
 
 class _TransactionsPageState extends State<TransactionsPage> {
   final _incomeViewModel = getIt<IncomeViewModel>();
+  final _expenseViewModel = getIt<ExpenseViewModel>();
 
   final _trasactionProvider = getIt<TransactionProvider>();
 
@@ -35,14 +38,17 @@ class _TransactionsPageState extends State<TransactionsPage> {
     _trasactionProvider.addListener(_updateState);
 
     _incomeViewModel.addListener(_updateState);
+    _expenseViewModel.addListener(_updateState);
 
     _incomeViewModel.getAll();
+    _expenseViewModel.getAll();
   }
 
   @override
   void dispose() {
     _trasactionProvider.removeListener(_updateState);
     _incomeViewModel.removeListener(_updateState);
+    _expenseViewModel.removeListener(_updateState);
     super.dispose();
   }
 
@@ -73,7 +79,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                         child: Text(text.new_income),
                       ),
                       PopupMenuItem(
-                        onTap: () {},
+                        onTap: () => context.pushNamed(ExpensePage.route),
                         child: Text(text.new_expense),
                       ),
                     ],
@@ -110,7 +116,13 @@ class _TransactionsPageState extends State<TransactionsPage> {
                     margin: const EdgeInsets.symmetric(
                       horizontal: Dimens.medium,
                     ),
-                    child: const ExpensesView(),
+                    child: ExpensesView(
+                      items: _expenseViewModel
+                          .groupExpensesByMonth()
+                          .entries
+                          .map((income) => income.value)
+                          .toList(),
+                    ),
                   ),
                 ),
               ),

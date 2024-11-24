@@ -63,5 +63,9 @@
     "rent": "Rent",
     "salaries": "Salaries",
     "marketing": "Marketing",
-    "transfer": "Transfer"
+    "transfer": "Transfer",
+    "expense_saved": "Expense saved successfully",
+    "category": "Category",
+    "payment_method": "Payment method",
+    "description": "Description"
 }

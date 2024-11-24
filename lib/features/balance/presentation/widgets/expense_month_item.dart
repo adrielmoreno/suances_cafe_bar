@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/presentation/common/localization/localization_manager.dart';
 import '../../../../core/presentation/common/theme/constants/dimens.dart';
 import '../../../../core/presentation/common/widgets/margins/margin_container.dart';
-import '../../domain/entities/montly_income.dart';
+import '../../domain/entities/montly_expense.dart';
 
-class IncomeMonthItem extends StatelessWidget {
-  const IncomeMonthItem({
+class ExpenseMonthItem extends StatelessWidget {
+  const ExpenseMonthItem({
     super.key,
-    required this.income,
+    required this.expense,
   });
 
-  final MonthlyIcome income;
+  final MonthlyExpense expense;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class IncomeMonthItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            income.id,
+            expense.id, // Month label (e.g., "January 2024")
             style: theme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: Dimens.small),
@@ -39,12 +38,11 @@ class IncomeMonthItem extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             backgroundColor: color.secondaryContainer,
-                            child: Icon(Icons.euro_outlined,
+                            child: Icon(Icons.money_outlined,
                                 color: color.secondary),
                           ),
                           const SizedBox(width: Dimens.small),
-                          Text(
-                              '${text.label_cash}: ${income.cash.toStringAsFixed(2)}'),
+                          Text('Cash: \$${expense.cash.toStringAsFixed(2)}'),
                         ],
                       ),
                       const SizedBox(height: Dimens.small),
@@ -56,8 +54,20 @@ class IncomeMonthItem extends StatelessWidget {
                                 color: color.primary),
                           ),
                           const SizedBox(width: Dimens.small),
+                          Text('Card: \$${expense.card.toStringAsFixed(2)}'),
+                        ],
+                      ),
+                      const SizedBox(height: Dimens.small),
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: color.tertiaryContainer,
+                            child: Icon(Icons.account_balance_outlined,
+                                color: color.tertiary),
+                          ),
+                          const SizedBox(width: Dimens.small),
                           Text(
-                              '${text.label_card}: ${income.card.toStringAsFixed(2)}'),
+                              'Transfer: \$${expense.transfer.toStringAsFixed(2)}'),
                         ],
                       ),
                     ],
@@ -72,14 +82,14 @@ class IncomeMonthItem extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          text.label_total,
+                          'Total',
                           style: theme.labelLarge?.copyWith(
                               color: color.onPrimary,
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: Dimens.extraSmall),
                         Text(
-                          (income.total).toStringAsFixed(2),
+                          '\$${(expense.total).toStringAsFixed(2)}',
                           style: theme.labelLarge?.copyWith(
                               color: color.onPrimary,
                               fontWeight: FontWeight.bold),

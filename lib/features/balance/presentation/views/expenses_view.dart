@@ -1,31 +1,24 @@
 import 'package:flutter/material.dart';
 
-class ExpensesView extends StatefulWidget {
+import '../../domain/entities/montly_expense.dart';
+import '../widgets/expense_month_item.dart';
+
+class ExpensesView extends StatelessWidget {
   const ExpensesView({
     super.key,
+    required this.items,
   });
 
-  static const route = '/expenses-view';
+  final List<MonthlyExpense> items;
 
-  @override
-  State<ExpensesView> createState() => _ExpensesViewState();
-}
-
-class _ExpensesViewState extends State<ExpensesView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      extendBody: true,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              ExpensesView.route,
-            ),
-          ],
-        ),
-      ),
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        final item = items[index];
+        return ExpenseMonthItem(expense: item);
+      },
     );
   }
 }

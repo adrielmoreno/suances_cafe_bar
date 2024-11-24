@@ -4,7 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/presentation/common/layouts/home_Layout.dart';
+import '../../features/balance/domain/entities/expense.dart';
 import '../../features/balance/domain/entities/income.dart';
+import '../../features/balance/presentation/pages/expense_page.dart';
 import '../../features/balance/presentation/pages/income_page.dart';
 import '../../features/balance/transactions_page.dart';
 import '../../features/metrics/metrics_page.dart';
@@ -66,6 +68,18 @@ class AppRouter {
                         return NoTransitionPage(
                             child: IncomePage(
                           income: data,
+                        ));
+                      },
+                    ),
+                    GoRoute(
+                      name: ExpensePage.route,
+                      path: ExpensePage.route,
+                      pageBuilder: (context, state) {
+                        // TODO: change by id Income
+                        final data = state.extra as Expense?;
+                        return NoTransitionPage(
+                            child: ExpensePage(
+                          expense: data,
                         ));
                       },
                     ),

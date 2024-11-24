@@ -60,7 +60,7 @@ class IncomeForm extends ChangeNotifier {
 
   void setTotal() {
     _total = (_card ?? 0.0) + (_cash ?? 0.0);
-    _totalController.text = '$_total';
+    _totalController.text = _total!.toStringAsFixed(2);
     notifyListeners();
   }
 

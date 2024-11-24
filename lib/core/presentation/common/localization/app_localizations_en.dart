@@ -175,4 +175,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transfer => 'Transfer';
+
+  @override
+  String get expense_saved => 'Expense saved successfully';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get payment_method => 'Payment method';
+
+  @override
+  String get description => 'Description';
 }

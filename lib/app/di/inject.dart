@@ -3,11 +3,16 @@ import 'package:get_it/get_it.dart';
 import '../../core/data/db_services/firebase_db.dart';
 import '../../core/data/db_services/local_db.dart';
 import '../../core/data/db_services/web_db.dart';
+import '../../features/balance/data/expenses/data_impl/expense_data_impl.dart';
+import '../../features/balance/data/expenses/remote_impl/expense_remote_impl.dart';
 import '../../features/balance/data/incomes/data_impl/income_data_impl.dart';
 import '../../features/balance/data/incomes/remote_impl/income_remote_impl.dart';
+import '../../features/balance/domain/repositories/expense_repository.dart';
 import '../../features/balance/domain/repositories/income_repository.dart';
+import '../../features/balance/presentation/forms/expense_form.dart';
 import '../../features/balance/presentation/forms/income_form.dart';
 import '../../features/balance/presentation/providers/transaction_provider.dart';
+import '../../features/balance/presentation/viewmodels/expense_view_model.dart';
 import '../../features/balance/presentation/viewmodels/income_view_model.dart';
 import '../../features/products/data/data_impl/product_data_impl.dart';
 import '../../features/products/data/remote_impl/product_remote_impl.dart';
@@ -32,6 +37,7 @@ class Inject {
     _setupToDos();
     _setupTransaction();
     _setupIncome();
+    _setupExpense();
   }
 
   _setupSupplier() {
@@ -50,6 +56,16 @@ class Inject {
     getIt.registerFactory<IncomeRepository>(() => IncomeDataImpl(getIt.get()));
     getIt.registerFactory<IncomeViewModel>(() => IncomeViewModel(getIt.get()));
     getIt.registerLazySingleton(() => IncomeForm());
+  }
+
+  _setupExpense() {
+    getIt.registerFactory<ExpenseRemoteImpl>(
+        () => ExpenseRemoteImpl(getIt.get()));
+    getIt
+        .registerFactory<ExpenseRepository>(() => ExpenseDataImpl(getIt.get()));
+    getIt
+        .registerFactory<ExpenseViewModel>(() => ExpenseViewModel(getIt.get()));
+    getIt.registerLazySingleton(() => ExpenseForm());
   }
 
   _setupToDos() {

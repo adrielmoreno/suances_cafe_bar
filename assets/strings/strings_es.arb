@@ -63,5 +63,9 @@
     "rent": "Alquiler",
     "salaries": "Salarios",
     "marketing": "Marketing",
-    "transfer": "Transferencia"
+    "transfer": "Transferencia",
+    "expense_saved": "Gasto guardado correctamente",
+    "category": "Categoría",
+    "payment_method": "Método de pago",
+    "description": "Descripción"
 }
