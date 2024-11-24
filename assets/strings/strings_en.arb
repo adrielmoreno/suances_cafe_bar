@@ -58,5 +58,10 @@
     "label_total": "€ Total",
     "label_date": "Date",
     "no_image": "No image selected.",
-    "income_saved": "Income saved successfully"
+    "income_saved": "Income saved successfully",
+    "maintenance": "Maintenance",
+    "rent": "Rent",
+    "salaries": "Salaries",
+    "marketing": "Marketing",
+    "transfer": "Transfer"
 }
