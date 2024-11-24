@@ -58,5 +58,14 @@
     "label_total": "€ Total",
     "label_date": "Fecha",
     "no_image": "No se ha seleccionado una imagen.",
-    "income_saved": "Ingreso guardado correctamente"
+    "income_saved": "Ingreso guardado correctamente",
+    "maintenance": "Mantenimiento",
+    "rent": "Alquiler",
+    "salaries": "Salarios",
+    "marketing": "Marketing",
+    "transfer": "Transferencia",
+    "expense_saved": "Gasto guardado correctamente",
+    "category": "Categoría",
+    "payment_method": "Método de pago",
+    "description": "Descripción"
 }

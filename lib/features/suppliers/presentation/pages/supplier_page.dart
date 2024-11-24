@@ -6,6 +6,7 @@ import '../../../../core/presentation/common/localization/localization_manager.d
 import '../../../../core/presentation/common/theme/constants/dimens.dart';
 import '../../../../core/presentation/common/widgets/buttons/custom_appbar.dart';
 import '../../../../core/presentation/common/widgets/buttons/text_icon_button.dart';
+import '../../../../core/presentation/common/widgets/inputs/custom_dropdown.dart';
 import '../../../../core/presentation/common/widgets/inputs/custom_text_form_field.dart';
 import '../../../../core/presentation/common/widgets/inputs/input_phone.dart';
 import '../../../../core/presentation/common/widgets/margins/margin_container.dart';
@@ -68,8 +69,6 @@ class _SupplierPageState extends State<SupplierPage> {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
-
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -119,38 +118,19 @@ class _SupplierPageState extends State<SupplierPage> {
                                     width: Dimens.medium,
                                   ),
                                   Expanded(
-                                    child:
-                                        DropdownButtonFormField<TypeOfSupplier>(
+                                    child: CustomDropDown<TypeOfSupplier>(
                                       value: _supplierForm.type,
+                                      items: TypeOfSupplier.values,
+                                      labelText: text.type,
+                                      getItemLabel: (supplier) =>
+                                          supplier.getName,
+                                      getItemIcon: (supplier) =>
+                                          supplier.getIconData,
                                       onChanged: (value) {
-                                        setState(() {
-                                          if (value != null) {
-                                            _supplierForm.type = value;
-                                          }
-                                        });
+                                        if (value != null) {
+                                          _supplierForm.type = value;
+                                        }
                                       },
-                                      items: TypeOfSupplier.values.map((type) {
-                                        return DropdownMenuItem<TypeOfSupplier>(
-                                          enabled: _supplierForm.isEnabled,
-                                          value: type,
-                                          child: Row(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                    Dimens.small),
-                                                child: Icon(
-                                                  type.getIconData,
-                                                  size: Dimens.medium,
-                                                  color: color.primary,
-                                                ),
-                                              ),
-                                              Text(type.getName),
-                                            ],
-                                          ),
-                                        );
-                                      }).toList(),
-                                      decoration:
-                                          InputDecoration(labelText: text.type),
                                     ),
                                   ),
                                 ],

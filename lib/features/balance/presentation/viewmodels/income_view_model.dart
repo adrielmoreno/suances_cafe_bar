@@ -9,8 +9,6 @@ import '../../domain/entities/income.dart';
 import '../../domain/entities/montly_income.dart';
 import '../../domain/repositories/income_repository.dart';
 
-enum TypeToDo { errand, order }
-
 class IncomeViewModel extends SearchProvider<Income> {
   final IncomeRepository _incomeRepository;
 

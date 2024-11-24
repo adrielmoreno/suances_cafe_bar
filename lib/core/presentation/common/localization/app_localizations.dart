@@ -392,6 +392,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Income saved successfully'**
   String get income_saved;
+
+  /// No description provided for @maintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance'**
+  String get maintenance;
+
+  /// No description provided for @rent.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent'**
+  String get rent;
+
+  /// No description provided for @salaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Salaries'**
+  String get salaries;
+
+  /// No description provided for @marketing.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketing'**
+  String get marketing;
+
+  /// No description provided for @transfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get transfer;
+
+  /// No description provided for @expense_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense saved successfully'**
+  String get expense_saved;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @payment_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment method'**
+  String get payment_method;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

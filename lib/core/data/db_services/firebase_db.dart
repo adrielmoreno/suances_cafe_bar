@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../../features/balance/domain/entities/expense.dart';
 import '../../../features/balance/domain/entities/income.dart';
 import '../../../features/products/domain/entities/product.dart';
 import '../../../features/suppliers/domain/entities/supplier.dart';
@@ -66,6 +67,9 @@ class FirebaseDB {
         toMap: (income) => income.toMap(),
       );
 
-  CollectionReference<Map<String, dynamic>> get expenses =>
-      _firestore.collection(FBCollection.expenses.name);
+  CollectionReference<Expense> get expenses => getCollectionWithConverter(
+        collection: FBCollection.expenses,
+        fromMap: (data) => Expense.fromMap(data),
+        toMap: (expense) => expense.toMap(),
+      );
 }
