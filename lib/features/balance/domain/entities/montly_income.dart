@@ -13,6 +13,7 @@ class MonthlyIcome {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'cash': cash,
       'card': card,
       'total': total,

@@ -360,19 +360,19 @@ abstract class AppLocalizations {
   /// No description provided for @label_cash.
   ///
   /// In en, this message translates to:
-  /// **'€ Cash'**
+  /// **'Cash'**
   String get label_cash;
 
   /// No description provided for @label_card.
   ///
   /// In en, this message translates to:
-  /// **'€ Card'**
+  /// **'Card'**
   String get label_card;
 
   /// No description provided for @label_total.
   ///
   /// In en, this message translates to:
-  /// **'€ Total'**
+  /// **'Total'**
   String get label_total;
 
   /// No description provided for @label_date.

@@ -144,13 +144,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_expense => 'New expense';
 
   @override
-  String get label_cash => '€ Cash';
+  String get label_cash => 'Cash';
 
   @override
-  String get label_card => '€ Card';
+  String get label_card => 'Card';
 
   @override
-  String get label_total => '€ Total';
+  String get label_total => 'Total';
 
   @override
   String get label_date => 'Date';

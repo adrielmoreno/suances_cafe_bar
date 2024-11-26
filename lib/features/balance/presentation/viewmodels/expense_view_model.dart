@@ -66,4 +66,27 @@ class ExpenseViewModel extends SearchProvider<Expense> {
       return groupedExpenses;
     });
   }
+
+  Map<String, double> get monthlyExpenses => {
+        for (var entry in groupExpensesByMonth().entries)
+          entry.key: entry.value.total
+      };
+
+  Map<String, Map<String, double>> get expensesByPaymentMethod => {
+        for (var entry in groupExpensesByMonth().entries)
+          entry.key: {
+            text.label_cash: entry.value.cash,
+            text.label_card: entry.value.card,
+            text.transfer: entry.value.transfer,
+          }
+      };
+
+  Map<String, double> get expensesByCategory {
+    final Map<String, double> result = {};
+    for (var expense in allItems) {
+      final category = expense.category.getName;
+      result[category] = (result[category] ?? 0) + expense.total;
+    }
+    return result;
+  }
 }
