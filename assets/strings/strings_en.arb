@@ -67,5 +67,9 @@
     "expense_saved": "Expense saved successfully",
     "category": "Category",
     "payment_method": "Payment method",
-    "description": "Description"
+    "description": "Description",
+    "income_trend": "Income Trend",
+    "income_and_expenses_by_month": "Income and Expenses by Month",
+    "expenses_by_category": "Expenses by Category",
+    "payment_methods_expenses": "Payment Methods - Expenses"
 }

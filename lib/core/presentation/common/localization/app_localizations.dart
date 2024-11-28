@@ -446,6 +446,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Description'**
   String get description;
+
+  /// No description provided for @income_trend.
+  ///
+  /// In en, this message translates to:
+  /// **'Income Trend'**
+  String get income_trend;
+
+  /// No description provided for @income_and_expenses_by_month.
+  ///
+  /// In en, this message translates to:
+  /// **'Income and Expenses by Month'**
+  String get income_and_expenses_by_month;
+
+  /// No description provided for @expenses_by_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses by Category'**
+  String get expenses_by_category;
+
+  /// No description provided for @payment_methods_expenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Methods - Expenses'**
+  String get payment_methods_expenses;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

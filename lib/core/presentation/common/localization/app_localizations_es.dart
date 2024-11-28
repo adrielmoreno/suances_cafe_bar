@@ -187,4 +187,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get description => 'Descripción';
+
+  @override
+  String get income_trend => 'Tendencia de Ingresos';
+
+  @override
+  String get income_and_expenses_by_month => 'Ingresos y Gastos por Mes';
+
+  @override
+  String get expenses_by_category => 'Gastos por Categoría';
+
+  @override
+  String get payment_methods_expenses => 'Métodos de Pago - Gastos';
 }

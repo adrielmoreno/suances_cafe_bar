@@ -67,5 +67,9 @@
     "expense_saved": "Gasto guardado correctamente",
     "category": "Categoría",
     "payment_method": "Método de pago",
-    "description": "Descripción"
+    "description": "Descripción",
+    "income_trend": "Tendencia de Ingresos",
+    "income_and_expenses_by_month": "Ingresos y Gastos por Mes",
+    "expenses_by_category": "Gastos por Categoría",
+    "payment_methods_expenses": "Métodos de Pago - Gastos"
 }

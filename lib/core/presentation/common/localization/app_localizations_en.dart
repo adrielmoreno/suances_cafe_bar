@@ -187,4 +187,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get description => 'Description';
+
+  @override
+  String get income_trend => 'Income Trend';
+
+  @override
+  String get income_and_expenses_by_month => 'Income and Expenses by Month';
+
+  @override
+  String get expenses_by_category => 'Expenses by Category';
+
+  @override
+  String get payment_methods_expenses => 'Payment Methods - Expenses';
 }

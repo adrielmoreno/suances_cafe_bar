@@ -1,67 +1,82 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // light:
-  static const primaryLight = Color(0xFF006E1D);
+  static const primaryLight = Color(0xFF00873E); // Verde suave y moderno
   static const onPrimaryLight = Color(0xFFFFFFFF);
-  static const primaryContainerLight = Color(0xFF99F895);
-  static const onPrimaryContainerLight = Color(0xFF002204);
-  static const secondaryLight = Color(0xFF52634F);
+  static const primaryContainerLight = Color(0xFFB9F7C0); // Verde pastel
+  static const onPrimaryContainerLight = Color(0xFF003112);
+
+  static const secondaryLight = Color(0xFF5C715E); // Verde grisáceo
   static const onSecondaryLight = Color(0xFFFFFFFF);
-  static const secondaryContainerLight = Color(0xFFD5E8CF);
-  static const onSecondaryContainerLight = Color(0xFF101F0F);
-  static const tertiaryLight = Color(0xFF38656A);
+  static const secondaryContainerLight =
+      Color(0xFFD8E8DC); // Verde claro desaturado
+  static const onSecondaryContainerLight = Color(0xFF1C2B20);
+
+  static const tertiaryLight = Color(0xFF2A6E73); // Azul verdoso
   static const onTertiaryLight = Color(0xFFFFFFFF);
-  static const tertiaryContainerLight = Color(0xFFBCEBF1);
-  static const onTertiaryContainerLight = Color(0xFF002023);
-  static const errorLight = Color(0xFFBA1A1A);
-  static const errorContainerLight = Color(0xFFFFDAD6);
+  static const tertiaryContainerLight = Color(0xFFA9D9DC); // Turquesa pastel
+  static const onTertiaryContainerLight = Color(0xFF003638);
+
+  static const errorLight = Color(0xFFE53935); // Rojo vibrante
+  static const errorContainerLight = Color(0xFFFFDAD4);
   static const onErrorLight = Color(0xFFFFFFFF);
   static const onErrorContainerLight = Color(0xFF410002);
-  static const backgroundLight = Color(0xFFFCFDF6);
+
+  static const backgroundLight =
+      Color(0xFFF5FFF8); // Blanco con un toque de verde
   static const onBackgroundLight = Color(0xFF1A1C19);
-  static const surfaceLight = Color(0xFFFCFDF6);
+  static const surfaceLight =
+      Color(0xFFF5FFF8); // Igual que el fondo para consistencia
   static const onSurfaceLight = Color(0xFF1A1C19);
-  static const surfaceVariantLight = Color(0xFFDEE5D8);
-  static const onSurfaceVariantLight = Color(0xFF424940);
-  static const outlineLight = Color(0xFF72796F);
-  static const onInverseSurfaceLight = Color(0xFFF0F1EB);
-  static const inverseSurfaceLight = Color(0xFF2F312D);
-  static const inversePrimaryLight = Color(0xFF7EDB7C);
+
+  static const surfaceVariantLight = Color(0xFFE0E9E1); // Gris claro
+  static const onSurfaceVariantLight = Color(0xFF3A4A3D);
+
+  static const outlineLight = Color(0xFF8F9E92); // Gris suave
+  static const onInverseSurfaceLight = Color(0xFFEFF1EC);
+  static const inverseSurfaceLight = Color(0xFF313633);
+  static const inversePrimaryLight = Color(0xFF80DC82);
   static const shadowLight = Color(0xFF000000);
-  static const surfaceTintLight = Color(0xFF006E1D);
+
+  static const surfaceTintLight = Color(0xFF00873E);
   static const outlineVariantLight = Color(0xFFC2C9BD);
   static const scrimLight = Color(0xFF000000);
 
-  // dark:
-  static const primaryDark = Color(0xFF7EDB7C);
-  static const onPrimaryDark = Color(0xFF00390B);
-  static const primaryContainerDark = Color(0xFF005314);
-  static const onPrimaryContainerDark = Color(0xFF99F895);
-  static const secondaryDark = Color(0xFFB9CCB3);
-  static const onSecondaryDark = Color(0xFF253423);
-  static const secondaryContainerDark = Color(0xFF3B4B38);
-  static const onSecondaryContainerDark = Color(0xFFD5E8CF);
-  static const tertiaryDark = Color(0xFFA0CFD4);
-  static const onTertiaryDark = Color(0xFF00363B);
-  static const tertiaryContainerDark = Color(0xFF1F4D52);
-  static const onTertiaryContainerDark = Color(0xFFBCEBF1);
-  static const errorDark = Color(0xFFFFB4AB);
-  static const errorContainerDark = Color(0xFF93000A);
-  static const onErrorDark = Color(0xFF690005);
-  static const onErrorContainerDark = Color(0xFFFFDAD6);
+  static const primaryDark = Color(0xFF80DC82); // Verde pastel oscuro
+  static const onPrimaryDark = Color(0xFF003910);
+  static const primaryContainerDark = Color(0xFF006E2E);
+  static const onPrimaryContainerDark = Color(0xFFB9F7C0);
+
+  static const secondaryDark = Color(0xFFB3CABB); // Verde grisáceo claro
+  static const onSecondaryDark = Color(0xFF263C2A);
+  static const secondaryContainerDark = Color(0xFF3E5443);
+  static const onSecondaryContainerDark = Color(0xFFD8E8DC);
+
+  static const tertiaryDark = Color(0xFF80CBD1); // Turquesa suave
+  static const onTertiaryDark = Color(0xFF00363A);
+  static const tertiaryContainerDark = Color(0xFF2B5258);
+  static const onTertiaryContainerDark = Color(0xFFA9D9DC);
+
+  static const errorDark = Color(0xFFFF867F); // Rojo más suave
+  static const errorContainerDark = Color(0xFF8B2321);
+  static const onErrorDark = Color(0xFF680005);
+  static const onErrorContainerDark = Color(0xFFFFDAD4);
+
   static const backgroundDark = Color(0xFF1A1C19);
-  static const onBackgroundDark = Color(0xFFE2E3DD);
+  static const onBackgroundDark = Color(0xFFDDE4DD);
   static const surfaceDark = Color(0xFF1A1C19);
-  static const onSurfaceDark = Color(0xFFE2E3DD);
-  static const surfaceVariantDark = Color(0xFF424940);
-  static const onSurfaceVariantDark = Color(0xFFC2C9BD);
-  static const outlineDark = Color(0xFF8C9388);
+  static const onSurfaceDark = Color(0xFFDDE4DD);
+
+  static const surfaceVariantDark = Color(0xFF3A4A3D);
+  static const onSurfaceVariantDark = Color(0xFFB3CABB);
+
+  static const outlineDark = Color(0xFF7A8B80);
   static const onInverseSurfaceDark = Color(0xFF1A1C19);
-  static const inverseSurfaceDark = Color(0xFFE2E3DD);
-  static const inversePrimaryDark = Color(0xFF006E1D);
+  static const inverseSurfaceDark = Color(0xFFDDE4DD);
+  static const inversePrimaryDark = Color(0xFF006E2E);
   static const shadowDark = Color(0xFF000000);
-  static const surfaceTintDark = Color(0xFF7EDB7C);
-  static const outlineVariantDark = Color(0xFF424940);
+
+  static const surfaceTintDark = Color(0xFF80DC82);
+  static const outlineVariantDark = Color(0xFF3A4A3D);
   static const scrimDark = Color(0xFF000000);
 }
