@@ -59,14 +59,10 @@ class _PaymentMethodBarChartState extends State<PaymentMethodBarChart> {
               }).toList(),
               borderData: FlBorderData(
                 show: true,
-                border: Border(
-                  bottom: BorderSide(color: Colors.grey[400]!, width: 1),
-                  left: BorderSide(color: Colors.grey[400]!, width: 1),
-                ),
+                border: Border.all(color: Colors.grey[400]!, width: 1),
               ),
               gridData: FlGridData(
                 show: true,
-                horizontalInterval: 1000,
                 getDrawingHorizontalLine: (value) => FlLine(
                   color: Colors.grey[300],
                   strokeWidth: 1,
