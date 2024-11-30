@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/presentation/common/localization/localization_manager.dart';
 import '../../../../core/presentation/common/theme/constants/app_colors.dart';
 import '../../../../core/presentation/common/theme/constants/dimens.dart';
-import '../../../../core/presentation/common/utils/local_dates.dart';
 import '../../domain/entities/product.dart';
 import '../pages/product_page.dart';
 
@@ -26,11 +26,13 @@ class CardItemProduct extends StatelessWidget {
             color: AppColors.inversePrimaryLight,
             borderRadius: BorderRadius.circular(Dimens.semiBig),
           ),
-          child: Padding(
+          child: Container(
             padding: const EdgeInsets.all(Dimens.small),
+            width: Dimens.giant,
             child: Text(
-              '${LocalDates.getCurrency()} ${product.pricePlusIVA.toStringAsFixed(2)}',
+              text.formattedAmount(product.pricePlusIVA),
               style: theme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
           ),
         ),

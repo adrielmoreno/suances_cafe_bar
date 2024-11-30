@@ -9,6 +9,7 @@ class CustomDropDown<T> extends StatelessWidget {
   final String Function(T) getItemLabel;
   final IconData Function(T)? getItemIcon;
   final ValueChanged<T?> onChanged;
+  final bool enabled;
 
   const CustomDropDown({
     super.key,
@@ -18,6 +19,7 @@ class CustomDropDown<T> extends StatelessWidget {
     required this.getItemLabel,
     this.getItemIcon,
     required this.onChanged,
+    this.enabled = true,
   });
 
   @override
@@ -29,15 +31,19 @@ class CustomDropDown<T> extends StatelessWidget {
       items: items.map((item) {
         return DropdownMenuItem<T>(
           value: item,
+          enabled: enabled,
           child: Row(
             children: [
               if (getItemIcon != null)
-                Padding(
-                  padding: const EdgeInsets.all(Dimens.small),
-                  child: Icon(
-                    getItemIcon!(item),
-                    size: Dimens.medium,
-                    color: color.primary,
+                FittedBox(
+                  fit: BoxFit.cover,
+                  child: Padding(
+                    padding: const EdgeInsets.all(Dimens.small),
+                    child: Icon(
+                      getItemIcon!(item),
+                      size: Dimens.medium,
+                      color: color.primary,
+                    ),
                   ),
                 ),
               Text(getItemLabel(item)),

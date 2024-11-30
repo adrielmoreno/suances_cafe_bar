@@ -8,6 +8,8 @@ import 'package:intl/intl.dart' as intl;
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 
+// ignore_for_file: type=lint
+
 /// Callers can lookup localized strings with an instance of AppLocalizations
 /// returned by `AppLocalizations.of(context)`.
 ///
@@ -360,19 +362,19 @@ abstract class AppLocalizations {
   /// No description provided for @label_cash.
   ///
   /// In en, this message translates to:
-  /// **'€ Cash'**
+  /// **'Cash'**
   String get label_cash;
 
   /// No description provided for @label_card.
   ///
   /// In en, this message translates to:
-  /// **'€ Card'**
+  /// **'Card'**
   String get label_card;
 
   /// No description provided for @label_total.
   ///
   /// In en, this message translates to:
-  /// **'€ Total'**
+  /// **'Total'**
   String get label_total;
 
   /// No description provided for @label_date.
@@ -446,6 +448,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Description'**
   String get description;
+
+  /// No description provided for @income_trend.
+  ///
+  /// In en, this message translates to:
+  /// **'Income Trend'**
+  String get income_trend;
+
+  /// No description provided for @income_and_expenses_by_month.
+  ///
+  /// In en, this message translates to:
+  /// **'Income and Expenses by Month'**
+  String get income_and_expenses_by_month;
+
+  /// No description provided for @expenses_by_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses by Category'**
+  String get expenses_by_category;
+
+  /// No description provided for @payment_methods_expenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Methods - Expenses'**
+  String get payment_methods_expenses;
+
+  /// No description provided for @formattedAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount}'**
+  String formattedAmount(double amount);
+
+  /// No description provided for @formattedAmountChart.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount}'**
+  String formattedAmountChart(double amount);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

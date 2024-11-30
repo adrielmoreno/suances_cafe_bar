@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/presentation/common/extensions/widget_extensions.dart';
 import '../../../../core/presentation/common/localization/localization_manager.dart';
 import '../../../../core/presentation/common/theme/constants/dimens.dart';
 import '../../../../core/presentation/common/widgets/margins/margin_container.dart';
 import '../../domain/entities/montly_income.dart';
+import 'amount_icon_text.dart';
 
 class IncomeMonthItem extends StatelessWidget {
   const IncomeMonthItem({
@@ -22,7 +24,7 @@ class IncomeMonthItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            income.id,
+            income.id.capitalize(),
             style: theme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: Dimens.small),
@@ -32,44 +34,42 @@ class IncomeMonthItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: color.secondaryContainer,
-                            child: Icon(Icons.euro_outlined,
-                                color: color.secondary),
-                          ),
-                          const SizedBox(width: Dimens.small),
-                          Text(
-                              '${text.label_cash}: ${income.cash.toStringAsFixed(2)}'),
-                        ],
-                      ),
-                      const SizedBox(height: Dimens.small),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: color.primaryContainer,
-                            child: Icon(Icons.credit_card_rounded,
-                                color: color.primary),
-                          ),
-                          const SizedBox(width: Dimens.small),
-                          Text(
-                              '${text.label_card}: ${income.card.toStringAsFixed(2)}'),
-                        ],
-                      ),
-                    ],
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AmountIconText(
+                          backgroundColor: color.secondaryContainer,
+                          iconColor: color.secondary,
+                          icon: Icons.euro_outlined,
+                          text:
+                              '${text.label_cash}: ${text.formattedAmount(income.cash)}',
+                        ),
+                        const SizedBox(height: Dimens.small),
+                        AmountIconText(
+                          backgroundColor: color.primaryContainer,
+                          iconColor: color.primary,
+                          icon: Icons.credit_card_rounded,
+                          text:
+                              '${text.label_card}: ${text.formattedAmount(income.card)}',
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: Dimens.small,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        vertical: Dimens.small, horizontal: Dimens.semiMedium),
+                      vertical: Dimens.small,
+                    ),
+                    width: 120,
                     decoration: BoxDecoration(
                       color: color.primary,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           text.label_total,
@@ -78,11 +78,14 @@ class IncomeMonthItem extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: Dimens.extraSmall),
-                        Text(
-                          (income.total).toStringAsFixed(2),
-                          style: theme.labelLarge?.copyWith(
-                              color: color.onPrimary,
-                              fontWeight: FontWeight.bold),
+                        FittedBox(
+                          fit: BoxFit.cover,
+                          child: Text(
+                            text.formattedAmount(income.total),
+                            style: theme.labelLarge?.copyWith(
+                                color: color.onPrimary,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     ),

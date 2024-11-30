@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../../../../features/balance/transactions_page.dart';
+import '../../../../features/metrics/metrics_page.dart';
+import '../../../../features/products/presentation/products_page.dart';
+import '../../../../features/suppliers/presentation/suppliers_page.dart';
+import '../../../../features/todos/presentation/to_dos_page.dart';
 import '../localization/localization_manager.dart';
 import '../theme/constants/app_colors.dart';
 import '../theme/constants/dimens.dart';
@@ -19,6 +25,8 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   int currentIndex = 0;
+  final selectedColor = AppColors.onPrimaryLight;
+  final unSelectedColor = AppColors.onPrimaryLight.withOpacity(0.5);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,16 @@ class _HomeLayoutState extends State<HomeLayout> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
-          child: widget.navigationShell,
+          child: Stack(
+            children: [
+              Row(
+                children: [
+                  if (breakpoint.largerThan(MOBILE)) _getSidebar(),
+                  Expanded(child: widget.navigationShell),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -48,7 +65,6 @@ class _HomeLayoutState extends State<HomeLayout> {
               child: const Icon(Icons.shopping_basket_outlined),
             )
           : null,
-      drawer: breakpoint.largerOrEqualTo(TABLET) ? _getDrawer() : null,
       bottomNavigationBar: breakpoint.isMobile ? _getBottomBar() : null,
     );
   }
@@ -99,40 +115,79 @@ class _HomeLayoutState extends State<HomeLayout> {
     );
   }
 
-  Widget _getDrawer() {
-    return Drawer(
-      width: 300,
+  Widget _getSidebar() {
+    return Container(
+      width: Dimens.sideMenu,
+      height: double.infinity,
+      decoration: buildBoxDecoration(),
       child: ListView(
-        padding: EdgeInsets.zero,
+        physics: const ClampingScrollPhysics(),
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: Text('Drawer Header'),
+          SvgPicture.asset(
+            'assets/images/suances_cafe.svg',
+            height: 200,
+            colorFilter: ColorFilter.mode(
+                AppColors.onPrimaryLight.withOpacity(0.8), BlendMode.srcIn),
+          ),
+          const SizedBox(height: Dimens.huge),
+          ItemDrawerButton(
+            text: getTitle(MetricsPage.route),
+            iconData: Icons.bar_chart,
+            color: currentIndex == 0 ? selectedColor : unSelectedColor,
+            onTap: () => goIndex(0),
           ),
           ItemDrawerButton(
-              iconData: Icons.bar_chart,
-              color: currentIndex == 0 ? AppColors.primaryLight : null,
-              onTap: () => goIndex(0)),
+            text: getTitle(TransactionsPage.route),
+            iconData: Icons.sync_alt_outlined,
+            color: currentIndex == 1 ? selectedColor : unSelectedColor,
+            onTap: () => goIndex(1),
+          ),
           ItemDrawerButton(
-              iconData: Icons.sync_alt_outlined,
-              color: currentIndex == 1 ? AppColors.primaryLight : null,
-              onTap: () => goIndex(1)),
+            text: getTitle(ToDosPage.route),
+            iconData: Icons.shopping_basket_outlined,
+            color: currentIndex == 2 ? selectedColor : unSelectedColor,
+            onTap: () => goIndex(2),
+          ),
           ItemDrawerButton(
-              iconData: Icons.shopping_basket_outlined,
-              color: currentIndex == 2 ? AppColors.primaryLight : null,
-              onTap: () => goIndex(2)),
+            text: getTitle(ProductsPage.route),
+            iconData: Icons.liquor_outlined,
+            color: currentIndex == 3 ? selectedColor : unSelectedColor,
+            onTap: () => goIndex(3),
+          ),
           ItemDrawerButton(
-              iconData: Icons.liquor_outlined,
-              color: currentIndex == 3 ? AppColors.primaryLight : null,
-              onTap: () => goIndex(3)),
-          ItemDrawerButton(
-              iconData: Icons.handshake_outlined,
-              color: currentIndex == 4 ? AppColors.primaryLight : null,
-              onTap: () => goIndex(4)),
+            text: getTitle(SuppliersPage.route),
+            iconData: Icons.handshake_outlined,
+            color: currentIndex == 4 ? selectedColor : unSelectedColor,
+            onTap: () => goIndex(4),
+          ),
         ],
       ),
     );
   }
+
+  String getTitle(String value) {
+    final title = value.replaceFirst('/', '');
+    return title;
+  }
+
+  void _navigateTo(String route) {
+    context.go(route);
+  }
+
+  BoxDecoration buildBoxDecoration() => const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColors.onPrimaryDark,
+            AppColors.primaryContainerDark,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: Dimens.small,
+          )
+        ],
+      );
 }

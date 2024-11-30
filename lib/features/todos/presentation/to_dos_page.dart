@@ -16,7 +16,7 @@ class ToDosPage extends StatefulWidget {
     super.key,
   });
 
-  static const route = '/todos-page';
+  static const route = '/todos';
 
   @override
   State<ToDosPage> createState() => _ToDosPageState();

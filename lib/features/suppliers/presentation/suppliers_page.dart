@@ -16,7 +16,7 @@ class SuppliersPage extends StatefulWidget {
     super.key,
   });
 
-  static const route = '/suppliers_page';
+  static const route = '/suppliers';
 
   @override
   State<SuppliersPage> createState() => _SuppliersPageState();

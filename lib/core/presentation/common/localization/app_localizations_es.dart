@@ -2,6 +2,8 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations.dart';
 
+// ignore_for_file: type=lint
+
 /// The translations for Spanish Castilian (`es`).
 class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
@@ -144,13 +146,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get new_expense => 'Nuevo gasto';
 
   @override
-  String get label_cash => '€ Efectivo';
+  String get label_cash => 'Efectivo';
 
   @override
-  String get label_card => '€ Tarjeta';
+  String get label_card => 'Tarjeta';
 
   @override
-  String get label_total => '€ Total';
+  String get label_total => 'Total';
 
   @override
   String get label_date => 'Fecha';
@@ -187,4 +189,44 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get description => 'Descripción';
+
+  @override
+  String get income_trend => 'Tendencia de Ingresos';
+
+  @override
+  String get income_and_expenses_by_month => 'Ingresos y Gastos por Mes';
+
+  @override
+  String get expenses_by_category => 'Gastos por Categoría';
+
+  @override
+  String get payment_methods_expenses => 'Métodos de Pago - Gastos';
+
+  @override
+  String formattedAmount(double amount) {
+    final intl.NumberFormat amountNumberFormat = intl.NumberFormat.currency(
+      locale: localeName,
+      decimalDigits: 2,
+      name: 'USD',
+      symbol: '\$',
+      customPattern: '¤#,##0.00'
+    );
+    final String amountString = amountNumberFormat.format(amount);
+
+    return '$amountString';
+  }
+
+  @override
+  String formattedAmountChart(double amount) {
+    final intl.NumberFormat amountNumberFormat = intl.NumberFormat.currency(
+      locale: localeName,
+      decimalDigits: 0,
+      name: 'USD',
+      symbol: '\$',
+      customPattern: '¤#,##0'
+    );
+    final String amountString = amountNumberFormat.format(amount);
+
+    return '$amountString';
+  }
 }

@@ -53,9 +53,9 @@
     },
     "new_income": "Nuevo ingreso",
     "new_expense": "Nuevo gasto",
-    "label_cash": "€ Efectivo",
-    "label_card": "€ Tarjeta",
-    "label_total": "€ Total",
+    "label_cash": "Efectivo",
+    "label_card": "Tarjeta",
+    "label_total": "Total",
     "label_date": "Fecha",
     "no_image": "No se ha seleccionado una imagen.",
     "income_saved": "Ingreso guardado correctamente",
@@ -67,5 +67,41 @@
     "expense_saved": "Gasto guardado correctamente",
     "category": "Categoría",
     "payment_method": "Método de pago",
-    "description": "Descripción"
+    "description": "Descripción",
+    "income_trend": "Tendencia de Ingresos",
+    "income_and_expenses_by_month": "Ingresos y Gastos por Mes",
+    "expenses_by_category": "Gastos por Categoría",
+    "payment_methods_expenses": "Métodos de Pago - Gastos",
+    "formattedAmount": "{amount}",
+    "@formattedAmount": {
+        "placeholders": {
+            "amount": {
+                "type": "double",
+                "format": "currency",
+                "example": "1.000,00 €",
+                "optionalParameters": {
+                    "decimalDigits": 2,
+                    "name": "EUR",
+                    "symbol": "€",
+                    "customPattern": "¤#,##0.00"
+                }
+            }
+        }
+    },
+    "formattedAmountChart": "{amount}",
+    "@formattedAmountChart": {
+        "placeholders": {
+            "amount": {
+                "type": "double",
+                "format": "currency",
+                "example": "1.000 €",
+                "optionalParameters": {
+                    "decimalDigits": 0,
+                    "name": "EUR",
+                    "symbol": "€",
+                    "customPattern": "¤#,##0"
+                }
+            }
+        }
+    }
 }

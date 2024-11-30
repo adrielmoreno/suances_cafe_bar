@@ -120,6 +120,7 @@ class _SupplierPageState extends State<SupplierPage> {
                                   Expanded(
                                     child: CustomDropDown<TypeOfSupplier>(
                                       value: _supplierForm.type,
+                                      enabled: _supplierForm.isEnabled,
                                       items: TypeOfSupplier.values,
                                       labelText: text.type,
                                       getItemLabel: (supplier) =>

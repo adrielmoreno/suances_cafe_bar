@@ -12,4 +12,5 @@ class Dimens {
 
   static const double minTableWidth = 840;
   static const double minDesktopWidth = 1280;
+  static const double sideMenu = 250;
 }

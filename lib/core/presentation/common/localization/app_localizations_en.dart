@@ -2,6 +2,8 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations.dart';
 
+// ignore_for_file: type=lint
+
 /// The translations for English (`en`).
 class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
@@ -144,13 +146,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_expense => 'New expense';
 
   @override
-  String get label_cash => '€ Cash';
+  String get label_cash => 'Cash';
 
   @override
-  String get label_card => '€ Card';
+  String get label_card => 'Card';
 
   @override
-  String get label_total => '€ Total';
+  String get label_total => 'Total';
 
   @override
   String get label_date => 'Date';
@@ -187,4 +189,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get description => 'Description';
+
+  @override
+  String get income_trend => 'Income Trend';
+
+  @override
+  String get income_and_expenses_by_month => 'Income and Expenses by Month';
+
+  @override
+  String get expenses_by_category => 'Expenses by Category';
+
+  @override
+  String get payment_methods_expenses => 'Payment Methods - Expenses';
+
+  @override
+  String formattedAmount(double amount) {
+    final intl.NumberFormat amountNumberFormat = intl.NumberFormat.currency(
+      locale: localeName,
+      decimalDigits: 2,
+      name: 'USD',
+      symbol: '\$',
+      customPattern: '¤#,##0.00'
+    );
+    final String amountString = amountNumberFormat.format(amount);
+
+    return '$amountString';
+  }
+
+  @override
+  String formattedAmountChart(double amount) {
+    final intl.NumberFormat amountNumberFormat = intl.NumberFormat.currency(
+      locale: localeName,
+      decimalDigits: 0,
+      name: 'USD',
+      symbol: '\$',
+      customPattern: '¤#,##0'
+    );
+    final String amountString = amountNumberFormat.format(amount);
+
+    return '$amountString';
+  }
 }

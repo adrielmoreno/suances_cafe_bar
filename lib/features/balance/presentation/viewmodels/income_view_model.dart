@@ -14,12 +14,10 @@ class IncomeViewModel extends SearchProvider<Income> {
 
   IncomeViewModel(this._incomeRepository);
 
-  String? errorMessage;
-
   Future<void> getAll() async {
     try {
       _incomeRepository.getAll().listen((event) => allItems = event);
-      errorMessage = null;
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error fetching incomes: ${e.toString()}');
@@ -36,7 +34,7 @@ class IncomeViewModel extends SearchProvider<Income> {
     try {
       await _incomeRepository.saveOne(income, imageFile);
     } catch (e) {
-      errorMessage = 'Error saving income: ${e.toString()}';
+      debugPrint('Error saving income: ${e.toString()}');
     }
   }
 
@@ -60,4 +58,9 @@ class IncomeViewModel extends SearchProvider<Income> {
       return groupedIncomes;
     });
   }
+
+  Map<String, double> get monthlyIncomes => {
+        for (var entry in groupIncomesByMonth().entries)
+          entry.key: entry.value.total
+      };
 }

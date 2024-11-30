@@ -16,7 +16,7 @@ class ProductsPage extends StatefulWidget {
     super.key,
   });
 
-  static const route = '/products-page';
+  static const route = '/products';
 
   @override
   State<ProductsPage> createState() => _ProductsPageState();
