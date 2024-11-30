@@ -97,7 +97,7 @@
                 "example": "$1000",
                 "optionalParameters": {
                     "decimalDigits": 0,
-                    "name": "USDUSD",
+                    "name": "USD",
                     "symbol": "$",
                     "customPattern": "¤#,##0"
                 }
