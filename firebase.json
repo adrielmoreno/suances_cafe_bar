@@ -1,0 +1,31 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "suancescafebar",
+                    "appId": "1:293520199507:android:9bba606f363ab9073a5ba6",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "ios": {
+                "default": {
+                    "projectId": "suancescafebar",
+                    "appId": "1:293520199507:ios:c44bde134b22923d3a5ba6",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "ios/Runner/GoogleService-Info.plist"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "suancescafebar",
+                    "configurations": {
+                        "android": "1:293520199507:android:9bba606f363ab9073a5ba6",
+                        "ios": "1:293520199507:ios:c44bde134b22923d3a5ba6",
+                        "web": "1:293520199507:web:4ef0987c46b9fcbf3a5ba6"
+                    }
+                }
+            }
+        }
+    }
+}
