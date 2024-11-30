@@ -61,12 +61,15 @@ class IncomeMonthItem extends StatelessWidget {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        vertical: Dimens.small, horizontal: Dimens.semiMedium),
+                      vertical: Dimens.small,
+                    ),
+                    width: 120,
                     decoration: BoxDecoration(
                       color: color.primary,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           text.label_total,

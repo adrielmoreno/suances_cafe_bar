@@ -68,8 +68,8 @@ class ExpenseMonthItem extends StatelessWidget {
                     width: Dimens.small,
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: Dimens.small, horizontal: Dimens.semiMedium),
+                    padding: const EdgeInsets.symmetric(vertical: Dimens.small),
+                    width: 120,
                     decoration: BoxDecoration(
                       color: color.primary,
                       borderRadius: BorderRadius.circular(15),
