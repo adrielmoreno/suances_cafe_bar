@@ -129,7 +129,7 @@ class _ExpensePageState extends State<ExpensePage> {
                                   },
                                 ),
                               ),
-                              const SizedBox(width: Dimens.medium),
+                              const SizedBox(width: Dimens.small),
                               Expanded(
                                 child: CustomDropDown<PaymentMethod>(
                                   value: _expenseForm.paymentMethod,

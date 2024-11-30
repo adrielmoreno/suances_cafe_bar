@@ -35,12 +35,15 @@ class CustomDropDown<T> extends StatelessWidget {
           child: Row(
             children: [
               if (getItemIcon != null)
-                Padding(
-                  padding: const EdgeInsets.all(Dimens.small),
-                  child: Icon(
-                    getItemIcon!(item),
-                    size: Dimens.medium,
-                    color: color.primary,
+                FittedBox(
+                  fit: BoxFit.cover,
+                  child: Padding(
+                    padding: const EdgeInsets.all(Dimens.small),
+                    child: Icon(
+                      getItemIcon!(item),
+                      size: Dimens.medium,
+                      color: color.primary,
+                    ),
                   ),
                 ),
               Text(getItemLabel(item)),
