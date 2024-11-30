@@ -213,4 +213,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
     return '$amountString';
   }
+
+  @override
+  String formattedAmountChart(double amount) {
+    final intl.NumberFormat amountNumberFormat = intl.NumberFormat.currency(
+      locale: localeName,
+      decimalDigits: 0,
+      name: 'USDUSD',
+      symbol: '\$',
+      customPattern: '¤#,##0'
+    );
+    final String amountString = amountNumberFormat.format(amount);
+
+    return '$amountString';
+  }
 }

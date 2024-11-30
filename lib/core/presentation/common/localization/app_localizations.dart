@@ -476,6 +476,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{amount}'**
   String formattedAmount(double amount);
+
+  /// No description provided for @formattedAmountChart.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount}'**
+  String formattedAmountChart(double amount);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/presentation/common/localization/localization_manager.dart';
 import '../../balance/domain/entities/income.dart';
 
 class IncomesLineChart extends StatelessWidget {
@@ -64,7 +65,7 @@ class IncomesLineChart extends StatelessWidget {
                       showTitles: true,
                       reservedSize: 40,
                       getTitlesWidget: (value, _) => Text(
-                        value.toInt().toString(),
+                        text.formattedAmountChart(value),
                         style: const TextStyle(
                           fontSize: 10,
                           color: Colors.black54,

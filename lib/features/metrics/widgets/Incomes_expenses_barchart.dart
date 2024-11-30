@@ -138,7 +138,7 @@ class _IncomesExpensesBarChartState extends State<IncomesExpensesBarChart> {
                     showTitles: true,
                     reservedSize: 40,
                     getTitlesWidget: (value, _) => Text(
-                      value.toInt().toString(),
+                      text.formattedAmountChart(value),
                       style:
                           const TextStyle(fontSize: 10, color: Colors.black54),
                     ),

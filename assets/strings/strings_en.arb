@@ -87,5 +87,21 @@
                 }
             }
         }
+    },
+    "formattedAmountChart": "{amount}",
+    "@formattedAmountChart": {
+        "placeholders": {
+            "amount": {
+                "type": "double",
+                "format": "currency",
+                "example": "$1000",
+                "optionalParameters": {
+                    "decimalDigits": 0,
+                    "name": "USDUSD",
+                    "symbol": "$",
+                    "customPattern": "¤#,##0"
+                }
+            }
+        }
     }
 }

@@ -30,9 +30,9 @@ class _PaymentMethodBarChartState extends State<PaymentMethodBarChart> {
             BarChartData(
               barGroups: months.map((month) {
                 final paymentData = widget.expensesByPaymentMethod[month] ?? {};
-                final cash = paymentData[text.label_cash] ?? 0;
-                final card = paymentData[text.label_card] ?? 0;
-                final transfer = paymentData[text.transfer] ?? 0;
+                final cash = paymentData[text.label_cash]?.truncate() ?? 0;
+                final card = paymentData[text.label_card]?.truncate() ?? 0;
+                final transfer = paymentData[text.transfer]?.truncate() ?? 0;
 
                 final index = months.indexOf(month);
 
@@ -93,7 +93,7 @@ class _PaymentMethodBarChartState extends State<PaymentMethodBarChart> {
                     showTitles: true,
                     reservedSize: 40,
                     getTitlesWidget: (value, _) => Text(
-                      value.toInt().toString(),
+                      text.formattedAmountChart(value),
                       style: const TextStyle(
                         fontSize: 10,
                         color: Colors.black54,
