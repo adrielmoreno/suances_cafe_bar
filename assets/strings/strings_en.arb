@@ -71,5 +71,21 @@
     "income_trend": "Income Trend",
     "income_and_expenses_by_month": "Income and Expenses by Month",
     "expenses_by_category": "Expenses by Category",
-    "payment_methods_expenses": "Payment Methods - Expenses"
+    "payment_methods_expenses": "Payment Methods - Expenses",
+    "formattedAmount": "{amount}",
+    "@formattedAmount": {
+        "placeholders": {
+            "amount": {
+                "type": "double",
+                "format": "currency",
+                "example": "$1000.00",
+                "optionalParameters": {
+                    "decimalDigits": 2,
+                    "name": "USD",
+                    "symbol": "$",
+                    "customPattern": "¤#,##0.00"
+                }
+            }
+        }
+    }
 }

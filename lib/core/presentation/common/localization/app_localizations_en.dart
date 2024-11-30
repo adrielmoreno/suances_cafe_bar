@@ -199,4 +199,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get payment_methods_expenses => 'Payment Methods - Expenses';
+
+  @override
+  String formattedAmount(double amount) {
+    final intl.NumberFormat amountNumberFormat = intl.NumberFormat.currency(
+      locale: localeName,
+      decimalDigits: 2,
+      name: 'USD',
+      symbol: '\$',
+      customPattern: '¤#,##0.00'
+    );
+    final String amountString = amountNumberFormat.format(amount);
+
+    return '$amountString';
+  }
 }

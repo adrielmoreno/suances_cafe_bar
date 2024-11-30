@@ -15,7 +15,7 @@ class MetricsPage extends StatefulWidget {
     super.key,
   });
 
-  static const route = '/metrics-page';
+  static const route = '/dashboard';
 
   @override
   State<MetricsPage> createState() => _MetricsPageState();

@@ -26,6 +26,8 @@ class ExpenseForm extends ChangeNotifier {
   double? _total;
   Supplier? _supplier;
 
+  bool _isEnabled = true;
+
   TypeOfExpense _category = TypeOfExpense.food;
   PaymentMethod _paymentMethod = PaymentMethod.card;
 
@@ -38,6 +40,7 @@ class ExpenseForm extends ChangeNotifier {
   DateTime get selectedDate => _selectedDate;
   double? get total => _total;
   Supplier? get supplier => _supplier;
+  bool get isEnabled => _isEnabled;
 
   TypeOfExpense get category => _category;
   PaymentMethod get paymentMethod => _paymentMethod;
@@ -70,6 +73,11 @@ class ExpenseForm extends ChangeNotifier {
 
   set supplier(Supplier? value) {
     _supplier = value;
+    notifyListeners();
+  }
+
+  set isEnabled(bool value) {
+    _isEnabled = value;
     notifyListeners();
   }
 

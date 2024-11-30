@@ -116,6 +116,7 @@ class _ExpensePageState extends State<ExpensePage> {
                               Expanded(
                                 child: CustomDropDown<TypeOfExpense>(
                                   value: _expenseForm.category,
+                                  enabled: _expenseForm.isEnabled,
                                   items: TypeOfExpense.values,
                                   labelText: text.category,
                                   getItemLabel: (category) => category.getName,
@@ -132,6 +133,7 @@ class _ExpensePageState extends State<ExpensePage> {
                               Expanded(
                                 child: CustomDropDown<PaymentMethod>(
                                   value: _expenseForm.paymentMethod,
+                                  enabled: _expenseForm.isEnabled,
                                   items: PaymentMethod.values,
                                   labelText: text.payment_method,
                                   getItemLabel: (method) => method.getName,

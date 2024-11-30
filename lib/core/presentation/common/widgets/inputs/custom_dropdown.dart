@@ -9,6 +9,7 @@ class CustomDropDown<T> extends StatelessWidget {
   final String Function(T) getItemLabel;
   final IconData Function(T)? getItemIcon;
   final ValueChanged<T?> onChanged;
+  final bool enabled;
 
   const CustomDropDown({
     super.key,
@@ -18,6 +19,7 @@ class CustomDropDown<T> extends StatelessWidget {
     required this.getItemLabel,
     this.getItemIcon,
     required this.onChanged,
+    this.enabled = true,
   });
 
   @override
@@ -29,6 +31,7 @@ class CustomDropDown<T> extends StatelessWidget {
       items: items.map((item) {
         return DropdownMenuItem<T>(
           value: item,
+          enabled: enabled,
           child: Row(
             children: [
               if (getItemIcon != null)

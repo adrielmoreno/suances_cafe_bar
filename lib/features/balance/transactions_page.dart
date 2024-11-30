@@ -19,7 +19,7 @@ class TransactionsPage extends StatefulWidget {
     super.key,
   });
 
-  static const route = '/transaction-page';
+  static const route = '/transactions';
 
   @override
   State<TransactionsPage> createState() => _TransactionsPageState();

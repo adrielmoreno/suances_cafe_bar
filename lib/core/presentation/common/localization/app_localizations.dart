@@ -470,6 +470,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment Methods - Expenses'**
   String get payment_methods_expenses;
+
+  /// No description provided for @formattedAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount}'**
+  String formattedAmount(double amount);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
