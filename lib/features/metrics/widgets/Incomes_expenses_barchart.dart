@@ -50,6 +50,7 @@ class _IncomesExpensesBarChartState extends State<IncomesExpensesBarChart> {
   Widget build(BuildContext context) {
     final incomesData = _incomeViewModel.monthlyIncomes;
     final expensesData = _expenseViewModel.monthlyExpenses;
+    final months = incomesData.keys.toList()..sort((a, b) => b.compareTo(a));
     final maxIncome = incomesData.values.isNotEmpty
         ? incomesData.values.reduce((a, b) => a > b ? a : b)
         : 0.0;
@@ -63,12 +64,10 @@ class _IncomesExpensesBarChartState extends State<IncomesExpensesBarChart> {
           height: 300,
           child: BarChart(
             BarChartData(
-              barGroups: incomesData.entries.map((entry) {
-                final month = entry.key;
-                final income = entry.value;
+              barGroups: months.map((month) {
+                final income = incomesData[month] ?? 0.0;
                 final expense = expensesData[month] ?? 0.0;
-
-                final index = incomesData.keys.toList().indexOf(month);
+                final index = months.indexOf(month);
 
                 return BarChartGroupData(
                   x: index,
@@ -123,13 +122,15 @@ class _IncomesExpensesBarChartState extends State<IncomesExpensesBarChart> {
                     reservedSize: 32,
                     getTitlesWidget: (value, _) {
                       final index = value.toInt();
-                      final monthKey =
-                          incomesData.keys.toList()[index % incomesData.length];
-                      return Text(
-                        monthKey,
-                        style: const TextStyle(
-                            fontSize: 12, color: Colors.black54),
-                      );
+
+                      if (index < months.length) {
+                        return Text(
+                          months[index],
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.black54),
+                        );
+                      }
+                      return const Text("");
                     },
                   ),
                 ),
@@ -145,6 +146,32 @@ class _IncomesExpensesBarChartState extends State<IncomesExpensesBarChart> {
                   ),
                 ),
                 rightTitles: const AxisTitles(drawBelowEverything: false),
+              ),
+              barTouchData: BarTouchData(
+                touchTooltipData: BarTouchTooltipData(
+                  getTooltipColor: (_) => Colors.white,
+                  tooltipBorder: BorderSide(color: Colors.grey[300]!),
+                  getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                    final label = rodIndex == 0 ? text.incomes : text.expenses;
+
+                    return BarTooltipItem(
+                      "$label\n",
+                      const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: text.formattedAmount(rod.toY),
+                          style: TextStyle(
+                            color: rod.color,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ),

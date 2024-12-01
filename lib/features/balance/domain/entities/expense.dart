@@ -44,7 +44,7 @@ class Expense {
     return Expense(
       id: map['id'],
       createdAt: map['createdAt'],
-      total: map['total'],
+      total: map['total'].toDouble(),
       urlImgTicket: map['urlImgTicket'],
       category: TypeOfExpense.values.byName(map['category']),
       paymentMethod: PaymentMethod.values.byName(map['paymentMethod']),

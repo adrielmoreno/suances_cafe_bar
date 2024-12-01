@@ -18,7 +18,8 @@ class PaymentMethodBarChart extends StatefulWidget {
 class _PaymentMethodBarChartState extends State<PaymentMethodBarChart> {
   @override
   Widget build(BuildContext context) {
-    final months = widget.expensesByPaymentMethod.keys.toList();
+    final months = widget.expensesByPaymentMethod.keys.toList()
+      ..sort((a, b) => b.compareTo(a));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -102,6 +103,36 @@ class _PaymentMethodBarChartState extends State<PaymentMethodBarChart> {
                   ),
                 ),
                 rightTitles: const AxisTitles(drawBelowEverything: false),
+              ),
+              barTouchData: BarTouchData(
+                touchTooltipData: BarTouchTooltipData(
+                  getTooltipColor: (_) => Colors.white,
+                  tooltipBorder: BorderSide(color: Colors.grey[300]!),
+                  getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                    final label = rodIndex == 0
+                        ? text.label_cash
+                        : rodIndex == 1
+                            ? text.label_card
+                            : text.transfer;
+
+                    return BarTooltipItem(
+                      "$label\n",
+                      const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: text.formattedAmount(rod.toY),
+                          style: TextStyle(
+                            color: rod.color,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ),
