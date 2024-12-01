@@ -75,11 +75,11 @@ class _TransactionsPageState extends State<TransactionsPage> {
                     icon: const Icon(Icons.more_vert_outlined),
                     itemBuilder: (context) => [
                       PopupMenuItem(
-                        onTap: () => context.pushNamed(IncomePage.route),
+                        onTap: () => context.goNamed(IncomePage.route),
                         child: Text(text.new_income),
                       ),
                       PopupMenuItem(
-                        onTap: () => context.pushNamed(ExpensePage.route),
+                        onTap: () => context.goNamed(ExpensePage.route),
                         child: Text(text.new_expense),
                       ),
                     ],

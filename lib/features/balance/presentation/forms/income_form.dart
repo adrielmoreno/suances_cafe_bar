@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -76,7 +77,7 @@ class IncomeForm extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveIncome() async {
+  Future<bool> saveIncome() async {
     if (formKey.currentState!.validate()) {
       // correct time
 
@@ -98,8 +99,14 @@ class IncomeForm extends ChangeNotifier {
         id: const Uuid().v4(),
       );
 
-      await getIt<IncomeViewModel>().saveOne(newIncome, imageFile);
-      resetForm();
+      try {
+        await getIt<IncomeViewModel>().saveOne(newIncome, imageFile);
+        resetForm();
+        return true;
+      } catch (e) {
+        log(e.toString());
+      }
     }
+    return false;
   }
 }
