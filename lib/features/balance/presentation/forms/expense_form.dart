@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -95,7 +96,7 @@ class ExpenseForm extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveExpense() async {
+  Future<bool> saveExpense() async {
     if (formKey.currentState!.validate()) {
       // Set correct time
       final dateWithCorrectTime = DateTime(
@@ -121,9 +122,14 @@ class ExpenseForm extends ChangeNotifier {
             ? getIt<FirebaseDB>().suppliers.doc(_supplier!.id)
             : null,
       );
-
-      await getIt<ExpenseViewModel>().saveOne(newExpense, imageFile);
-      resetForm();
+      try {
+        await getIt<ExpenseViewModel>().saveOne(newExpense, imageFile);
+        resetForm();
+        return true;
+      } catch (e) {
+        log(e.toString());
+      }
     }
+    return false;
   }
 }

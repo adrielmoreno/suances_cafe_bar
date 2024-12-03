@@ -171,10 +171,11 @@ class _ExpensePageState extends State<ExpensePage> {
                             width: double.infinity,
                             child: FilledButton(
                               onPressed: () async {
-                                _expenseForm.saveExpense().then(
-                                      (value) => context
-                                          .showSnackBar(text.expense_saved),
-                                    );
+                                _expenseForm.saveExpense().then((value) {
+                                  if (value) {
+                                    context.showSnackBar(text.expense_saved);
+                                  }
+                                });
                               },
                               child: Text(text.save),
                             ),

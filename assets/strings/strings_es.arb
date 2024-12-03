@@ -103,5 +103,6 @@
                 }
             }
         }
-    }
+    },
+    "average_daily_income_expenses": "Promedio Diario de Ingresos y Gastos"
 }

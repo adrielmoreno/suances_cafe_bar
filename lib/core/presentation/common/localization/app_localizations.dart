@@ -484,6 +484,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{amount}'**
   String formattedAmountChart(double amount);
+
+  /// No description provided for @average_daily_income_expenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Average Daily Income and Expenses'**
+  String get average_daily_income_expenses;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -103,5 +103,6 @@
                 }
             }
         }
-    }
+    },
+    "average_daily_income_expenses": "Average Daily Income and Expenses"
 }

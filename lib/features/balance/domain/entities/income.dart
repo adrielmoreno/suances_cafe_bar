@@ -32,9 +32,9 @@ class Income {
     return Income(
       id: map['id'],
       createdAt: map['createdAt'],
-      cash: map['cash'],
-      card: map['card'],
-      total: map['total'],
+      cash: map['cash'].toDouble(),
+      card: map['card'].toDouble(),
+      total: map['total'].toDouble(),
       urlImgTicket: map['imgTicket'],
     );
   }

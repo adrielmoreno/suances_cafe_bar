@@ -162,10 +162,11 @@ class _IncomePageState extends State<IncomePage> {
                             width: double.infinity,
                             child: FilledButton(
                               onPressed: () async {
-                                _incomeForm.saveIncome().then(
-                                      (value) => context
-                                          .showSnackBar(text.income_saved),
-                                    );
+                                _incomeForm.saveIncome().then((value) {
+                                  if (value) {
+                                    context.showSnackBar(text.income_saved);
+                                  }
+                                });
                               },
                               child: Text(text.save),
                             ),
