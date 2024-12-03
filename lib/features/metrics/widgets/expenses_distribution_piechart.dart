@@ -1,6 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/presentation/common/localization/localization_manager.dart';
+import '../../../core/presentation/common/theme/constants/dimens.dart';
+
 class ExpensesDistributionPieChart extends StatelessWidget {
   final Map<String, double> expensesByCategory;
 
@@ -15,15 +18,24 @@ class ExpensesDistributionPieChart extends StatelessWidget {
         expensesByCategory.values.fold(0.0, (sum, value) => sum + value);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 16),
-        SizedBox(
-          height: 300,
+        Text(
+          text.expenses_by_category,
+          style: const TextStyle(
+            fontSize: Dimens.semiBig,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: Dimens.medium),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: Dimens.medium),
+          height: Dimens.heightChart,
           child: PieChart(
             PieChartData(
-              sectionsSpace: 4,
-              centerSpaceRadius: 50,
+              sectionsSpace: Dimens.small,
+              centerSpaceRadius: Dimens.huge,
               sections: expensesByCategory.entries.map((entry) {
                 final index =
                     expensesByCategory.keys.toList().indexOf(entry.key);
@@ -35,9 +47,9 @@ class ExpensesDistributionPieChart extends StatelessWidget {
                   title:
                       percentage > 5 ? "${percentage.toStringAsFixed(1)}%" : "",
                   color: color,
-                  radius: 80,
+                  radius: 100,
                   titleStyle: const TextStyle(
-                    fontSize: 12,
+                    fontSize: Dimens.semiMedium,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -47,32 +59,36 @@ class ExpensesDistributionPieChart extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 16),
-        Wrap(
-          alignment: WrapAlignment.center,
-          spacing: 8,
-          children: expensesByCategory.keys.map((key) {
-            final index = expensesByCategory.keys.toList().indexOf(key);
-            final color = Colors.primaries[index % Colors.primaries.length];
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 12,
-                  height: 12,
-                  decoration: BoxDecoration(
-                    color: color,
-                    shape: BoxShape.circle,
+        const SizedBox(height: Dimens.medium),
+        Center(
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            runAlignment: WrapAlignment.center,
+            spacing: Dimens.small,
+            children: expensesByCategory.keys.map((key) {
+              final index = expensesByCategory.keys.toList().indexOf(key);
+              final color = Colors.primaries[index % Colors.primaries.length];
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: Dimens.medium,
+                    height: Dimens.medium,
+                    decoration: BoxDecoration(
+                      color: color,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  key,
-                  style: const TextStyle(fontSize: 12, color: Colors.black54),
-                ),
-              ],
-            );
-          }).toList(),
+                  const SizedBox(width: Dimens.extraSmall),
+                  Text(
+                    key,
+                    style: const TextStyle(
+                        fontSize: Dimens.semiMedium, color: Colors.black54),
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
         ),
       ],
     );
