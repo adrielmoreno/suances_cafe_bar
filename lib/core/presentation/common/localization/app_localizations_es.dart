@@ -205,11 +205,12 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String formattedAmount(double amount) {
     final intl.NumberFormat amountNumberFormat = intl.NumberFormat.currency(
-        locale: localeName,
-        decimalDigits: 2,
-        name: 'EUR',
-        symbol: '€',
-        customPattern: '¤#,##0.00');
+      locale: localeName,
+      decimalDigits: 2,
+      name: 'USD',
+      symbol: '\$',
+      customPattern: '¤#,##0.00'
+    );
     final String amountString = amountNumberFormat.format(amount);
 
     return '$amountString';
@@ -218,13 +219,17 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String formattedAmountChart(double amount) {
     final intl.NumberFormat amountNumberFormat = intl.NumberFormat.currency(
-        locale: localeName,
-        decimalDigits: 0,
-        name: 'EUR',
-        symbol: '€',
-        customPattern: '¤#,##0');
+      locale: localeName,
+      decimalDigits: 0,
+      name: 'USD',
+      symbol: '\$',
+      customPattern: '¤#,##0'
+    );
     final String amountString = amountNumberFormat.format(amount);
 
     return '$amountString';
   }
+
+  @override
+  String get average_daily_income_expenses => 'Promedio Diario de Ingresos y Gastos';
 }

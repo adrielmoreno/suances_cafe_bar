@@ -229,4 +229,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
     return '$amountString';
   }
+
+  @override
+  String get average_daily_income_expenses => 'Average Daily Income and Expenses';
 }
