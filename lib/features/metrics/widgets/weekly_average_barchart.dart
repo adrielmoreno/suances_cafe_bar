@@ -23,11 +23,6 @@ class WeeklyAverageBarChart extends StatelessWidget {
     final expenses =
         daysOfWeek.map((day) => averageExpensesByDay[day] ?? 0.0).toList();
 
-    final maxIncome =
-        incomes.isNotEmpty ? incomes.reduce((a, b) => a > b ? a : b) : 0.0;
-    final maxExpense =
-        expenses.isNotEmpty ? expenses.reduce((a, b) => a > b ? a : b) : 0.0;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,15 +63,6 @@ class WeeklyAverageBarChart extends StatelessWidget {
               borderData: FlBorderData(
                 show: true,
                 border: Border.all(color: Colors.grey[400]!, width: 1),
-              ),
-              gridData: FlGridData(
-                show: true,
-                horizontalInterval:
-                    maxIncome > maxExpense ? maxIncome / 5 : maxExpense / 5,
-                getDrawingHorizontalLine: (value) => FlLine(
-                  color: Colors.grey[300],
-                  strokeWidth: 1,
-                ),
               ),
               titlesData: FlTitlesData(
                 topTitles: const AxisTitles(drawBelowEverything: false),
