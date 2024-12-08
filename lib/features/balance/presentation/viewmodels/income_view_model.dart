@@ -14,11 +14,15 @@ class IncomeViewModel extends SearchProvider<Income> {
 
   IncomeViewModel(this._incomeRepository);
 
+  StreamSubscription<List<Income>>? _incomesSubscription;
+
   Future<void> getAll() async {
     try {
-      _incomeRepository.getAll().listen((event) => allItems = event);
-
-      notifyListeners();
+      _incomesSubscription = _incomeRepository.getAll().listen((event) {
+        allItems = event;
+        filteredItems = event;
+        notifyListeners();
+      });
     } catch (e) {
       debugPrint('Error fetching incomes: ${e.toString()}');
     }
@@ -39,7 +43,7 @@ class IncomeViewModel extends SearchProvider<Income> {
   }
 
   Map<String, MonthlyIcome> groupIncomesByMonth() {
-    return allItems.fold({},
+    return filteredItems.fold({},
         (Map<String, MonthlyIcome> groupedIncomes, income) {
       String monthKey = text.month_format(income.createdAt.toDate());
       if (!groupedIncomes.containsKey(monthKey)) {
@@ -116,5 +120,11 @@ class IncomeViewModel extends SearchProvider<Income> {
       default:
         throw ArgumentError("Invalid weekday: $weekday");
     }
+  }
+
+  @override
+  void dispose() {
+    _incomesSubscription?.cancel();
+    super.dispose();
   }
 }

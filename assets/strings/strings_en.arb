@@ -51,6 +51,15 @@
             }
         }
     },
+    "date_format": "{date}",
+    "@date_format": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd"
+            }
+        }
+    },
     "new_income": "New income",
     "new_expense": "New expense",
     "label_cash": "Cash",

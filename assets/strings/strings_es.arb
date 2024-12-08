@@ -51,6 +51,15 @@
             }
         }
     },
+    "date_format": "{date}",
+    "@date_format": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd"
+            }
+        }
+    },
     "new_income": "Nuevo ingreso",
     "new_expense": "Nuevo gasto",
     "label_cash": "Efectivo",

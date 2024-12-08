@@ -39,7 +39,7 @@ class IncomeRemoteImpl {
 
       if (imageFile != null) {
         imageUrl = await _uploadImageToStorage(imageFile);
-        income = income.copyWith(urlImgTicket: imageUrl ?? '');
+        income = income.copyWith(urlImgTicket: imageUrl);
       }
 
       await _db.incomes.doc(income.id).set(income);

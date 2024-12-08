@@ -20,11 +20,13 @@ class PickImageGallery extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            // TODO:
             ElevatedButton.icon(
               onPressed: () => context.pickImage(ImageSource.camera, onFile),
               icon: const Icon(Icons.camera),
               label: const Text('Cámara'),
             ),
+            // TODO:
             ElevatedButton.icon(
               onPressed: () => context.pickImage(ImageSource.gallery, onFile),
               icon: const Icon(Icons.photo_library),

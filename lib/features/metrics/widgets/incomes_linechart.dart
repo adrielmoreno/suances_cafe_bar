@@ -12,7 +12,7 @@ class IncomesLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sortedIncomes = incomes
+    final sortedIncomes = List<Income>.from(incomes)
       ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
     final spots = sortedIncomes.map((income) {

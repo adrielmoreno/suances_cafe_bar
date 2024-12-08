@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -15,15 +16,17 @@ class ExpenseViewModel extends SearchProvider<Expense> {
 
   ExpenseViewModel(this._expenseRepository);
 
-  String? errorMessage;
+  StreamSubscription<List<Expense>>? _expensesSubscription;
 
   Future<void> getAll() async {
     try {
-      _expenseRepository.getAll().listen((event) => allItems = event);
-      errorMessage = null;
-      notifyListeners();
+      _expensesSubscription = _expenseRepository.getAll().listen((event) {
+        allItems = event;
+        filteredItems = event;
+        notifyListeners();
+      });
     } catch (e) {
-      debugPrint('Error fetching expenses: ${e.toString()}');
+      debugPrint('Error fetching incomes: ${e.toString()}');
     }
   }
 
@@ -31,7 +34,7 @@ class ExpenseViewModel extends SearchProvider<Expense> {
     try {
       await _expenseRepository.saveOne(expense, imageFile);
     } catch (e) {
-      errorMessage = 'Error saving expense: ${e.toString()}';
+      log('Error saving expense: ${e.toString()}');
     }
   }
 
@@ -142,5 +145,11 @@ class ExpenseViewModel extends SearchProvider<Expense> {
       default:
         throw ArgumentError("Invalid weekday: $weekday");
     }
+  }
+
+  @override
+  void dispose() {
+    _expensesSubscription?.cancel();
+    super.dispose();
   }
 }

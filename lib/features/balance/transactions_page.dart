@@ -5,7 +5,9 @@ import '../../app/di/inject.dart';
 import '../../core/presentation/common/localization/localization_manager.dart';
 import '../../core/presentation/common/theme/constants/dimens.dart';
 import '../../core/presentation/common/widgets/buttons/custom_appbar.dart';
+import 'presentation/pages/expense_list_page.dart';
 import 'presentation/pages/expense_page.dart';
+import 'presentation/pages/income_list_page.dart';
 import 'presentation/pages/income_page.dart';
 import 'presentation/providers/transaction_provider.dart';
 import 'presentation/viewmodels/expense_view_model.dart';
@@ -40,8 +42,11 @@ class _TransactionsPageState extends State<TransactionsPage> {
     _incomeViewModel.addListener(_updateState);
     _expenseViewModel.addListener(_updateState);
 
-    _incomeViewModel.getAll();
-    _expenseViewModel.getAll();
+    if (_incomeViewModel.allItems.isEmpty ||
+        _expenseViewModel.allItems.isEmpty) {
+      _incomeViewModel.getAll();
+      _expenseViewModel.getAll();
+    }
   }
 
   @override
@@ -68,68 +73,129 @@ class _TransactionsPageState extends State<TransactionsPage> {
         child: Center(
           child: Column(
             children: [
-              CustomAppBar(
-                title: text.transaction,
-                actions: [
-                  PopupMenuButton(
-                    icon: const Icon(Icons.more_vert_outlined),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        onTap: () => context.goNamed(IncomePage.route),
-                        child: Text(text.new_income),
-                      ),
-                      PopupMenuItem(
-                        onTap: () => context.goNamed(ExpensePage.route),
-                        child: Text(text.new_expense),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              // MENU
+              const BuildMenu(),
               // ---- Switchs
               const TransactionOption(),
               // ---- Income List
-              Visibility(
-                visible: _trasactionProvider.transactionView ==
-                    TypeTransaction.income,
-                child: Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: Dimens.medium,
+              _incomeViewModel.allItems.isEmpty
+                  ? const Center(
+                      child:
+                          CircularProgressIndicator(), // Loader mientras carga
+                    )
+                  : Visibility(
+                      visible: _trasactionProvider.transactionView ==
+                          TypeTransaction.income,
+                      child: Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: Dimens.medium,
+                          ),
+                          child: IncomesView(
+                            items: _incomeViewModel
+                                .groupIncomesByMonth()
+                                .entries
+                                .map((income) => income.value)
+                                .toList(),
+                          ),
+                        ),
+                      ),
                     ),
-                    child: IncomesView(
-                      items: _incomeViewModel
-                          .groupIncomesByMonth()
-                          .entries
-                          .map((income) => income.value)
-                          .toList(),
-                    ),
-                  ),
-                ),
-              ),
               // ---- Expenses List
-              Visibility(
-                visible: _trasactionProvider.transactionView !=
-                    TypeTransaction.income,
-                child: Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: Dimens.medium,
+              _expenseViewModel.allItems.isEmpty
+                  ? const Center(
+                      child:
+                          CircularProgressIndicator(), // Loader mientras carga
+                    )
+                  : Visibility(
+                      visible: _trasactionProvider.transactionView !=
+                          TypeTransaction.income,
+                      child: Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: Dimens.medium,
+                          ),
+                          child: ExpensesView(
+                            items: _expenseViewModel
+                                .groupExpensesByMonth()
+                                .entries
+                                .map((income) => income.value)
+                                .toList(),
+                          ),
+                        ),
+                      ),
                     ),
-                    child: ExpensesView(
-                      items: _expenseViewModel
-                          .groupExpensesByMonth()
-                          .entries
-                          .map((income) => income.value)
-                          .toList(),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class BuildMenu extends StatelessWidget {
+  const BuildMenu({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomAppBar(
+      title: text.transaction,
+      actions: [
+        PopupMenuButton<int>(
+          icon: const Icon(Icons.more_vert_outlined),
+          onSelected: (value) {
+            switch (value) {
+              case 1:
+                context.goNamed(IncomeListPage.route);
+                break;
+              case 2:
+                context.pushNamed(IncomePage.route);
+                break;
+              case 3:
+                context.goNamed(ExpenseListPage.route);
+                break;
+              case 4:
+                context.pushNamed(ExpensePage.route);
+                break;
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem<int>(
+              value: 1,
+              child: Text("Listado de ingresos"),
+            ),
+            PopupMenuItem<int>(
+              value: 2,
+              child: Row(
+                children: [
+                  const SizedBox(width: 16),
+                  Icon(Icons.add, color: Theme.of(context).primaryColor),
+                  const SizedBox(width: 8),
+                  Text(text.new_income),
+                ],
+              ),
+            ),
+            const PopupMenuDivider(),
+            const PopupMenuItem<int>(
+              value: 3,
+              child: Text("Listado de gastos"),
+            ),
+            PopupMenuItem<int>(
+              value: 4,
+              child: Row(
+                children: [
+                  const SizedBox(width: 16),
+                  Icon(Icons.add, color: Theme.of(context).primaryColor),
+                  const SizedBox(width: 8),
+                  Text(text.new_expense),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

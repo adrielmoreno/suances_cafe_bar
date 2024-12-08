@@ -39,7 +39,7 @@ class ExpenseRemoteImpl {
 
       if (imageFile != null) {
         imageUrl = await _uploadImageToStorage(imageFile);
-        expense = expense.copyWith(urlImgTicket: imageUrl ?? '');
+        expense = expense.copyWith(urlImgTicket: imageUrl);
       }
 
       await _db.expenses.doc(expense.id).set(expense);
