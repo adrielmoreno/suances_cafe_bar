@@ -152,18 +152,19 @@ class _ExpensePageState extends State<ExpensePage> {
                             labelText: text.description,
                             hintText: text.description,
                           ),
-                          const SizedBox(height: Dimens.medium),
-                          const SizedBox(height: Dimens.medium),
-                          const SizedBox(height: Dimens.medium),
+                          const SizedBox(height: Dimens.huge),
                           _expenseForm.imageFile == null
                               ? Text(text.no_image)
                               : Image.file(_expenseForm.imageFile!),
                           const SizedBox(height: Dimens.medium),
                           PickImageGallery(
                             onFile: (file) {
-                              setState(() {
-                                _expenseForm.imageFile = file;
-                              });
+                              // setState(() {
+                              //   _expenseForm.imageFile = file;
+                              // });
+                              if (file != null) {
+                                _expenseForm.processTicketImage(file);
+                              }
                             },
                           ),
                           const SizedBox(height: Dimens.semiBig),
