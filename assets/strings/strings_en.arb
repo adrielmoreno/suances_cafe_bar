@@ -113,5 +113,25 @@
             }
         }
     },
-    "average_daily_income_expenses": "Average Daily Income and Expenses"
+    "average_daily_income_expenses": "Average Daily Income and Expenses",
+    "table_expenses": "Expenses Table",
+    "column_date": "Date",
+    "column_total": "Total",
+    "column_category": "Category",
+    "column_payment_method": "Payment Method",
+    "column_ticket": "Ticket",
+    "column_supplier": "Supplier",
+    "column_actions": "Actions",
+    "table_incomes": "Income Table",
+    "column_card": "Card",
+    "column_cash": "Cash",
+    "day_monday_short": "M",
+    "day_tuesday_short": "T",
+    "day_wednesday_short": "W",
+    "day_thursday_short": "Th",
+    "day_friday_short": "F",
+    "day_saturday_short": "Sa",
+    "day_sunday_short": "Su",
+    "income_list": "Income List",
+    "expense_list": "Expense List"
 }

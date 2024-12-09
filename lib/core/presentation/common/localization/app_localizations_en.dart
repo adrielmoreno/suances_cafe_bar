@@ -240,4 +240,64 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get average_daily_income_expenses => 'Average Daily Income and Expenses';
+
+  @override
+  String get table_expenses => 'Expenses Table';
+
+  @override
+  String get column_date => 'Date';
+
+  @override
+  String get column_total => 'Total';
+
+  @override
+  String get column_category => 'Category';
+
+  @override
+  String get column_payment_method => 'Payment Method';
+
+  @override
+  String get column_ticket => 'Ticket';
+
+  @override
+  String get column_supplier => 'Supplier';
+
+  @override
+  String get column_actions => 'Actions';
+
+  @override
+  String get table_incomes => 'Income Table';
+
+  @override
+  String get column_card => 'Card';
+
+  @override
+  String get column_cash => 'Cash';
+
+  @override
+  String get day_monday_short => 'M';
+
+  @override
+  String get day_tuesday_short => 'T';
+
+  @override
+  String get day_wednesday_short => 'W';
+
+  @override
+  String get day_thursday_short => 'Th';
+
+  @override
+  String get day_friday_short => 'F';
+
+  @override
+  String get day_saturday_short => 'Sa';
+
+  @override
+  String get day_sunday_short => 'Su';
+
+  @override
+  String get income_list => 'Income List';
+
+  @override
+  String get expense_list => 'Expense List';
 }

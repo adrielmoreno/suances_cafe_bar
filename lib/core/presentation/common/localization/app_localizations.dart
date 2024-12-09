@@ -496,6 +496,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Average Daily Income and Expenses'**
   String get average_daily_income_expenses;
+
+  /// No description provided for @table_expenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses Table'**
+  String get table_expenses;
+
+  /// No description provided for @column_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get column_date;
+
+  /// No description provided for @column_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get column_total;
+
+  /// No description provided for @column_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get column_category;
+
+  /// No description provided for @column_payment_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get column_payment_method;
+
+  /// No description provided for @column_ticket.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket'**
+  String get column_ticket;
+
+  /// No description provided for @column_supplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier'**
+  String get column_supplier;
+
+  /// No description provided for @column_actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get column_actions;
+
+  /// No description provided for @table_incomes.
+  ///
+  /// In en, this message translates to:
+  /// **'Income Table'**
+  String get table_incomes;
+
+  /// No description provided for @column_card.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get column_card;
+
+  /// No description provided for @column_cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get column_cash;
+
+  /// No description provided for @day_monday_short.
+  ///
+  /// In en, this message translates to:
+  /// **'M'**
+  String get day_monday_short;
+
+  /// No description provided for @day_tuesday_short.
+  ///
+  /// In en, this message translates to:
+  /// **'T'**
+  String get day_tuesday_short;
+
+  /// No description provided for @day_wednesday_short.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get day_wednesday_short;
+
+  /// No description provided for @day_thursday_short.
+  ///
+  /// In en, this message translates to:
+  /// **'Th'**
+  String get day_thursday_short;
+
+  /// No description provided for @day_friday_short.
+  ///
+  /// In en, this message translates to:
+  /// **'F'**
+  String get day_friday_short;
+
+  /// No description provided for @day_saturday_short.
+  ///
+  /// In en, this message translates to:
+  /// **'Sa'**
+  String get day_saturday_short;
+
+  /// No description provided for @day_sunday_short.
+  ///
+  /// In en, this message translates to:
+  /// **'Su'**
+  String get day_sunday_short;
+
+  /// No description provided for @income_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Income List'**
+  String get income_list;
+
+  /// No description provided for @expense_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense List'**
+  String get expense_list;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
