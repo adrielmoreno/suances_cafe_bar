@@ -140,6 +140,14 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String date_format(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '$dateString';
+  }
+
+  @override
   String get new_income => 'Nuevo ingreso';
 
   @override
@@ -232,4 +240,64 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get average_daily_income_expenses => 'Promedio Diario de Ingresos y Gastos';
+
+  @override
+  String get table_expenses => 'Tabla de Gastos';
+
+  @override
+  String get column_date => 'Fecha';
+
+  @override
+  String get column_total => 'Total';
+
+  @override
+  String get column_category => 'Categoría';
+
+  @override
+  String get column_payment_method => 'Método de Pago';
+
+  @override
+  String get column_ticket => 'Ticket';
+
+  @override
+  String get column_supplier => 'Proveedor';
+
+  @override
+  String get column_actions => 'Acciones';
+
+  @override
+  String get table_incomes => 'Tabla de Ingresos';
+
+  @override
+  String get column_card => 'Tarjeta';
+
+  @override
+  String get column_cash => 'Efectivo';
+
+  @override
+  String get day_monday_short => 'L';
+
+  @override
+  String get day_tuesday_short => 'M';
+
+  @override
+  String get day_wednesday_short => 'X';
+
+  @override
+  String get day_thursday_short => 'J';
+
+  @override
+  String get day_friday_short => 'V';
+
+  @override
+  String get day_saturday_short => 'S';
+
+  @override
+  String get day_sunday_short => 'D';
+
+  @override
+  String get income_list => 'Listado de ingresos';
+
+  @override
+  String get expense_list => 'Listado de gastos';
 }

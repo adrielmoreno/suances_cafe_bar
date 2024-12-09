@@ -24,8 +24,6 @@ class ExpensesDistributionPieChart extends StatelessWidget {
           text.expenses_by_category,
           style: const TextStyle(
             fontSize: Dimens.semiBig,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
           ),
         ),
         const SizedBox(height: Dimens.medium),

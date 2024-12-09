@@ -14,11 +14,15 @@ class IncomeViewModel extends SearchProvider<Income> {
 
   IncomeViewModel(this._incomeRepository);
 
+  StreamSubscription<List<Income>>? _incomesSubscription;
+
   Future<void> getAll() async {
     try {
-      _incomeRepository.getAll().listen((event) => allItems = event);
-
-      notifyListeners();
+      _incomesSubscription = _incomeRepository.getAll().listen((event) {
+        allItems = event;
+        filteredItems = event;
+        notifyListeners();
+      });
     } catch (e) {
       debugPrint('Error fetching incomes: ${e.toString()}');
     }
@@ -39,7 +43,7 @@ class IncomeViewModel extends SearchProvider<Income> {
   }
 
   Map<String, MonthlyIcome> groupIncomesByMonth() {
-    return allItems.fold({},
+    return filteredItems.fold({},
         (Map<String, MonthlyIcome> groupedIncomes, income) {
       String monthKey = text.month_format(income.createdAt.toDate());
       if (!groupedIncomes.containsKey(monthKey)) {
@@ -64,57 +68,12 @@ class IncomeViewModel extends SearchProvider<Income> {
           entry.key: entry.value.total
       };
 
-  Map<String, double> get averageIncomesByDay {
-    final Map<String, List<double>> incomesByDay = {
-      "L": [],
-      "M": [],
-      "X": [],
-      "J": [],
-      "V": [],
-      "S": [],
-      "D": [],
-    };
+  Map<String, double> get averageIncomesByDay => calculateAverageByDay(
+      (income) => income.createdAt.toDate(), (income) => income.total);
 
-    for (var income in allItems) {
-      final dayOfWeek = income.createdAt.toDate().weekday;
-      final dayKey = _dayKeyFromWeekday(dayOfWeek);
-
-      if (incomesByDay.containsKey(dayKey)) {
-        incomesByDay[dayKey]!.add(income.total);
-      }
-    }
-
-    final Map<String, double> averageByDay = {};
-    for (var entry in incomesByDay.entries) {
-      final day = entry.key;
-      final totals = entry.value;
-
-      averageByDay[day] = totals.isNotEmpty
-          ? totals.reduce((a, b) => a + b) / totals.length
-          : 0.0;
-    }
-
-    return averageByDay;
-  }
-
-  String _dayKeyFromWeekday(int weekday) {
-    switch (weekday) {
-      case DateTime.monday:
-        return "L";
-      case DateTime.tuesday:
-        return "M";
-      case DateTime.wednesday:
-        return "X";
-      case DateTime.thursday:
-        return "J";
-      case DateTime.friday:
-        return "V";
-      case DateTime.saturday:
-        return "S";
-      case DateTime.sunday:
-        return "D";
-      default:
-        throw ArgumentError("Invalid weekday: $weekday");
-    }
+  @override
+  void dispose() {
+    _incomesSubscription?.cancel();
+    super.dispose();
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -15,15 +16,17 @@ class ExpenseViewModel extends SearchProvider<Expense> {
 
   ExpenseViewModel(this._expenseRepository);
 
-  String? errorMessage;
+  StreamSubscription<List<Expense>>? _expensesSubscription;
 
   Future<void> getAll() async {
     try {
-      _expenseRepository.getAll().listen((event) => allItems = event);
-      errorMessage = null;
-      notifyListeners();
+      _expensesSubscription = _expenseRepository.getAll().listen((event) {
+        allItems = event;
+        filteredItems = event;
+        notifyListeners();
+      });
     } catch (e) {
-      debugPrint('Error fetching expenses: ${e.toString()}');
+      debugPrint('Error fetching incomes: ${e.toString()}');
     }
   }
 
@@ -31,7 +34,7 @@ class ExpenseViewModel extends SearchProvider<Expense> {
     try {
       await _expenseRepository.saveOne(expense, imageFile);
     } catch (e) {
-      errorMessage = 'Error saving expense: ${e.toString()}';
+      log('Error saving expense: ${e.toString()}');
     }
   }
 
@@ -90,57 +93,12 @@ class ExpenseViewModel extends SearchProvider<Expense> {
     return result;
   }
 
-  Map<String, double> get averageExpensesByDay {
-    final Map<String, List<double>> expensesByDay = {
-      "L": [],
-      "M": [],
-      "X": [],
-      "J": [],
-      "V": [],
-      "S": [],
-      "D": [],
-    };
+  Map<String, double> get averageExpensesByDay => calculateAverageByDay(
+      (expense) => expense.createdAt.toDate(), (expense) => expense.total);
 
-    for (var expense in allItems) {
-      final dayOfWeek = expense.createdAt.toDate().weekday;
-      final dayKey = _dayKeyFromWeekday(dayOfWeek);
-
-      if (expensesByDay.containsKey(dayKey)) {
-        expensesByDay[dayKey]!.add(expense.total);
-      }
-    }
-
-    final Map<String, double> averageByDay = {};
-    for (var entry in expensesByDay.entries) {
-      final day = entry.key;
-      final totals = entry.value;
-
-      averageByDay[day] = totals.isNotEmpty
-          ? totals.reduce((a, b) => a + b) / totals.length
-          : 0.0;
-    }
-
-    return averageByDay;
-  }
-
-  String _dayKeyFromWeekday(int weekday) {
-    switch (weekday) {
-      case DateTime.monday:
-        return "L";
-      case DateTime.tuesday:
-        return "M";
-      case DateTime.wednesday:
-        return "X";
-      case DateTime.thursday:
-        return "J";
-      case DateTime.friday:
-        return "V";
-      case DateTime.saturday:
-        return "S";
-      case DateTime.sunday:
-        return "D";
-      default:
-        throw ArgumentError("Invalid weekday: $weekday");
-    }
+  @override
+  void dispose() {
+    _expensesSubscription?.cancel();
+    super.dispose();
   }
 }

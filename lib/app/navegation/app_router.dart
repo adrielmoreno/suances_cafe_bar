@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 import '../../core/presentation/common/layouts/home_Layout.dart';
 import '../../features/balance/domain/entities/expense.dart';
 import '../../features/balance/domain/entities/income.dart';
+import '../../features/balance/presentation/pages/expense_list_page.dart';
 import '../../features/balance/presentation/pages/expense_page.dart';
+import '../../features/balance/presentation/pages/income_list_page.dart';
 import '../../features/balance/presentation/pages/income_page.dart';
 import '../../features/balance/transactions_page.dart';
 import '../../features/metrics/metrics_page.dart';
@@ -59,30 +61,49 @@ class AppRouter {
                         child: TransactionsPage(),
                       ),
                   routes: [
+                    // Incomes
                     GoRoute(
-                      name: IncomePage.route,
-                      path: IncomePage.route,
-                      pageBuilder: (context, state) {
-                        // TODO: change by id Income
-                        final data = state.extra as Income?;
-                        return NoTransitionPage(
-                            child: IncomePage(
-                          income: data,
-                        ));
-                      },
-                    ),
+                        name: IncomeListPage.route,
+                        path: IncomeListPage.route,
+                        pageBuilder: (context, state) {
+                          return const NoTransitionPage(
+                              child: IncomeListPage());
+                        },
+                        routes: [
+                          GoRoute(
+                            name: IncomePage.route,
+                            path: IncomePage.route,
+                            pageBuilder: (context, state) {
+                              // TODO: change by id Income
+                              final data = state.extra as Income?;
+                              return NoTransitionPage(
+                                  child: IncomePage(
+                                income: data,
+                              ));
+                            },
+                          ),
+                        ]),
+                    // Expenses
                     GoRoute(
-                      name: ExpensePage.route,
-                      path: ExpensePage.route,
-                      pageBuilder: (context, state) {
-                        // TODO: change by id Income
-                        final data = state.extra as Expense?;
-                        return NoTransitionPage(
-                            child: ExpensePage(
-                          expense: data,
-                        ));
-                      },
-                    ),
+                        name: ExpenseListPage.route,
+                        path: ExpenseListPage.route,
+                        pageBuilder: (context, state) {
+                          return const NoTransitionPage(
+                              child: ExpenseListPage());
+                        },
+                        routes: [
+                          GoRoute(
+                            name: ExpensePage.route,
+                            path: ExpensePage.route,
+                            pageBuilder: (context, state) {
+                              final data = state.extra as Expense?;
+                              return NoTransitionPage(
+                                  child: ExpensePage(
+                                expense: data,
+                              ));
+                            },
+                          ),
+                        ]),
                   ])
             ],
           ),

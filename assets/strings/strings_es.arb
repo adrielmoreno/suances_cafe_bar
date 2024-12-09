@@ -51,6 +51,15 @@
             }
         }
     },
+    "date_format": "{date}",
+    "@date_format": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd"
+            }
+        }
+    },
     "new_income": "Nuevo ingreso",
     "new_expense": "Nuevo gasto",
     "label_cash": "Efectivo",
@@ -104,5 +113,25 @@
             }
         }
     },
-    "average_daily_income_expenses": "Promedio Diario de Ingresos y Gastos"
+    "average_daily_income_expenses": "Promedio Diario de Ingresos y Gastos",
+    "table_expenses": "Tabla de Gastos",
+    "column_date": "Fecha",
+    "column_total": "Total",
+    "column_category": "Categoría",
+    "column_payment_method": "Método de Pago",
+    "column_ticket": "Ticket",
+    "column_supplier": "Proveedor",
+    "column_actions": "Acciones",
+    "table_incomes": "Tabla de Ingresos",
+    "column_card": "Tarjeta",
+    "column_cash": "Efectivo",
+    "day_monday_short": "L",
+    "day_tuesday_short": "M",
+    "day_wednesday_short": "X",
+    "day_thursday_short": "J",
+    "day_friday_short": "V",
+    "day_saturday_short": "S",
+    "day_sunday_short": "D",
+    "income_list": "Listado de ingresos",
+    "expense_list": "Listado de gastos"
 }

@@ -37,9 +37,11 @@ class _MetricsPageState extends State<MetricsPage> {
   }
 
   _updateState() {
-    if (mounted) {
-      setState(() {});
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override

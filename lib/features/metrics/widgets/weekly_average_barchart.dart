@@ -16,17 +16,20 @@ class WeeklyAverageBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final daysOfWeek = ["L", "M", "X", "J", "V", "S", "D"];
+    final daysOfWeek = [
+      text.day_monday_short,
+      text.day_tuesday_short,
+      text.day_wednesday_short,
+      text.day_thursday_short,
+      text.day_friday_short,
+      text.day_saturday_short,
+      text.day_sunday_short,
+    ];
 
     final incomes =
         daysOfWeek.map((day) => averageIncomesByDay[day] ?? 0.0).toList();
     final expenses =
         daysOfWeek.map((day) => averageExpensesByDay[day] ?? 0.0).toList();
-
-    final maxIncome =
-        incomes.isNotEmpty ? incomes.reduce((a, b) => a > b ? a : b) : 0.0;
-    final maxExpense =
-        expenses.isNotEmpty ? expenses.reduce((a, b) => a > b ? a : b) : 0.0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,8 +39,6 @@ class WeeklyAverageBarChart extends StatelessWidget {
           text.average_daily_income_expenses,
           style: const TextStyle(
             fontSize: Dimens.semiBig,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
           ),
         ),
         const SizedBox(height: Dimens.medium),
@@ -68,15 +69,6 @@ class WeeklyAverageBarChart extends StatelessWidget {
               borderData: FlBorderData(
                 show: true,
                 border: Border.all(color: Colors.grey[400]!, width: 1),
-              ),
-              gridData: FlGridData(
-                show: true,
-                horizontalInterval:
-                    maxIncome > maxExpense ? maxIncome / 5 : maxExpense / 5,
-                getDrawingHorizontalLine: (value) => FlLine(
-                  color: Colors.grey[300],
-                  strokeWidth: 1,
-                ),
               ),
               titlesData: FlTitlesData(
                 topTitles: const AxisTitles(drawBelowEverything: false),

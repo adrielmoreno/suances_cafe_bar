@@ -58,6 +58,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: breakpoint.isMobile
           ? FloatingActionButton(
+              mini: true,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(Dimens.big)),
               onPressed: () => goIndex(2),
@@ -168,10 +169,6 @@ class _HomeLayoutState extends State<HomeLayout> {
   String getTitle(String value) {
     final title = value.replaceFirst('/', '');
     return title;
-  }
-
-  void _navigateTo(String route) {
-    context.go(route);
   }
 
   BoxDecoration buildBoxDecoration() => const BoxDecoration(

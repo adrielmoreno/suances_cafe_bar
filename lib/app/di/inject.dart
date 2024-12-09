@@ -54,7 +54,8 @@ class Inject {
     getIt
         .registerFactory<IncomeRemoteImpl>(() => IncomeRemoteImpl(getIt.get()));
     getIt.registerFactory<IncomeRepository>(() => IncomeDataImpl(getIt.get()));
-    getIt.registerFactory<IncomeViewModel>(() => IncomeViewModel(getIt.get()));
+    getIt.registerLazySingleton<IncomeViewModel>(
+        () => IncomeViewModel(getIt.get()));
     getIt.registerLazySingleton(() => IncomeForm());
   }
 
@@ -63,8 +64,8 @@ class Inject {
         () => ExpenseRemoteImpl(getIt.get()));
     getIt
         .registerFactory<ExpenseRepository>(() => ExpenseDataImpl(getIt.get()));
-    getIt
-        .registerFactory<ExpenseViewModel>(() => ExpenseViewModel(getIt.get()));
+    getIt.registerLazySingleton<ExpenseViewModel>(
+        () => ExpenseViewModel(getIt.get()));
     getIt.registerLazySingleton(() => ExpenseForm());
   }
 

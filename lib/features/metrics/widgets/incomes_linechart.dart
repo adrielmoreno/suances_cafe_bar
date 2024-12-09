@@ -12,7 +12,7 @@ class IncomesLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sortedIncomes = incomes
+    final sortedIncomes = List<Income>.from(incomes)
       ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
     final spots = sortedIncomes.map((income) {
@@ -29,8 +29,6 @@ class IncomesLineChart extends StatelessWidget {
                 text.income_trend,
                 style: const TextStyle(
                   fontSize: Dimens.semiBig,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
                 ),
               ),
               const SizedBox(height: Dimens.medium),

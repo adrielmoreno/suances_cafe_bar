@@ -67,8 +67,6 @@ class _IncomesExpensesBarChartState extends State<IncomesExpensesBarChart> {
               text.income_and_expenses_by_month,
               style: const TextStyle(
                 fontSize: Dimens.semiBig,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
               ),
             ),
             const SizedBox(height: Dimens.medium),
