@@ -92,6 +92,7 @@ class ExpenseForm extends ChangeNotifier {
     _category = TypeOfExpense.food;
     _paymentMethod = PaymentMethod.cash;
     _supplier = null;
+    _selectedDate = DateTime.now();
 
     notifyListeners();
   }
