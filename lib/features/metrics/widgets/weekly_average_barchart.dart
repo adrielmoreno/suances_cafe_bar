@@ -16,7 +16,15 @@ class WeeklyAverageBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final daysOfWeek = ["L", "M", "X", "J", "V", "S", "D"];
+    final daysOfWeek = [
+      text.day_monday_short,
+      text.day_tuesday_short,
+      text.day_wednesday_short,
+      text.day_thursday_short,
+      text.day_friday_short,
+      text.day_saturday_short,
+      text.day_sunday_short,
+    ];
 
     final incomes =
         daysOfWeek.map((day) => averageIncomesByDay[day] ?? 0.0).toList();
@@ -31,8 +39,6 @@ class WeeklyAverageBarChart extends StatelessWidget {
           text.average_daily_income_expenses,
           style: const TextStyle(
             fontSize: Dimens.semiBig,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
           ),
         ),
         const SizedBox(height: Dimens.medium),

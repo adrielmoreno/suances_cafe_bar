@@ -71,13 +71,13 @@ class _IncomeListPageState extends State<IncomeListPage> {
                   )
                 : MarginContainer(
                     child: PaginatedDataTable(
-                      header: const Text("Tabla de Ingresos"),
+                      header: Text(text.column_date),
                       sortColumnIndex: _sortColumnIndex,
                       sortAscending: _isAscending,
                       showEmptyRows: false,
                       columns: [
                         DataColumn(
-                          label: const Text("Fecha"),
+                          label: Text(text.column_date),
                           onSort: (columnIndex, ascending) {
                             _sort(
                               columnIndex,
@@ -87,7 +87,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
                           },
                         ),
                         DataColumn(
-                          label: const Text("Total"),
+                          label: Text(text.column_total),
                           onSort: (columnIndex, ascending) {
                             _sort(
                               columnIndex,
@@ -97,7 +97,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
                           },
                         ),
                         DataColumn(
-                          label: const Text("Tarjeta"),
+                          label: Text(text.column_card),
                           onSort: (columnIndex, ascending) {
                             _sort(
                               columnIndex,
@@ -107,7 +107,7 @@ class _IncomeListPageState extends State<IncomeListPage> {
                           },
                         ),
                         DataColumn(
-                          label: const Text("Efectivo"),
+                          label: Text(text.column_cash),
                           onSort: (columnIndex, ascending) {
                             _sort(
                               columnIndex,
@@ -116,8 +116,8 @@ class _IncomeListPageState extends State<IncomeListPage> {
                             );
                           },
                         ),
-                        const DataColumn(label: Text("Ticket")),
-                        const DataColumn(label: Text("Acciones")),
+                        DataColumn(label: Text(text.column_ticket)),
+                        DataColumn(label: Text(text.column_actions)),
                       ],
                       source: _dataSource,
                       rowsPerPage: _incomeViewModel.allItems.length >= 31

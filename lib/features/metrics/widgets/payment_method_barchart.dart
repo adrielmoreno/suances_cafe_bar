@@ -31,8 +31,6 @@ class _PaymentMethodBarChartState extends State<PaymentMethodBarChart> {
           text.payment_methods_expenses,
           style: const TextStyle(
             fontSize: Dimens.semiBig,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
           ),
         ),
         const SizedBox(height: Dimens.medium),

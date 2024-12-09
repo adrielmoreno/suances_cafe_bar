@@ -73,13 +73,13 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                   )
                 : MarginContainer(
                     child: PaginatedDataTable(
-                      header: const Text("Tabla de Gastos"),
+                      header: Text(text.table_expenses),
                       sortColumnIndex: _sortColumnIndex,
                       sortAscending: _isAscending,
                       showEmptyRows: false,
                       columns: [
                         DataColumn(
-                          label: const Text("Fecha"),
+                          label: Text(text.column_date),
                           onSort: (columnIndex, ascending) {
                             _sort(
                               columnIndex,
@@ -89,7 +89,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                           },
                         ),
                         DataColumn(
-                          label: const Text("Total"),
+                          label: Text(text.column_total),
                           onSort: (columnIndex, ascending) {
                             _sort(
                               columnIndex,
@@ -99,7 +99,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                           },
                         ),
                         DataColumn(
-                          label: const Text("Categoría"),
+                          label: Text(text.column_category),
                           onSort: (columnIndex, ascending) {
                             _sort(
                               columnIndex,
@@ -109,7 +109,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                           },
                         ),
                         DataColumn(
-                          label: const Text("Método de Pago"),
+                          label: Text(text.column_payment_method),
                           onSort: (columnIndex, ascending) {
                             _sort(
                               columnIndex,
@@ -118,11 +118,9 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                             );
                           },
                         ),
-                        const DataColumn(
-                          label: Text("Proveedor"),
-                        ),
-                        const DataColumn(label: Text("Ticket")),
-                        const DataColumn(label: Text("Acciones")),
+                        DataColumn(label: Text(text.column_ticket)),
+                        DataColumn(label: Text(text.column_supplier)),
+                        DataColumn(label: Text(text.column_actions)),
                       ],
                       source: _dataSource,
                       rowsPerPage: _expenseViewModel.allItems.length >= 31

@@ -134,64 +134,63 @@ class _TransactionsPageState extends State<TransactionsPage> {
 }
 
 class BuildMenu extends StatelessWidget {
-  const BuildMenu({
-    super.key,
-  });
+  const BuildMenu({super.key});
+
+  PopupMenuEntry _buildMenuItem({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required Color iconColor,
+    required VoidCallback onTap,
+  }) {
+    return PopupMenuItem<int>(
+      child: ListTile(
+        leading: Icon(icon, color: iconColor),
+        title: Text(title),
+        onTap: () {
+          Navigator.pop(context);
+          onTap();
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomAppBar(
       title: text.transaction,
       actions: [
-        PopupMenuButton<int>(
+        PopupMenuButton(
           icon: const Icon(Icons.more_vert_outlined),
-          onSelected: (value) {
-            switch (value) {
-              case 1:
-                context.goNamed(IncomeListPage.route);
-                break;
-              case 2:
-                context.pushNamed(IncomePage.route);
-                break;
-              case 3:
-                context.goNamed(ExpenseListPage.route);
-                break;
-              case 4:
-                context.pushNamed(ExpensePage.route);
-                break;
-            }
-          },
           itemBuilder: (context) => [
-            const PopupMenuItem<int>(
-              value: 1,
-              child: Text("Listado de ingresos"),
+            _buildMenuItem(
+              context: context,
+              icon: Icons.list_alt,
+              title: text.income_list,
+              iconColor: Colors.blue,
+              onTap: () => context.goNamed(IncomeListPage.route),
             ),
-            PopupMenuItem<int>(
-              value: 2,
-              child: Row(
-                children: [
-                  const SizedBox(width: 16),
-                  Icon(Icons.add, color: Theme.of(context).primaryColor),
-                  const SizedBox(width: 8),
-                  Text(text.new_income),
-                ],
-              ),
+            _buildMenuItem(
+              context: context,
+              icon: Icons.add,
+              title: text.new_income,
+              iconColor: Colors.green,
+              onTap: () => context.pushNamed(IncomePage.route),
             ),
             const PopupMenuDivider(),
-            const PopupMenuItem<int>(
-              value: 3,
-              child: Text("Listado de gastos"),
+            _buildMenuItem(
+              context: context,
+              icon: Icons.list,
+              title: text.expense_list,
+              iconColor: Colors.blue,
+              onTap: () => context.goNamed(ExpenseListPage.route),
             ),
-            PopupMenuItem<int>(
-              value: 4,
-              child: Row(
-                children: [
-                  const SizedBox(width: 16),
-                  Icon(Icons.add, color: Theme.of(context).primaryColor),
-                  const SizedBox(width: 8),
-                  Text(text.new_expense),
-                ],
-              ),
+            _buildMenuItem(
+              context: context,
+              icon: Icons.add,
+              title: text.new_expense,
+              iconColor: Colors.red,
+              onTap: () => context.pushNamed(ExpensePage.route),
             ),
           ],
         ),

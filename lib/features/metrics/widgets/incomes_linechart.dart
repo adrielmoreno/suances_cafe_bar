@@ -29,8 +29,6 @@ class IncomesLineChart extends StatelessWidget {
                 text.income_trend,
                 style: const TextStyle(
                   fontSize: Dimens.semiBig,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
                 ),
               ),
               const SizedBox(height: Dimens.medium),

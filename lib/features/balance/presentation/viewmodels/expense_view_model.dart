@@ -93,59 +93,8 @@ class ExpenseViewModel extends SearchProvider<Expense> {
     return result;
   }
 
-  Map<String, double> get averageExpensesByDay {
-    final Map<String, List<double>> expensesByDay = {
-      "L": [],
-      "M": [],
-      "X": [],
-      "J": [],
-      "V": [],
-      "S": [],
-      "D": [],
-    };
-
-    for (var expense in allItems) {
-      final dayOfWeek = expense.createdAt.toDate().weekday;
-      final dayKey = _dayKeyFromWeekday(dayOfWeek);
-
-      if (expensesByDay.containsKey(dayKey)) {
-        expensesByDay[dayKey]!.add(expense.total);
-      }
-    }
-
-    final Map<String, double> averageByDay = {};
-    for (var entry in expensesByDay.entries) {
-      final day = entry.key;
-      final totals = entry.value;
-
-      averageByDay[day] = totals.isNotEmpty
-          ? totals.reduce((a, b) => a + b) / totals.length
-          : 0.0;
-    }
-
-    return averageByDay;
-  }
-
-  String _dayKeyFromWeekday(int weekday) {
-    switch (weekday) {
-      case DateTime.monday:
-        return "L";
-      case DateTime.tuesday:
-        return "M";
-      case DateTime.wednesday:
-        return "X";
-      case DateTime.thursday:
-        return "J";
-      case DateTime.friday:
-        return "V";
-      case DateTime.saturday:
-        return "S";
-      case DateTime.sunday:
-        return "D";
-      default:
-        throw ArgumentError("Invalid weekday: $weekday");
-    }
-  }
+  Map<String, double> get averageExpensesByDay => calculateAverageByDay(
+      (expense) => expense.createdAt.toDate(), (expense) => expense.total);
 
   @override
   void dispose() {
