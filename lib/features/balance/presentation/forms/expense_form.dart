@@ -152,6 +152,10 @@ class ExpenseForm extends ChangeNotifier {
         _dateController.text = LocalDates.dateFormated(_selectedDate);
       }
 
+      if (results['supplier'] != null) {
+        _supplier = results['supplier'] as Supplier;
+      }
+
       _imageFile = imageFile;
       notifyListeners();
     } catch (e) {

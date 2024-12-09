@@ -45,7 +45,7 @@ class Inject {
         () => SupplierRemoteImpl(getIt.get()));
     getIt.registerFactory<SupplierRepository>(
         () => SupplierDataImpl(getIt.get()));
-    getIt.registerFactory<SupplierViewModel>(
+    getIt.registerLazySingleton<SupplierViewModel>(
         () => SupplierViewModel(getIt.get()));
     getIt.registerLazySingleton(() => SupplierForm());
   }
