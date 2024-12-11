@@ -47,9 +47,11 @@ class _SuppliersPageState extends State<SuppliersPage> {
   }
 
   void _onUpdate() {
-    if (mounted) {
-      setState(() {});
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override

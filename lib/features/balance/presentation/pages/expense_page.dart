@@ -16,6 +16,7 @@ import '../../../../core/presentation/common/widgets/inputs/custom_dropdown.dart
 import '../../../../core/presentation/common/widgets/inputs/custom_text_form_field.dart';
 import '../../../../core/presentation/common/widgets/margins/margin_container.dart';
 import '../../../suppliers/domain/entities/supplier.dart';
+import '../../../suppliers/presentation/view_model/supplier_view_model.dart';
 import '../../domain/entities/expense.dart';
 import '../forms/expense_form.dart';
 
@@ -30,11 +31,17 @@ class ExpensePage extends StatefulWidget {
 
 class _ExpensePageState extends State<ExpensePage> {
   final _expenseForm = getIt<ExpenseForm>();
+  final _supplierViewModel = getIt<SupplierViewModel>();
 
   @override
   void initState() {
     super.initState();
     _expenseForm.addListener(_onUpdate);
+    _supplierViewModel.addListener(_onUpdate);
+
+    if (_supplierViewModel.allItems.isEmpty) {
+      _supplierViewModel.getAll();
+    }
 
     _expenseForm.selectedDate = widget.expense != null
         ? widget.expense!.createdAt.toDate()
@@ -45,6 +52,7 @@ class _ExpensePageState extends State<ExpensePage> {
   void dispose() {
     _expenseForm.resetForm();
     _expenseForm.removeListener(_onUpdate);
+    _supplierViewModel.removeListener(_onUpdate);
     super.dispose();
   }
 
