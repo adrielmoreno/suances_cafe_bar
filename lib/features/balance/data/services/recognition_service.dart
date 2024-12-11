@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
@@ -26,63 +27,60 @@ class RecognitionService {
       Supplier? matchedSupplier;
 
       // Refined regular expressions
-      final totalRegex = RegExp(r'(Total|Importe|Pagado)[:\s]*([\d.,]+)',
+      final totalRegex = RegExp(r'(Total|Importe|Pagado)[\s:.]*([\d.,]+)',
           caseSensitive: false);
+
       final dateRegex = RegExp(r'\b\d{1,2}[/-]\d{1,2}[/-]\d{4}\b');
       final numberRegex =
           RegExp(r'\b\d{1,4}[.,]\d{2}\b'); // Matches any decimal number
 
-      print("Full recognized text:\n${recognizedText.text}");
+      log("Full recognized text:\n${recognizedText.text}");
 
       List<String> allNumbers = [];
-      String? previousLineText;
 
       for (TextBlock block in recognizedText.blocks) {
         for (TextLine line in block.lines) {
           String text = line.text.trim();
 
-          // Extract date
+          // 1. Detect "IMPORTE EUR" as a priority
+          if (text.contains("IMPORTE EUR")) {
+            final match =
+                RegExp(r'IMPORTE EUR[:\s]*([\d.,]+)').firstMatch(text);
+            if (match != null) {
+              extractedTotal = match.group(1)?.replaceAll(',', '.') ?? '';
+            }
+          }
+
+          // 2. Detect explicit total using keywords like "Total", "Importe", "Pagado"
+          if (totalRegex.hasMatch(text) && extractedTotal.isEmpty) {
+            final match = totalRegex.firstMatch(text);
+            extractedTotal = match?.group(2)?.replaceAll(',', '.') ?? '';
+          }
+
+          // 3. Extract date using date regex patterns
           if (dateRegex.hasMatch(text) && extractedDate.isEmpty) {
             String rawDate = dateRegex.firstMatch(text)?.group(0) ?? '';
             extractedDate = _parseAndFormatDateSafely(rawDate);
-            print("Date found: $extractedDate");
           }
 
-          // Extract explicit total
-          if (totalRegex.hasMatch(text)) {
-            final match = totalRegex.firstMatch(text);
-            extractedTotal = match?.group(2)?.replaceAll(',', '.') ?? '';
-            print("Total found with keyword: $extractedTotal");
-          }
-
-          // Handle "TOTAL" in previous line
-          if (previousLineText != null &&
-              previousLineText.toLowerCase().contains('total') &&
-              numberRegex.hasMatch(text)) {
-            extractedTotal = numberRegex.firstMatch(text)?.group(0) ?? '';
-            extractedTotal = extractedTotal.replaceAll(',', '.');
-            print("Total found on the next line: $extractedTotal");
-          }
-
-          // Extract all valid numbers
+          // 4. Store all valid numeric values for later inference
           final numberMatches = numberRegex.allMatches(text);
           for (var match in numberMatches) {
             allNumbers.add(match.group(0)?.replaceAll(',', '.') ?? '');
           }
 
-          // Attempt to find supplier in the first lines
+          // 5. Search for supplier in the recognized text
           matchedSupplier ??= _findSupplier(text);
-
-          previousLineText = text;
         }
       }
 
-      // Infer total if not found
+      // Infer the total if no explicit value was found
       if (extractedTotal.isEmpty && allNumbers.isNotEmpty) {
         extractedTotal = _inferTotalFromNumbers(allNumbers);
         print("Inferred total: $extractedTotal");
       }
 
+      // Return the extracted results
       return {
         "total": extractedTotal,
         "date": extractedDate,
