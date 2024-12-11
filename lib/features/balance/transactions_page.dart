@@ -143,7 +143,7 @@ class BuildMenu extends StatelessWidget {
     required Color iconColor,
     required VoidCallback onTap,
   }) {
-    return PopupMenuItem<int>(
+    return PopupMenuItem(
       child: ListTile(
         leading: Icon(icon, color: iconColor),
         title: Text(title),

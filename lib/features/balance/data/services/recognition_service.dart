@@ -109,7 +109,8 @@ class RecognitionService {
         supplier = _supplierViewModel.filteredItems.first;
       }
     }
-
+    // Clears
+    _supplierViewModel.search('', (supplier) => supplier.name);
     return supplier;
   }
 
