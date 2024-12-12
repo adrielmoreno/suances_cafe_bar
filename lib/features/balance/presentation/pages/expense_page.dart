@@ -185,6 +185,8 @@ class _ExpensePageState extends State<ExpensePage> {
                                     context.showSnackBar(text.expense_saved);
                                   }
                                 });
+                                // Hide keyboard
+                                FocusScope.of(context).unfocus();
                               },
                               child: Text(text.save),
                             ),
