@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../localization/localization_manager.dart';
+import '../theme/constants/app_colors.dart';
 
 extension WidgetExtensions on BuildContext {
   void showSnackBar(String message) {
@@ -24,7 +28,6 @@ extension WidgetExtensions on BuildContext {
   Future<void> pickImage(
       ImageSource source, final Function(File?) onFile) async {
     final ImagePicker picker = ImagePicker();
-
     final permission =
         source == ImageSource.camera ? Permission.camera : Permission.photos;
 
@@ -39,10 +42,35 @@ extension WidgetExtensions on BuildContext {
           await picker.pickImage(source: source, imageQuality: 20);
 
       if (pickedFile != null) {
-        onFile(File(pickedFile.path));
+        File? croppedFile = await _cropImage(pickedFile.path);
+        onFile(croppedFile);
       }
     } else {
       showSnackBar('Permiso para acceder denegado');
+    }
+  }
+
+  Future<File?> _cropImage(String imagePath) async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: imagePath,
+      compressQuality: 20,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: text.crop_image_title,
+          toolbarColor: AppColors.primaryLight,
+          toolbarWidgetColor: AppColors.onBackgroundDark,
+          lockAspectRatio: false,
+        ),
+        IOSUiSettings(
+          title: text.crop_image_title,
+        ),
+      ],
+    );
+
+    if (croppedFile != null) {
+      return File(croppedFile.path);
+    } else {
+      return null;
     }
   }
 }
