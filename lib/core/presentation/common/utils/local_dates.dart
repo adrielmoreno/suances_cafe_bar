@@ -33,4 +33,12 @@ class LocalDates {
     }
     return days[weekday - 1];
   }
+
+  static DateTime parseFromString(String dateString) {
+    try {
+      return DateFormat('dd/MM/yyyy').parseStrict(dateString);
+    } catch (_) {
+      return DateFormat('dd-MM-yyyy').parseStrict(dateString);
+    }
+  }
 }

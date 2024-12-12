@@ -616,6 +616,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expense List'**
   String get expense_list;
+
+  /// No description provided for @crop_image_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop Image'**
+  String get crop_image_title;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

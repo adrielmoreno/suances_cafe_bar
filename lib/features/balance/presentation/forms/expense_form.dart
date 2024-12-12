@@ -11,6 +11,7 @@ import '../../../../core/presentation/common/enums/payment_method.dart';
 import '../../../../core/presentation/common/enums/type_of_expense.dart';
 import '../../../../core/presentation/common/utils/local_dates.dart';
 import '../../../suppliers/domain/entities/supplier.dart';
+import '../../data/services/recognition_service.dart';
 import '../../domain/entities/expense.dart';
 import '../viewmodels/expense_view_model.dart';
 
@@ -92,6 +93,7 @@ class ExpenseForm extends ChangeNotifier {
     _category = TypeOfExpense.food;
     _paymentMethod = PaymentMethod.cash;
     _supplier = null;
+    _selectedDate = DateTime.now();
 
     notifyListeners();
   }
@@ -131,5 +133,33 @@ class ExpenseForm extends ChangeNotifier {
       }
     }
     return false;
+  }
+
+  // Recognition
+  final _textRecognitionService = RecognitionService();
+
+  Future<void> processTicketImage(File imageFile) async {
+    try {
+      final results = await _textRecognitionService.processImage(imageFile);
+
+      if (results['total'] != null) {
+        _total = double.tryParse(results['total']!) ?? 0.0;
+        _totalController.text = _total.toString();
+      }
+
+      if (results['date'] != null) {
+        _selectedDate = LocalDates.parseFromString(results['date']!);
+        _dateController.text = LocalDates.dateFormated(_selectedDate);
+      }
+
+      if (results['supplier'] != null) {
+        _supplier = results['supplier'] as Supplier;
+      }
+
+      _imageFile = imageFile;
+      notifyListeners();
+    } catch (e) {
+      log("Error al procesar el ticket: $e");
+    }
   }
 }

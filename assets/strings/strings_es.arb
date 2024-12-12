@@ -133,5 +133,6 @@
     "day_saturday_short": "S",
     "day_sunday_short": "D",
     "income_list": "Listado de ingresos",
-    "expense_list": "Listado de gastos"
+    "expense_list": "Listado de gastos",
+    "crop_image_title": "Recortar Imagen"
 }

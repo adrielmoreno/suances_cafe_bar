@@ -300,4 +300,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get expense_list => 'Listado de gastos';
+
+  @override
+  String get crop_image_title => 'Recortar Imagen';
 }
