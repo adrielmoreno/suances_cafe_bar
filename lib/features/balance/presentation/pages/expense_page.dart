@@ -167,9 +167,9 @@ class _ExpensePageState extends State<ExpensePage> {
                           const SizedBox(height: Dimens.medium),
                           PickImageGallery(
                             onFile: (file) {
-                              // setState(() {
-                              //   _expenseForm.imageFile = file;
-                              // });
+                              setState(() {
+                                _expenseForm.imageFile = file;
+                              });
                               if (file != null) {
                                 _expenseForm.processTicketImage(file);
                               }
