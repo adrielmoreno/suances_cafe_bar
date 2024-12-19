@@ -155,6 +155,9 @@ class _IncomePageState extends State<IncomePage> {
                               setState(() {
                                 _incomeForm.imageFile = file;
                               });
+                              if (file != null) {
+                                _incomeForm.processTicketImage(file);
+                              }
                             },
                           ),
                           const SizedBox(height: Dimens.semiBig),

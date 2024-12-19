@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../../app/di/inject.dart';
 import '../../../../core/presentation/common/utils/local_dates.dart';
+import '../../data/services/recognition_service.dart';
 import '../../domain/entities/income.dart';
 import '../viewmodels/income_view_model.dart';
 
@@ -108,5 +109,36 @@ class IncomeForm extends ChangeNotifier {
       }
     }
     return false;
+  }
+
+  // Recognition
+  final _textRecognitionService = RecognitionService();
+
+  Future<void> processTicketImage(File imageFile) async {
+    try {
+      final results =
+          await _textRecognitionService.processIncomeImage(imageFile);
+
+      if (results['cash'] != null) {
+        _cash = double.tryParse(results['cash']) ?? 0.0;
+        _cashController.text = _cash.toString();
+      }
+
+      if (results['card'] != null) {
+        _card = double.tryParse(results['card']) ?? 0.0;
+        _cardController.text = _card.toString();
+      }
+
+      if (results['date'] != null) {
+        _selectedDate = LocalDates.parseFromString(results['date']!);
+        _dateController.text = LocalDates.dateFormated(_selectedDate);
+      }
+
+      setTotal();
+      _imageFile = imageFile;
+      notifyListeners();
+    } catch (e) {
+      log("Error processing ticket image: $e");
+    }
   }
 }

@@ -77,7 +77,6 @@ class RecognitionService {
       // Infer the total if no explicit value was found
       if (extractedTotal.isEmpty && allNumbers.isNotEmpty) {
         extractedTotal = _inferTotalFromNumbers(allNumbers);
-        print("Inferred total: $extractedTotal");
       }
 
       // Return the extracted results
@@ -110,6 +109,87 @@ class RecognitionService {
     // Clears
     _supplierViewModel.search('', (supplier) => supplier.name);
     return supplier;
+  }
+
+  /// Processes an image to extract cash (Ventas), card (Tarjeta), and date.
+  Future<Map<String, dynamic>> processIncomeImage(File image) async {
+    final inputImage = InputImage.fromFile(image);
+
+    try {
+      final RecognizedText recognizedText =
+          await _textRecognizer.processImage(inputImage);
+
+      // Regular expression for date
+      final dateRegex = RegExp(r'(\d{2})\s(\w{3,})\.?\s(\d{4})');
+
+      String extractedDate = '';
+      double? extractedCash;
+      double? extractedCard;
+
+      log("Full recognized text:\n${recognizedText.text}");
+
+      List<String> lines = recognizedText.text.split('\n');
+
+      for (int i = 0; i < lines.length; i++) {
+        String text = lines[i].trim();
+
+        if (dateRegex.hasMatch(text) && extractedDate.isEmpty) {
+          final match = dateRegex.firstMatch(text);
+          if (match != null) {
+            String day = match.group(1)!;
+            String monthAbbr = match.group(2)!;
+            String year = match.group(3)!;
+
+            final monthMap = {
+              'ene': '01',
+              'feb': '02',
+              'mar': '03',
+              'abr': '04',
+              'may': '05',
+              'jun': '06',
+              'jul': '07',
+              'ago': '08',
+              'sept': '09',
+              'oct': '10',
+              'nov': '11',
+              'dic': '12'
+            };
+            String month = monthMap[monthAbbr.toLowerCase()] ?? '01';
+            extractedDate = '$day/$month/$year';
+          }
+        }
+
+        if (text.toLowerCase().contains('ventas') && extractedCash == null) {
+          int valuePosition = i + 8;
+          if (valuePosition < lines.length) {
+            String cashValue = lines[valuePosition].trim();
+            extractedCash =
+                double.tryParse(cashValue.replaceAll(',', '.')) ?? 0.0;
+          }
+        }
+
+        if (text.toLowerCase().contains('tarjeta de crédito') &&
+            extractedCard == null) {
+          int valuePosition = i - 3;
+          if (valuePosition >= 0) {
+            String cardValue = lines[valuePosition].trim();
+            extractedCard =
+                double.tryParse(cardValue.replaceAll(',', '.')) ?? 0.0;
+          }
+        }
+      }
+
+      // Devolver resultados
+      return {
+        "date": extractedDate,
+        "cash": extractedCash?.toStringAsFixed(2) ?? "0.00",
+        "card": extractedCard?.toStringAsFixed(2) ?? "0.00",
+      };
+    } catch (e) {
+      throw Exception("Error processing income text: $e");
+    } finally {
+      _textRecognizer.close();
+    }
   }
 
   /// Safely parses and formats a date string.
