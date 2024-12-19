@@ -347,6 +347,12 @@ abstract class AppLocalizations {
   /// **'{date}'**
   String month_format(DateTime date);
 
+  /// No description provided for @month_day_format.
+  ///
+  /// In en, this message translates to:
+  /// **'{date}'**
+  String month_day_format(DateTime date);
+
   /// No description provided for @date_format.
   ///
   /// In en, this message translates to:

@@ -140,6 +140,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String month_day_format(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.MMM(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return '$dateString';
+  }
+
+  @override
   String date_format(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
     final String dateString = dateDateFormat.format(date);

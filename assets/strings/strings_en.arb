@@ -51,6 +51,15 @@
             }
         }
     },
+    "month_day_format": "{date}",
+    "@month_day_format": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "MMM"
+            }
+        }
+    },
     "date_format": "{date}",
     "@date_format": {
         "placeholders": {
