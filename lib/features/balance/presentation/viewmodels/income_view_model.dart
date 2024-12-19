@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/presentation/common/extensions/widget_extensions.dart';
 import '../../../../core/presentation/common/localization/localization_manager.dart';
 import '../../../../core/presentation/common/provider/search_provider.dart';
 import '../../domain/entities/income.dart';
@@ -42,13 +43,15 @@ class IncomeViewModel extends SearchProvider<Income> {
     }
   }
 
-  Map<String, MonthlyIcome> groupIncomesByMonth() {
+  Map<DateTime, MonthlyIcome> groupIncomesByMonth() {
     return filteredItems.fold({},
-        (Map<String, MonthlyIcome> groupedIncomes, income) {
-      String monthKey = text.month_format(income.createdAt.toDate());
+        (Map<DateTime, MonthlyIcome> groupedIncomes, income) {
+      DateTime monthKey = DateTime(
+          income.createdAt.toDate().year, income.createdAt.toDate().month);
+
       if (!groupedIncomes.containsKey(monthKey)) {
         groupedIncomes[monthKey] = MonthlyIcome(
-          id: monthKey,
+          id: text.month_format(monthKey).capitalize(),
           cash: 0,
           card: 0,
           total: 0,
@@ -63,10 +66,15 @@ class IncomeViewModel extends SearchProvider<Income> {
     });
   }
 
-  Map<String, double> get monthlyIncomes => {
-        for (var entry in groupIncomesByMonth().entries)
-          entry.key: entry.value.total
-      };
+  Map<String, double> get monthlyIncomes {
+    final grouped = groupIncomesByMonth();
+    final sortedKeys = grouped.keys.toList()..sort();
+
+    return {
+      for (var date in sortedKeys)
+        text.month_day_format(date): grouped[date]!.total
+    };
+  }
 
   Map<String, double> get averageIncomesByDay => calculateAverageByDay(
       (income) => income.createdAt.toDate(), (income) => income.total);

@@ -20,8 +20,7 @@ class PaymentMethodBarChart extends StatefulWidget {
 class _PaymentMethodBarChartState extends State<PaymentMethodBarChart> {
   @override
   Widget build(BuildContext context) {
-    final months = widget.expensesByPaymentMethod.keys.toList()
-      ..sort((a, b) => b.compareTo(a));
+    final months = widget.expensesByPaymentMethod.keys.toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

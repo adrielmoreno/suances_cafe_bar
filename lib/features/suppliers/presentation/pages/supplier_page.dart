@@ -10,6 +10,7 @@ import '../../../../core/presentation/common/widgets/inputs/custom_dropdown.dart
 import '../../../../core/presentation/common/widgets/inputs/custom_text_form_field.dart';
 import '../../../../core/presentation/common/widgets/inputs/input_phone.dart';
 import '../../../../core/presentation/common/widgets/margins/margin_container.dart';
+import '../../../balance/presentation/viewmodels/expense_view_model.dart';
 import '../../domain/entities/supplier.dart';
 import '../forms/supplier_form.dart';
 
@@ -28,12 +29,18 @@ class SupplierPage extends StatefulWidget {
 
 class _SupplierPageState extends State<SupplierPage> {
   final _supplierForm = getIt<SupplierForm>();
+  final _expenseViewModel = getIt<ExpenseViewModel>();
 
   @override
   void initState() {
     super.initState();
 
     _supplierForm.addListener(_onUpdate);
+    _expenseViewModel.addListener(_onUpdate);
+
+    if (_expenseViewModel.allItems.isEmpty) {
+      _expenseViewModel.getAll();
+    }
 
     _initializeFormData();
   }
@@ -49,6 +56,7 @@ class _SupplierPageState extends State<SupplierPage> {
 
   @override
   void dispose() {
+    _expenseViewModel.removeListener(_onUpdate);
     _supplierForm.removeListener(_onUpdate);
     super.dispose();
   }
@@ -189,6 +197,8 @@ class _SupplierPageState extends State<SupplierPage> {
                   ),
                 ),
               ),
+
+              // Show Table expenses
             ],
           ),
         ),

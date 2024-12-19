@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/di/inject.dart';
+import '../../../core/presentation/common/extensions/widget_extensions.dart';
 import '../../../core/presentation/common/localization/localization_manager.dart';
 import '../../../core/presentation/common/theme/constants/dimens.dart';
 import '../../balance/presentation/viewmodels/expense_view_model.dart';
@@ -50,7 +51,7 @@ class _IncomesExpensesBarChartState extends State<IncomesExpensesBarChart> {
   Widget build(BuildContext context) {
     final incomesData = _incomeViewModel.monthlyIncomes;
     final expensesData = _expenseViewModel.monthlyExpenses;
-    final months = incomesData.keys.toList()..sort((a, b) => b.compareTo(a));
+    final months = incomesData.keys.toList();
     final maxIncome = incomesData.values.isNotEmpty
         ? incomesData.values.reduce((a, b) => a > b ? a : b)
         : 0.0;
@@ -138,7 +139,7 @@ class _IncomesExpensesBarChartState extends State<IncomesExpensesBarChart> {
 
                           if (index < months.length) {
                             return Text(
-                              months[index],
+                              months[index].capitalize(),
                               style: const TextStyle(
                                   fontSize: Dimens.semiMedium,
                                   color: Colors.black54),

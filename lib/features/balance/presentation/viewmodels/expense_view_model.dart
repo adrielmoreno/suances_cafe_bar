@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../../../core/presentation/common/enums/payment_method.dart';
+import '../../../../core/presentation/common/extensions/widget_extensions.dart';
 import '../../../../core/presentation/common/localization/localization_manager.dart';
 import '../../../../core/presentation/common/provider/search_provider.dart';
 import '../../domain/entities/expense.dart';
@@ -38,13 +39,15 @@ class ExpenseViewModel extends SearchProvider<Expense> {
     }
   }
 
-  Map<String, MonthlyExpense> groupExpensesByMonth() {
+  Map<DateTime, MonthlyExpense> groupExpensesByMonth() {
     return allItems.fold({},
-        (Map<String, MonthlyExpense> groupedExpenses, expense) {
-      String monthKey = text.month_format(expense.createdAt.toDate());
+        (Map<DateTime, MonthlyExpense> groupedExpenses, expense) {
+      DateTime monthKey = DateTime(
+          expense.createdAt.toDate().year, expense.createdAt.toDate().month);
+
       if (!groupedExpenses.containsKey(monthKey)) {
         groupedExpenses[monthKey] = MonthlyExpense(
-          id: monthKey,
+          id: text.month_format(monthKey).capitalize(),
           total: 0,
           cash: 0,
           card: 0,
@@ -70,19 +73,28 @@ class ExpenseViewModel extends SearchProvider<Expense> {
     });
   }
 
-  Map<String, double> get monthlyExpenses => {
-        for (var entry in groupExpensesByMonth().entries)
-          entry.key: entry.value.total
-      };
+  Map<String, double> get monthlyExpenses {
+    final grouped = groupExpensesByMonth();
+    final sortedKeys = grouped.keys.toList()..sort();
 
-  Map<String, Map<String, double>> get expensesByPaymentMethod => {
-        for (var entry in groupExpensesByMonth().entries)
-          entry.key: {
-            text.label_cash: entry.value.cash,
-            text.label_card: entry.value.card,
-            text.transfer: entry.value.transfer,
-          }
-      };
+    return {
+      for (var date in sortedKeys)
+        text.month_day_format(date): grouped[date]!.total
+    };
+  }
+
+  Map<String, Map<String, double>> get expensesByPaymentMethod {
+    final grouped = groupExpensesByMonth();
+    final sortedKeys = grouped.keys.toList()..sort();
+    return {
+      for (var date in sortedKeys)
+        text.month_day_format(date): {
+          text.label_cash: grouped[date]!.cash,
+          text.label_card: grouped[date]!.card,
+          text.transfer: grouped[date]!.transfer,
+        }
+    };
+  }
 
   Map<String, double> get expensesByCategory {
     final Map<String, double> result = {};
