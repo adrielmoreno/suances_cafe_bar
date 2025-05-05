@@ -39,7 +39,7 @@ extension WidgetExtensions on BuildContext {
 
     if (status.isGranted || status.isLimited) {
       final pickedFile = await picker.pickImage(
-          source: source, maxWidth: 1080, maxHeight: 1080, imageQuality: 45);
+          source: source, maxWidth: 1080, maxHeight: 1080, imageQuality: 50);
 
       if (pickedFile != null) {
         File? croppedFile = await _cropImage(pickedFile.path);
@@ -53,7 +53,7 @@ extension WidgetExtensions on BuildContext {
   Future<File?> _cropImage(String imagePath) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
       sourcePath: imagePath,
-      compressQuality: 40,
+      compressQuality: 50,
       maxWidth: 1080,
       maxHeight: 1080,
       uiSettings: [
